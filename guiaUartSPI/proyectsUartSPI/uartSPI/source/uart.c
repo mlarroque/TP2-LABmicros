@@ -23,8 +23,29 @@ uint8_t uartRXpins[] = {PORTNUM2PIN(PB, 16), PORTNUM2PIN(PC, 3), PORTNUM2PIN(PD,
 							//TX_0				//TX_1				//TX_2				//TX_3				//TX_4
 uint8_t uartTXpins[] = {PORTNUM2PIN(PB, 17), PORTNUM2PIN(PC, 4), PORTNUM2PIN(PD, 3), PORTNUM2PIN(PC, 17), PORTNUM2PIN(PE, 25)};
 
+
+uint8_t uartIRQs_TX_RX[] = UART_RX_TX_IRQS;
+uint8_t uartIRQs_ERR[] = UART_ERR_IRQS;
+uint8_t uartIRQS_LON[] = UART_LON_IRQS;
+
 void UART_clockGating(uint8_t id);
 void UART_setBaudRate(UART_Type * p2uart, uint32_t baudRate);
+
+void UARTX_LON_IRQHandler(uint8_t id);
+void UARTX_RX_TX_IRQHandler(uint8_t id);
+void UARTX_ERR_IRQHandler(uint8_t id);
+
+void UART0_LON_IRQHandler(void);
+void UART0_RX_TX_IRQHandler(void);
+void UART0_ERR_IRQHandler(void);
+void UART1_RX_TX_IRQHandler(void);
+void UART1_ERR_IRQHandler(void);
+void UART2_RX_TX_IRQHandler(void);
+void UART2_ERR_IRQHandler(void);
+void UART3_RX_TX_IRQHandler(void);
+void UART3_ERR_IRQHandler(void);
+void UART4_RX_TX_IRQHandler(void);
+void UART4_ERR_IRQHandler(void);
 
 void uartInit (uint8_t id, uart_cfg_t config)
 {
@@ -46,14 +67,27 @@ void uartInit (uint8_t id, uart_cfg_t config)
 
 		setPCRmux(portPointers[portRX], numPinRX, UART_MUX);
 		setPCRmux(portPointers[portTX], numPinTX, UART_MUX);
-		setPCRirqc(portPointers[portRX], numPinRX, DISABLE_MODE);
-		setPCRirqc(portPointers[portTX], numPinTX, DISABLE_MODE);
+		setPCRirqc(portPointers[portRX], numPinRX, DISABLE_MODE); //deshabilito interrupciones de puerto, para que transmitir o
+		setPCRirqc(portPointers[portTX], numPinTX, DISABLE_MODE); //recibir no me ocasione interrupción de puerto
+
+		p2uart->C2 |= (UART_C2_TE_MASK | UART_C2_RE_MASK);
+
+		if(config.mode == NON_BLOCKING_SIMPLE)
+		{
+			p2uart->C2 |= UART_C2_RIE_MASK;
+			NVIC_EnableIRQ(uartIRQs_TX_RX[id]);
+			NVIC_EnableIRQ(uartIRQs_ERR[id]);
+			if(id == U0)
+			{
+				NVIC_EnableIRQ(uartIRQs_LON[id]);
+			}
+		}
+		else if(config.mode == NON_BLOCKING_FIFO)
+		{
+			//ACA HAY QUE SETEAR LOS WATERMARK, EL TAMAÑO DE LA FIFO, Y VER COMO SE MANEJAN LAS INTERRUPCIONES
+		}
 
 
-
-		//para que se active el baudRate aun hay que setear C2[RE] o C2[TE] (receiver o transmitter enabled)
-		//setear los pines de RX y TX, deshabilitando interrupciones del puerto donde estan estos pines (para qeu RX y TX no hagan saltar interrupciones de puerto
-		//habilitar transmisor o receptor
 
 
 
@@ -134,4 +168,63 @@ void UART_clockGating(uint8_t id)
 			sim->SCGC1 |= SIM_SCGC1_UART5_MASK;
 			break;
 	}
+}
+
+
+void UARTX_LON_IRQHandler(uint8_t id)
+{
+
+}
+void UARTX_RX_TX_IRQHandler(uint8_t id)
+{
+
+}
+void UARTX_ERR_IRQHandler(uint8_t id)
+{
+
+}
+
+void UART0_LON_IRQHandler(void)
+{
+	UARTX_LON_IRQHandler(U0);
+}
+void UART0_RX_TX_IRQHandler(void)
+{
+	UARTX_RX_TX_IRQHandler(U0);
+}
+void UART0_ERR_IRQHandler(void)
+{
+	UARTX_ERR_IRQHandler(U0);
+}
+void UART1_RX_TX_IRQHandler(void)
+{
+	UARTX_RX_TX_IRQHandler(U1);
+}
+void UART1_ERR_IRQHandler(void)
+{
+	UARTX_ERR_IRQHandler(U1);
+}
+void UART2_RX_TX_IRQHandler(void)
+{
+	UARTX_RX_TX_IRQHandler(U2);
+}
+void UART2_ERR_IRQHandler(void)
+{
+	UARTX_ERR_IRQHandler(U2);
+}
+void UART3_RX_TX_IRQHandler(void)
+{
+	UARTX_RX_TX_IRQHandler(U3);
+}
+void UART3_ERR_IRQHandler(void)
+{
+	UARTX_ERR_IRQHandler(U3);
+}
+void UART4_RX_TX_IRQHandler(void)
+{
+	UARTX_RX_TX_IRQHandler(U4);
+}
+void UART4_ERR_IRQHandler(void)
+{
+	UARTX_ERR_IRQHandler(U4);
 }
