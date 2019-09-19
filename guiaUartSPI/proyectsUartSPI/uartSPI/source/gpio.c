@@ -98,9 +98,13 @@ _Bool gpioIRQ (pin_t pin, uint8_t irqMode, pinIrqFun_t irqFun)
 			p2irqFunctions[port][numPin] = irqFun;
 
 			succeed = true;
+			if(irqMode != GPIO_IRQ_MODE_DISABLE)
+			{
+				NVIC_EnableIRQ(p2portsIRQ[port]);
+			}
 		}
 		//NVIC_EnableIRQ(p2portsIRQ[port]);
-		NVIC_EnableIRQ(p2portsIRQ[port]);
+
 	}
 
 	return succeed;

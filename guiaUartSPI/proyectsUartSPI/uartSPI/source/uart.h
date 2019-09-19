@@ -19,17 +19,16 @@
  * CONSTANT AND MACRO DEFINITIONS USING #DEFINE
  ******************************************************************************/
 
-#define UART_CANT_IDS   ????
+#define UART_CANT_IDS 5
 
 
 /*******************************************************************************
  * ENUMERATIONS AND STRUCTURES AND TYPEDEFS
  ******************************************************************************/
-
+enum {BLOCKING, NON_BLOCKING_SIMPLE, NON_BLOCKING_FIFO}UART_MODE;
 typedef struct {
     uint32_t baudRate;
-    //???
-    //???
+    UART_MODE mode;
 } uart_cfg_t;
 
 
