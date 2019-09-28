@@ -11,8 +11,8 @@
 #include "board.h"
 #include "gpio.h"
 #include "SysTick.h"
+#include "accelerometer.h"
 
-#define BALIZA_FREQ_HZ 15U
 
 
 /*******************************************************************************
@@ -23,10 +23,6 @@
 /*******************************************************************************
  * FUNCTION PROTOTYPES FOR PRIVATE FUNCTIONS WITH FILE LEVEL SCOPE
  ******************************************************************************/
-
-_Bool buttonLastState = false;
-_Bool isBalizaOn = false;
-//_Bool rebote = false;
 
 void sysTickCallback(void);
 void switchCallback(void);
@@ -40,16 +36,8 @@ void switchCallback(void);
 /* Función que se llama 1 vez, al comienzo del programa */
 void App_Init (void)
 {
-    gpioMode(PIN_LED_RED, OUTPUT);
-    //gpioMode(PIN_LED_BLUE, OUTPUT);
-    gpioMode(PIN_SW3 , SW_INPUT_TYPE);
-    //gpioMode(PIN_SW2 , SW_INPUT_TYPE);
-    gpioMode(PIN_LED_EXTERNAL , EXTERNAL_LED_TYPE);
-    //gpioMode(PIN_SWITCH_EXTERNAL , EXTERNAL_SW_TYPE);
-    gpioWrite(PIN_LED_RED, HIGH);
+	accelerometerInit();
 
-    gpioIRQ (PIN_SW3, GPIO_IRQ_MODE_FALLING_EDGE, switchCallback);
-    SysTick_Init(&sysTickCallback);
 
 }
 

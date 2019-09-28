@@ -17,7 +17,7 @@
 /*******************************************************************************
  * CONSTANT AND MACRO DEFINITIONS USING #DEFINE
  ******************************************************************************/
-
+#define NULL 0
 
 /*******************************************************************************
  * ENUMERATIONS AND STRUCTURES AND TYPEDEFS
@@ -38,6 +38,7 @@ typedef struct{
 	uint32_t baud_rate;
 	i2c_mode_type mode;	//solo se configurará master mode
 	uint8_t prim_slave_address;
+	bool  polling_mode;	//definir 0 si se quieren interrupciones
 }i2c_conf_type;
 
 /*******************************************************************************
@@ -48,10 +49,12 @@ typedef struct{
  * FUNCTION PROTOTYPES WITH GLOBAL SCOPE
  ******************************************************************************/
 
-void i2cInit(void)
+bool i2cInit(void);
+
+void
 
 
-datatypealgo readDataBurst(dfsdfsdf)
+//datatypealgo readDataBurst(dfsdfsdf)
 
 /*******************************************************************************
  ******************************************************************************/
