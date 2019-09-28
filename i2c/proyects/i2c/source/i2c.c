@@ -53,8 +53,8 @@ typedef struct {
     int tx_index; /* TX index */
     int rx_index; /* RX index */
     int data_present; /* Data present flag */
-    uint16 length; /* Length of the buffer in bytes */
-    uint8 buf[I2C_BUFFER_SIZE];/* Data buffer */
+    uint16_t length; /* Length of the buffer in bytes */
+    uint8_t buf[I2C_BUFFER_SIZE];/* Data buffer */
 } I2C_BUFFER;   //llenarla antes de transferir
 
 
@@ -79,25 +79,19 @@ enum _i2c_flags
     kI2C_BusBusyFlag           = I2C_S_BUSY_MASK,  /*!< I2C bus busy flag. */
     kI2C_AddressMatchFlag      = I2C_S_IAAS_MASK,  /*!< I2C address match flag. */
     kI2C_TransferCompleteFlag  = I2C_S_TCF_MASK,   /*!< I2C transfer complete flag. */
-#ifdef I2C_HAS_STOP_DETECT
-    kI2C_StopDetectFlag = I2C_FLT_STOPF_MASK << 8, /*!< I2C stop detect flag. */
-#endif /* FSL_FEATURE_I2C_HAS_START_STOP_DETECT / FSL_FEATURE_I2C_HAS_STOP_DETECT */
 
-#if defined(FSL_FEATURE_I2C_HAS_START_STOP_DETECT) && FSL_FEATURE_I2C_HAS_START_STOP_DETECT
-    kI2C_StartDetectFlag = I2C_FLT_STARTF_MASK << 8, /*!< I2C start detect flag. */
-#endif                                               /* FSL_FEATURE_I2C_HAS_START_STOP_DETECT */
 };
 typedef enum{
 	uint8_t start_count;
-	enum _i2c_transfer_states
+	/*enum _i2c_transfer_states
 	{
-	    kIdleState             = 0x0U, /*!< I2C bus idle. */
-	    kCheckAddressState     = 0x1U, /*!< 7-bit address check state. */
-	    kSendCommandState      = 0x2U, /*!< Send command byte phase. */
-	    kSendDataState         = 0x3U, /*!< Send data transfer phase. */
-	    kReceiveDataBeginState = 0x4U, /*!< Receive data transfer phase begin. */
-	    kReceiveDataState      = 0x5U, /*!< Receive data transfer phase. */
-	};
+	    kIdleState             = 0x0U, !< I2C bus idle.
+	    kCheckAddressState     = 0x1U, !< 7-bit address check state.
+	    kSendCommandState      = 0x2U, !< Send command byte phase.
+	    kSendDataState         = 0x3U, !< Send data transfer phase.
+	    kReceiveDataBeginState = 0x4U, !< Receive data transfer phase begin.
+	    kReceiveDataState      = 0x5U, !< Receive data transfer phase.
+	};*/
 }i2c_FSM_type;
 typedef struct _i2c_master_transfer
 {

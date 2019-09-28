@@ -23,12 +23,11 @@
 /*******************************************************************************
  * ENUMERATIONS AND STRUCTURES AND TYPEDEFS
  ******************************************************************************/
-typedef struct
-{
+typedef struct{
 	int16_t x;
 	int16_t y;
 	int16_t z;
-} SRAWDATA;
+}acc_data_type;
 
 /*******************************************************************************
  * VARIABLE PROTOTYPES WITH GLOBAL SCOPE

@@ -25,25 +25,25 @@ endif
 # Add inputs and outputs from these tool invocations to the build variables 
 
 # All Target
-all: uartSPI.axf
+all: i2c.axf
 
 # Tool invocations
-uartSPI.axf: $(OBJS) $(USER_OBJS)
+i2c.axf: $(OBJS) $(USER_OBJS)
 	@echo 'Building target: $@'
 	@echo 'Invoking: MCU Linker'
-	arm-none-eabi-gcc -nostdlib -Xlinker -Map="uartSPI.map" -Xlinker --gc-sections -Xlinker -print-memory-usage -Xlinker --sort-section=alignment -mcpu=cortex-m4 -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -T "Blink_Debug.ld" -o "uartSPI.axf" $(OBJS) $(USER_OBJS) $(LIBS)
+	arm-none-eabi-gcc -nostdlib -Xlinker -Map="i2c.map" -Xlinker --gc-sections -Xlinker -print-memory-usage -Xlinker --sort-section=alignment -mcpu=cortex-m4 -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -T "i2c_Debug.ld" -o "i2c.axf" $(OBJS) $(USER_OBJS) $(LIBS)
 	@echo 'Finished building target: $@'
 	@echo ' '
 	$(MAKE) --no-print-directory post-build
 
 # Other Targets
 clean:
-	-$(RM) $(EXECUTABLES)$(OBJS)$(C_DEPS) uartSPI.axf
+	-$(RM) $(EXECUTABLES)$(OBJS)$(C_DEPS) i2c.axf
 	-@echo ' '
 
 post-build:
 	-@echo 'Performing post-build steps'
-	-arm-none-eabi-size "uartSPI.axf"; # arm-none-eabi-objcopy -v -O binary "uartSPI.axf" "uartSPI.bin" ; # checksum -p MK64FN1M0xxx12 -d "uartSPI.bin";
+	-arm-none-eabi-size "i2c.axf"; # arm-none-eabi-objcopy -v -O binary "i2c.axf" "i2c.bin" ; # checksum -p MK64FN1M0xxx12 -d "i2c.bin";
 	-@echo ' '
 
 .PHONY: all clean dependents post-build

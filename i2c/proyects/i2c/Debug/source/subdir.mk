@@ -6,7 +6,9 @@
 C_SRCS += \
 ../source/App.c \
 ../source/SysTick.c \
+../source/accelerometer.c \
 ../source/gpio.c \
+../source/i2c.c \
 ../source/pinsHandler.c \
 ../source/spi.c \
 ../source/uart.c 
@@ -14,7 +16,9 @@ C_SRCS += \
 OBJS += \
 ./source/App.o \
 ./source/SysTick.o \
+./source/accelerometer.o \
 ./source/gpio.o \
+./source/i2c.o \
 ./source/pinsHandler.o \
 ./source/spi.o \
 ./source/uart.o 
@@ -22,7 +26,9 @@ OBJS += \
 C_DEPS += \
 ./source/App.d \
 ./source/SysTick.d \
+./source/accelerometer.d \
 ./source/gpio.d \
+./source/i2c.d \
 ./source/pinsHandler.d \
 ./source/spi.d \
 ./source/uart.d 
