@@ -1,7 +1,7 @@
 import CircuitBoard as c
 import SerialCommunicationHandler as s
 #Numero de Kinetis utilizadas
-NUMBER_OF_BOARDS = 4
+NUMBER_OF_BOARDS = 6
 ANGLE_MAX = 180
 ANGLE_MIN = -179
 ACK = 'A'
@@ -25,6 +25,9 @@ class MessageHandler(object):
 
     def ReadFrame(self):
         return self.Comm.ReadMessage(MAX_MSG_SIZE);
+
+    def WriteFrame(self,data):
+        return self.Comm.WriteMessage(data);
 
     def ManageMessage(self, msg, size):
         msg_string = msg.decode('ascii');
