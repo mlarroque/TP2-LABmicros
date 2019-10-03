@@ -14,7 +14,8 @@ void initResourcesController2pc(void)
 
 }
 
-void sendMessage2pc(int id, int coord, int coordName)
+void sendMessage2pc(char id, char coord, char coordName)
 {
+	//shapeinfo
 
 }

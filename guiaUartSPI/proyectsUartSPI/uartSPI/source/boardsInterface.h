@@ -13,6 +13,6 @@ void initBoardsInterface(void);
 
 //Return 0 if there is no lecture. Return !0 if there is something updated.
 //if there is something updated, the update is written in the "ints" passed as inputs.
-int updateLetcure(int * id, int * coord, int * coordName);
+int updateLetcure(char * id, char * coord, char * coordName);
 
 #endif /* BOARDSINTERFACE_H_ */

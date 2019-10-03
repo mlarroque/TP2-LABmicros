@@ -16,6 +16,7 @@ uint8_t aux;
 */
 #include "boardsInterface.h"
 #include "comController2pc.h"
+#include "boardIds.h"
 
 /*******************************************************************************
  * CONSTANT AND MACRO DEFINITIONS USING #DEFINE
@@ -44,10 +45,14 @@ void App_Init (void)
 
 void App_Run (void)
 {
-	int id, coord, coordName;
+	char id, coord, coordName;
 	if(updateLecture(&id, &coord, &coordName))
 	{
-		sendMessage(id, coord, coordName);
+		sendMessage2pc(id, coord, coordName);
+		if(coordName == OUR_BOARD)
+		{
+			sendMessage2othersBoards(OUR_BOARD, coord, coordName);
+		}
 	}
 }
 
