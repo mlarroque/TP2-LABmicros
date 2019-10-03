@@ -25,7 +25,7 @@
 /*******************************************************************************
  * ENUMERATIONS AND STRUCTURES AND TYPEDEFS
  ******************************************************************************/
-enum {BLOCKING, NON_BLOCKING_SIMPLE, NON_BLOCKING_FIFO}UART_MODE;
+typedef enum {BLOCKING, NON_BLOCKING_SIMPLE, NON_BLOCKING_FIFO}UART_MODE;
 typedef struct {
     uint32_t baudRate;
     UART_MODE mode;

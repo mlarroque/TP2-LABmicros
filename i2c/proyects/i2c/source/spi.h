@@ -10,11 +10,12 @@
 
 #define SPI_CANT_IDS //?
 
+#include <stdint.h>
 
 /*******************************************************************************
  * ENUMERATIONS AND STRUCTURES AND TYPEDEFS
  ******************************************************************************/
-enum {MASTER, SLAVE}SPI_MODE;
+typedef enum {MASTER, SLAVE}SPI_MODE;
 typedef struct {
     uint32_t baudRate;
     SPI_MODE mode; //master / slave

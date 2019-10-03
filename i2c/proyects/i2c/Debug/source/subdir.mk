@@ -7,7 +7,6 @@ C_SRCS += \
 ../source/App.c \
 ../source/SysTick.c \
 ../source/accelerometer.c \
-../source/gpio.c \
 ../source/i2c.c \
 ../source/pinsHandler.c \
 ../source/spi.c \
@@ -17,7 +16,6 @@ OBJS += \
 ./source/App.o \
 ./source/SysTick.o \
 ./source/accelerometer.o \
-./source/gpio.o \
 ./source/i2c.o \
 ./source/pinsHandler.o \
 ./source/spi.o \
@@ -27,7 +25,6 @@ C_DEPS += \
 ./source/App.d \
 ./source/SysTick.d \
 ./source/accelerometer.d \
-./source/gpio.d \
 ./source/i2c.d \
 ./source/pinsHandler.d \
 ./source/spi.d \
@@ -38,7 +35,7 @@ C_DEPS += \
 source/%.o: ../source/%.c
 	@echo 'Building file: $<'
 	@echo 'Invoking: MCU C Compiler'
-	arm-none-eabi-gcc -DCPU_MK64FN1M0VLL12 -D__USE_CMSIS -DDEBUG -I../source -I../ -I../SDK/CMSIS -I../SDK/startup -O2 -fno-common -g3 -Wall -c -ffunction-sections -fdata-sections -ffreestanding -fno-builtin -mcpu=cortex-m4 -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -MMD -MP -MF"$(@:%.o=%.d)" -MT"$(@:%.o=%.o)" -MT"$(@:%.o=%.d)" -o "$@" "$<"
+	arm-none-eabi-gcc -DCPU_MK64FN1M0VLL12 -D__USE_CMSIS -DDEBUG -I../source -I../ -I../SDK/CMSIS -I../SDK/startup -O0 -fno-common -g3 -Wall -c -ffunction-sections -fdata-sections -ffreestanding -fno-builtin -mcpu=cortex-m4 -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -MMD -MP -MF"$(@:%.o=%.d)" -MT"$(@:%.o=%.o)" -MT"$(@:%.o=%.d)" -o "$@" "$<"
 	@echo 'Finished building: $<'
 	@echo ' '
 

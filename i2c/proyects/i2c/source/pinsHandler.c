@@ -8,6 +8,8 @@
 #include "pinsHandler.h"
 
 
+
+
 _Bool isPinValid(pin_t pin)
 {
 	_Bool ret = false;
@@ -30,18 +32,23 @@ void setPCRmux(PORT_Type * p2port, uint8_t numPin, uint8_t mux)
 
 void setPCRpullEnable(PORT_Type * portPointer, uint8_t numPin)
 {
-	uint32_t maskPE = (HIGH << PORT_PCR_PE_SHIFT);
+	uint32_t maskPE = (1 << PORT_PCR_PE_SHIFT);
 	(portPointer->PCR)[numPin] = ((portPointer->PCR)[numPin] | maskPE);
 }
 void setPCRpullUp(PORT_Type * portPointer, uint8_t numPin)
 {
-	uint32_t maskPE = (HIGH << PORT_PCR_PS_SHIFT);
+	uint32_t maskPE = (1 << PORT_PCR_PS_SHIFT);
 	(portPointer->PCR)[numPin] = ((portPointer->PCR)[numPin] | maskPE);
 }
 void setPCRpullDown(PORT_Type * portPointer, uint8_t numPin)
 {
-	uint32_t maskPE = (HIGH << PORT_PCR_PE_SHIFT);
+	uint32_t maskPE = (1 << PORT_PCR_PE_SHIFT);
 	(portPointer->PCR)[numPin] = ((portPointer->PCR)[numPin] & (~maskPE));
+}
+
+void setPCRopenDrainEnable(PORT_Type * portPointer, uint8_t numPin)
+{
+	(portPointer->PCR)[numPin] = ((portPointer->PCR)[numPin] | PORT_PCR_ODE_MASK);
 }
 
 

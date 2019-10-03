@@ -12,7 +12,7 @@
  * INCLUDE HEADER FILES
  ******************************************************************************/
 
-#include "i2c.h"
+#include <stdint.h>
 
 
 /*******************************************************************************
@@ -27,7 +27,16 @@ typedef struct{
 	int16_t x;
 	int16_t y;
 	int16_t z;
-}acc_data_type;
+}raw_data_type;
+
+
+typedef struct
+{
+    int16_t x;      //son de 16 bits porque leo parte baja y alta
+    int16_t y;
+    int16_t z;
+} SRAWDATA;
+
 
 /*******************************************************************************
  * VARIABLE PROTOTYPES WITH GLOBAL SCOPE
@@ -37,9 +46,10 @@ typedef struct{
  * FUNCTION PROTOTYPES WITH GLOBAL SCOPE
  ******************************************************************************/
 
-void accelerometerInit(void);
-SRAWDATA* readAccelerometerValue(void);
-
+void accelandMagnetInit(void);
+raw_data_type* readAccelandMagnetValue(void);
+uint8_t _mqx_ints_FXOS8700CQ_start();
+int16_t ReadAccelMagnData(SRAWDATA *pAccelData, SRAWDATA *pMagnData);
 /*******************************************************************************
  ******************************************************************************/
 

@@ -9,30 +9,19 @@
 #include "i2c.h"
 #include "pinsHandler.h"
 #include "MK64F12.h"
+#include "hardware.h"
 #include <stdint.h>
 #include <stdlib.h>
+
 
 //MACROS
 
 //#define I2C_BAUDRATE_DEFAULT 50000bps
-#define I2C_BUFFER_SIZE 256 //tamaño del buffer
-#define I2C_READ 1
-//#define I2C_WRITE !I2C_READ
-#define I2C_BUS_CLOCK 60000000
+#define buffer_SIZE 255 //tamaño del buffer
+
+
 	 //ALT2//ALT1//ALT5
-enum {I2C0, I2C1, I2C2, I2C_CHANNEL_COUNT};
-
-
-//los valores del SCL dividers posibles para calcular el ICR y luego el baud-rate, que es el índice del arreglo
-static const uint16_t i2cSCLDividers[] = {
-		20,  22,  24,  26,   28,   30,   34,   40,   28,   32,   36,   40,   44,   48,   56,   68,
-		48,  56,  64,  72,   80,   88,   104,  128,  80,   96,   112,  128,  144,  160,  192,  240,
-		160, 192, 224, 256,  288,  320,  384,  480,  320,  384,  448,  512,  576,  640,  768,  960,
-		640, 768, 896, 1024, 1152, 1280, 1536, 1920, 1280, 1536, 1792, 2048, 2304, 2560, 3072, 3840};
-
-
-
-
+enum {I2C_0, I2C_1, I2C_2, I2C_CHANNEL_COUNT};
 
 							//I2C0_SCL			//I2C1_SCL			//I2C2_SCL
 uint8_t i2cSCLpins[] = {PORTNUM2PIN(PB, 2), PORTNUM2PIN(PC, 10), PORTNUM2PIN(PA, 14)};
@@ -44,175 +33,324 @@ uint8_t i2cSDApins[] = {PORTNUM2PIN(PB, 3), PORTNUM2PIN(PC, 11), PORTNUM2PIN(PA,
 uint8_t i2cIRQs[]= I2C_IRQS;
 
 
-
-
 //ESTRUCTURAS
 
-/* Structure for storing I2C transfer data */
-typedef struct {
-    int tx_index; /* TX index */
-    int rx_index; /* RX index */
-    int data_present; /* Data present flag */
-    uint16_t length; /* Length of the buffer in bytes */
-    uint8_t buf[I2C_BUFFER_SIZE];/* Data buffer */
-} I2C_BUFFER;   //llenarla antes de transferir
+typedef struct{
+	bool finished;
+	uint8_t*	rx_buff;
+	uint8_t*	tx_buff;
 
+	uint8_t	tx_size;
+	uint8_t	rx_size;
 
-//IDLE;WAITING_FOR_ACK;
-
-enum _i2c_status
-{
-    kStatus_I2C_Busy            = MAKE_STATUS(kStatusGroup_I2C, 0), /*!< I2C is busy with current transfer. */
-    kStatus_I2C_Idle            = MAKE_STATUS(kStatusGroup_I2C, 1), /*!< Bus is Idle. */
-    kStatus_I2C_Nak             = MAKE_STATUS(kStatusGroup_I2C, 2), /*!< NAK received during transfer. */
-    kStatus_I2C_ArbitrationLost = MAKE_STATUS(kStatusGroup_I2C, 3), /*!< Arbitration lost during transfer. */
-    kStatus_I2C_Timeout         = MAKE_STATUS(kStatusGroup_I2C, 4), /*!< Timeout poling status flags. */
-    kStatus_I2C_Addr_Nak        = MAKE_STATUS(kStatusGroup_I2C, 5), /*!< NAK received during the address probe. */
-};
-enum _i2c_flags
-{
-    kI2C_ReceiveNakFlag        = I2C_S_RXAK_MASK,  /*!< I2C receive NAK flag. */
-    kI2C_IntPendingFlag        = I2C_S_IICIF_MASK, /*!< I2C interrupt pending flag. */
-    kI2C_TransferDirectionFlag = I2C_S_SRW_MASK,   /*!< I2C transfer direction flag. */
-    kI2C_RangeAddressMatchFlag = I2C_S_RAM_MASK,   /*!< I2C range address match flag. */
-    kI2C_ArbitrationLostFlag   = I2C_S_ARBL_MASK,  /*!< I2C arbitration lost flag. */
-    kI2C_BusBusyFlag           = I2C_S_BUSY_MASK,  /*!< I2C bus busy flag. */
-    kI2C_AddressMatchFlag      = I2C_S_IAAS_MASK,  /*!< I2C address match flag. */
-    kI2C_TransferCompleteFlag  = I2C_S_TCF_MASK,   /*!< I2C transfer complete flag. */
-
-};
-typedef enum{
-	uint8_t start_count;
-	/*enum _i2c_transfer_states
-	{
-	    kIdleState             = 0x0U, !< I2C bus idle.
-	    kCheckAddressState     = 0x1U, !< 7-bit address check state.
-	    kSendCommandState      = 0x2U, !< Send command byte phase.
-	    kSendDataState         = 0x3U, !< Send data transfer phase.
-	    kReceiveDataBeginState = 0x4U, !< Receive data transfer phase begin.
-	    kReceiveDataState      = 0x5U, !< Receive data transfer phase.
-	};*/
-}i2c_FSM_type;
-typedef struct _i2c_master_transfer
-{
-    uint32_t flags;            /*!< A transfer flag which controls the transfer. */
-    uint8_t slaveAddress;      /*!< 7-bit slave address. */
-    i2c_direction_t direction; /*!< A transfer direction, read or write. */
-    uint32_t subaddress;       /*!< A sub address. Transferred MSB first. */
-    uint8_t subaddressSize;    /*!< A size of the command buffer. */
-    uint8_t *volatile data;    /*!< A transfer buffer. */
-    volatile size_t dataSize;  /*!< A transfer size. */
-} i2c_master_transfer_t;
-
+	uint8_t	slave;
+	uint8_t	index;
+	uint8_t	r_start;
+	i2c_direction_type dir;
+	uint8_t	reg;
+	uint8_t	reg_size;
+}buffer_type;
 
 //GLOBAL VARIABLES
 
-I2C_BUFFER i2c_tx_buffer;   //I2c TX buffer
-I2C_BUFFER i2c_rx_buffer;   //i2c RX buffer
+static I2C_Type* i2c;
+static bool init=false;
+static buffer_type buffer;
 
 
 //PROTOTIPOS
+static  void sendStart(){
+     i2c->C1 |= I2C_C1_MST_MASK;
+}
+static void sendStop(){
+    i2c->C1 &= ~I2C_C1_MST_MASK;
+}
+static  void sendRepeatStart(){
+    i2c->C1 |= I2C_C1_RSTA_MASK;
+}
+static  uint8_t	getInterruptFlag(){
+    return i2c->S & I2C_S_IICIF_MASK;
+}
+static  void clearInterruptFlag(){
+    i2c->S|=I2C_S_IICIF_MASK;
+}
+static  uint8_t	getMode(){
+    return (i2c->C1 & I2C_C1_TX_MASK);
+}
+static  void setModeTX(){
+    i2c->C1 |= I2C_C1_TX_MASK;
+}
+static  void setModeRX(){
+    i2c->C1 &= ~I2C_C1_TX_MASK;
+}
+static  uint8_t	isBusBusy(){
+    return i2c->S & I2C_S_BUSY_MASK;
+}
+static  void setNack(){
+    i2c->C1 |= I2C_C1_TXAK_MASK;
+}
+static  void unsetNack(){
+    i2c->C1 &= ~I2C_C1_TXAK_MASK;
+}
+static  uint8_t	receivedAck(){
+    return ~(i2c->S & I2C_S_RXAK_MASK);
+}
+static  void writeByte(uint8_t byte){
+    i2c->D=byte;
+}
+static  uint8_t	readByte(){
+    return i2c->D;
+}
 
-//Initializes the specified I2C channel. Address mode is 7-bit
-//Parameters:
-//channel: I2C channel number specified by user
-//addr: primary slave address
-//bps: baud rate (Hz)
-//Return value:
-//none
-void i2cInit(uint8_t channel, i2c_conf_type conf)
+static bool isr_routine(void);
+void setBaudRate(I2C_Type * i2c);
+void configurePins(uint8_t channel);
+void clockGating(int8_t channel);
+//void clearInterruptFlag(I2C_Type * i2c);
+void masterRead(I2C_Type * i2c, uint8_t* data, uint8_t data_size);
+void i2cMasterWrite(I2C_Type * i2c, uint8_t* data, uint8_t data_size);
+void i2cResetModule(I2C_Type * i2c);
+
+
+bool i2cInit(uint8_t channel, i2c_conf_type conf)
 {
-	init = false;
-	if(channel < I2C_CHANNEL_COUNT)
+	if((channel < I2C_CHANNEL_COUNT) && (init==false))		//chequeo que sea valido el I2C elegido
 	{
 		I2C_Type * i2c_ptrs[] = I2C_BASE_PTRS;
-		I2C_Type * i2c = i2c_ptrs[channel];
+		i2c = i2c_ptrs[channel];
 
-		i2cClockGating(channel);
-		i2cConfigurePins(channel);
-		i2cSetBaudRate(conf.baud_rate, i2c);
+		clockGating(channel);
+		configurePins(channel);
+//		resetModule(i2c);	//reseteo el modulo: deshabilito el flag de interrupciones, borro registros, etc
+		setBaudRate(i2c);
 
-		//interrupciones
-		//NVIC_EnableIRQ(i2cIRQs(channel));
-		//callback de interrupcion??
-
-		if(conf.)
-		{
-
-
-
-			i2c->C1 |= I2C_C1_IICEN_MASK;
-
-			init = true;
-		}
+		NVIC_EnableIRQ(i2cIRQs[channel]);
+		i2c->C1 = 0;
+		i2c->C1 = I2C_C1_IICIE_MASK | I2C_C1_IICEN_MASK;
+		i2c->S = I2C_S_TCF_MASK | I2C_S_IICIF_MASK;
+		init = true;
 	}
 	return init;
 }
 
-void i2cDeInit(uint8_t channel)
+
+void i2cTransferInit(i2c_transfer_type t)
 {
-	I2C_Type * i2c = i2c_ptrs[channel];
-    i2c->C1 &= ~(uint8_t)I2C_C1_IICEN_MASK;		//borro el bit que habilita interrupciones
+	buffer.finished = false;
+	buffer.rx_buff = t.data;
+	buffer.tx_buff = t.data;
+
+	buffer.tx_size = t.data_size;
+	buffer.rx_size = t.data_size;
+
+	buffer.slave = t.slave_address;
+	buffer.index = 0;
+	buffer.r_start = t.repeat_start;
+	buffer.dir = t.dir;
+
+	buffer.reg = t.reg;
+	buffer.reg_size = t.reg_size;
+
+
+	if(isBusBusy())
+		return;
+    setModeTX();
+    sendStart();
+    writeByte(t.slave_address << 1 | 0);
 }
 
-//General function for performing I2C master transfers.
-//Prototype:
-//void i2c_master(uint8 channel, uint8 mode, uint16 slave_address)
-//Parameters:
-//channel: I2C channel number specified by user
-//mode: Valid modes include I2C_TX, I2C_RX//, I2C_TXRX, I2C_10BIT_TX, I2C_10BIT_RX, I2C_10BIT_TXRX (all modes defined in i2c.h)
-//slave_address: the slave address
-//Return value:
-//none
-void i2cSetBaudRate(uint32_t baud_rate,I2C_Type * i2c)
+void i2cTransferNonBlocking(i2c_transfer_type t)
 {
-	//i2c usa bus clock que es 60MHz
-	uint32_t clock = I2C_BUS_CLOCK;
-	uint32_t calculated_baud_rate;
-	uint32_t mult = 1;
-	uint32_t icr;
-	uint32_t best_error = UINT32_MAX;
-	uint32_t error = best_error;
-	uint8_t = i,j;
-	for(j = 0; j <= 2; j++)
+	i2cTransferInit(t);
+}
+
+bool i2cTransferBlocking(i2c_transfer_type t)
+{
+	if(isBusBusy())
+		return I2C_ERROR;
+	else
 	{
-		mult = 1 << j; 	//1, 2, o 4, que son los mutiplicadores
+		i2cTransferInit(t);
+		while(!buffer.finished)
+			isr_routine();
+	}
+	return I2C_OK;
+}
 
-		for(i=0; i < (sizeof(i2cSCLDividers)/sizeof(uint16_t)); i++)		//busco el menor error en todo el arreglo
+void i2cMasterWrite(uint8_t* data, uint8_t data_size/*, bool repeated_start*/)
+{
+	setModeTX();
+	while(data_size > 0)
+	{
+		writeByte(*data);	//mando byte de datos
+		data++;
+		data_size--;
+	}
+
+	if(data_size == 0)					//si ya envié toda la data
+	{
+		setModeRX();
+		sendStop();
+		buffer.finished = true;
+	}
+}
+
+void i2cMasterRead(I2C_Type * i2c, uint8_t* data, uint8_t data_size)
+{
+	uint8_t dummy_read = 0;
+	dummy_read++;
+
+	setModeRX();
+
+	while(data_size > 0)
+	{
+		if(data_size == 1)
+			setNack();
+		else
+			unsetNack();
+
+		*buffer.rx_buff++ = readByte();
+		data_size--;
+	}
+
+	if(data_size == 0)
+	{
+		setModeRX();
+		i2cMasterStop(i2c);
+		buffer.finished = true;
+	}
+}
+
+
+bool masterTransfer()
+{
+	if(buffer.finished)
+		return;
+	if(!receivedAck())
+		return;
+
+	if(buffer.slave_reg_size > 0)
+	{
+		transfer.slave_reg_size--;
+		writeByte(buffer.reg);
+
+		if(transfer.direction == I2C_READ)
 		{
-			calculated_baud_rate = clock / (mult * i2cSCLDividers[i]);
-			error = abs(baud_rate-calculated_baud_rate);
+			sendRepeatStart();
+			writeByte(buffer.slave | 0);
+		}
+	}
+	else
+	{
 
-			if (error < best_error)
+		//recibo data
+		if(buffer.dir == I2C_READ)// && (buffer.rx_size> 0))
+		{
+			i2cMasterRead(buffer.rx_buff, buffer.rx_size);
+		}
+
+		//transmito data
+		if(buffer.dir == I2C_WRITE)// && (buffer.tx_size > 0))
+		{
+			i2cMasterWrite(buffer.tx_buff, buffer.tx_size);
+		}
+		clearInterruptFlag();
+	}
+}
+
+
+bool isr_routine(void)
+{
+	if(getMode() == I2C_C1_TX_MASK)
+	{
+		if(buffer.finished)
+			sendStop(i2c);
+		else	//quedan cosas para mandar
+		{
+			if(!receivedAck())
+				sendStop();
+			else		//llegó ack
 			{
-				best_error = error;
-				mult  = j;
-				icr   = i;
+				if(buffer.index == buffer.tx_size)
+				{
+					if(buffer.rx_size > 0)		//quiero recibir, entonces cambio de modo
+					{
+						setModeRX(i2c);
+						if(buffer.index == (buffer.rx_size-1))
+							setNack();
+						else
+							unsetNack();
+						buffer.rx_buff[buffer.index] = readByte();		//dummy read
+					}
+					else
+					{
+						buffer.finished = true;
+						sendStop();
+					}
+				}
+				else
+				{
+					if(buffer.index == buffer.r_start) //buffer.repeat_start == 1 ??
+					{
+						sendRepeatStart();
+						writeByte(buffer.slave << 1 | 1); //esto va?
+					}
+					else
+					{
+						writeByte(buffer.tx_buff[buffer.index]);
+						buffer.index++;
+					}
+				}
 
-				if (error == 0)	//si el error es ideal, dejo de buscar
-					break;
 			}
 		}
 	}
-
-	//seteo baud_rate
-
-	i2c->F = I2C_F_MULT(mult) | I2C_F_ICR(icr);
-
+	else	//RX
+	{
+		if(buffer.index == buffer.rx_size)
+		{
+			sendStop();
+			buffer.finished = true;
+		}
+		else if(buffer.index == (buffer.rx_size-1))
+			setNack();
+		else
+			unsetNack();
+		buffer.rx_buff[buffer.index++] = readByte();
+	}
+	clearInterruptFlag(i2c);
 }
 
-void i2cConfigurePins(uint8_t channel)
+
+static void resetModule(I2C_Type * i2c)
 {
-	uint8_t i2c_mux;
+	i2c->C1 &= ~(uint8_t)(I2C_C1_IICEN_MASK); 	//deshabilito interrupciones
+	//borro los registros que voy a usar
+	i2c->A1 = 0x00; 		//address register
+	i2c->F = 0x00;		//freq divider register
+	i2c->C1 = I2C_C1_IICIE_MASK | I2C_C1_IICEN_MASK;	//control reg
+	i2c->S = I2C_S_TCF_MASK | I2C_S_IICIF_MASK;		//status reg
+}
+
+
+
+void setBaudRate(I2C_Type * i2c)
+{
+	i2c->F = I2C_F_ICR(0x20) | I2C_F_MULT(0x2);
+}
+
+void configurePins(uint8_t channel)
+{
+	uint8_t i2c_mux=2;
 	switch(channel)
 	{
-	case I2C0:
+	case I2C_0:
 		i2c_mux = 2;
 		break;
-	case I2C1:
+	case I2C_1:
 		i2c_mux = 1;
 		break;
-	case I2C2:
+	case I2C_2:
 		i2c_mux = 5;
 		break;
 	}
@@ -227,39 +365,51 @@ void i2cConfigurePins(uint8_t channel)
 
 	setPCRmux(portPointers[port_SDA], num_pin_SDA, i2c_mux);
 	setPCRmux(portPointers[port_SCL], num_pin_SCL, i2c_mux);
-	setPCRirqc(portPointers[port_SDA], num_pin_SDA, DISABLE_MODE); //deshabilito interrupciones de puerto
-	setPCRirqc(portPointers[port_SCL], num_pin_SCL, DISABLE_MODE);
+	setPCRirqc(portPointers[port_SDA], num_pin_SDA, IRQ_MODE_DISABLE); //deshabilito interrupciones de puerto
+	setPCRirqc(portPointers[port_SCL], num_pin_SCL, IRQ_MODE_DISABLE);
+
+	//seteo open drain enable como dice la filmina
+	setPCRopenDrainEnable(portPointers[port_SDA], num_pin_SDA);
+	setPCRpullEnable(portPointers[port_SDA], num_pin_SDA);
+	setPCRpullUp(portPointers[port_SDA], num_pin_SDA);
+	setPCRopenDrainEnable(portPointers[port_SCL], num_pin_SCL);
+	setPCRpullEnable(portPointers[port_SCL], num_pin_SCL);
+	setPCRpullUp(portPointers[port_SCL], num_pin_SCL);
+
 }
 
-void i2cClockGating(uint8_t channel)
+void clockGating(int8_t channel)
 {
 	SIM_Type * sim = SIM;
 	switch(channel)
 	{
-		case I2C0:
+		case I2C_0:
 			sim->SCGC4 |= SIM_SCGC4_I2C0_MASK;
+			sim->SCGC5 |= SIM_SCGC5_PORTB_MASK;
 			break;
-		case I2C1:
+		case I2C_1:
 			sim->SCGC4 |= SIM_SCGC4_I2C1_MASK;
+			sim->SCGC5 |= SIM_SCGC5_PORTC_MASK;
 			break;
-		case I2C2:
+		case I2C_2:
 			sim->SCGC1 |= SIM_SCGC1_I2C2_MASK;
-			break;
-		default:
+			sim->SCGC5 |= SIM_SCGC5_PORTA_MASK;
 			break;
 	}
 }
 
 
-void initSlave()
+void I2C0_IRQHandler(void)
 {
-//	Module Initialization (Slave)
-//	1. Write: Control Register 2
-//		• to enable or disable general call
-//		• to select 10-bit or 7-bit addressing mode
-//	2. Write: Address Register 1 to set the slave address
-//	3. Write: Control Register 1 to enable the I2C module and interrupts
-//	4. Initialize RAM variables (IICEN = 1 and IICIE = 1) for transmit data
-//	5. Initialize RAM variables used to achieve the routine shown in the following figure
-	return;
+	isr_routine();
+}
+
+void I2C1_IRQHandler(void)
+{
+	isr_routine();
+}
+
+void I2C2_IRQHandler(void)
+{
+	isr_routine();
 }

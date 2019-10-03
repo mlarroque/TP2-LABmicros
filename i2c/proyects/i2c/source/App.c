@@ -8,8 +8,8 @@
  * INCLUDE HEADER FILES
  ******************************************************************************/
 
-#include "board.h"
-#include "gpio.h"
+//#include "board.h"
+//#include "gpio.h"
 #include "SysTick.h"
 #include "accelerometer.h"
 
@@ -33,11 +33,14 @@ void switchCallback(void);
  *******************************************************************************
  ******************************************************************************/
 
+SRAWDATA *pAccelData;
+SRAWDATA *pMagnData;
+
 /* Función que se llama 1 vez, al comienzo del programa */
 void App_Init (void)
 {
-	accelerometerInit();
-
+	accelandMagnetInit();
+	_mqx_ints_FXOS8700CQ_start();
 
 }
 
@@ -45,6 +48,7 @@ void App_Init (void)
 void App_Run (void)
 {
 
+	ReadAccelMagnData(pAccelData,pMagnData );
 	//espero interrupciones y realizo ISRs.
 }
 

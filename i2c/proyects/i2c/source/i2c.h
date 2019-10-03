@@ -23,22 +23,22 @@
 /*******************************************************************************
  * ENUMERATIONS AND STRUCTURES AND TYPEDEFS
  ******************************************************************************/
-typedef enum {MASTER, SLAVE}i2c_mode_type;
-typedef enum {TX, RX, TX_RX}i2c_master_mode_type;
-
+typedef enum {I2C_WRITE, I2C_READ}i2c_direction_type;
+enum {I2C_ERROR=9, I2C_OK=6};
 
 //RELLENAR ESTA ESTRUCTURAAAA!!!!1
 typedef struct{
-	i2c_master_mode_type master_mode;		//si transmito, recibo, o transmito seguido de recibo
-	//con cantidad de bytes o un puntero al arreglo a transmitir me parece mejor
-	uint8_t N;		//cantidad de bytes que transmito
-	uint8_t M;		//cantidad de bytes que recibo
-}i2c_data_type;
+	 i2c_direction_type dir;		//si transmito, recibo
+	uint8_t slave_address;				//con qué slave quiero comunicarme
+	uint8_t* data;					//a qué registro quiero escribir
+	uint8_t	data_size;
+	uint8_t reg;
+    uint8_t reg_size;
+	bool repeat_start;
+}i2c_transfer_type;
 
 typedef struct{
 	uint32_t baud_rate;
-	i2c_mode_type mode;	//solo se configurará master mode
-	uint8_t prim_slave_address;
 	bool  polling_mode;	//definir 0 si se quieren interrupciones
 }i2c_conf_type;
 
@@ -50,9 +50,10 @@ typedef struct{
  * FUNCTION PROTOTYPES WITH GLOBAL SCOPE
  ******************************************************************************/
 
-bool i2cInit(void);
+bool i2cInit(uint8_t channel, i2c_conf_type conf);
 
-void
+void i2cTransferNonBlocking(i2c_transfer_type t);
+bool i2cTransferBlocking(i2c_transfer_type t);
 
 
 //datatypealgo readDataBurst(dfsdfsdf)

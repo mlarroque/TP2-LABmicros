@@ -7,6 +7,7 @@
 
 #include "uart.h"
 #include "pinsHandler.h"
+#include "hardware.h"
 
 #define MAX_BAUD_RATE 0x1FFF
 #define MIN_BAUD_RATE 0x0000
@@ -72,17 +73,17 @@ void uartInit (uint8_t id, uart_cfg_t config)
 
 		p2uart->C2 |= (UART_C2_TE_MASK | UART_C2_RE_MASK);
 
-		if(config.mode == NON_BLOCKING_SIMPLE)
+//		if(config.mode == NON_BLOCKING_SIMPLE)
 		{
 			p2uart->C2 |= UART_C2_RIE_MASK;
 			NVIC_EnableIRQ(uartIRQs_TX_RX[id]);
 			NVIC_EnableIRQ(uartIRQs_ERR[id]);
 			if(id == U0)
 			{
-				NVIC_EnableIRQ(uartIRQs_LON[id]);
+				NVIC_EnableIRQ(uartIRQS_LON[id]);
 			}
 		}
-		else if(config.mode == NON_BLOCKING_FIFO)
+//		else if(config.mode == NON_BLOCKING_FIFO)
 		{
 			//ACA HAY QUE SETEAR LOS WATERMARK, EL TAMAÑO DE LA FIFO, Y VER COMO SE MANEJAN LAS INTERRUPCIONES
 		}
@@ -96,27 +97,27 @@ void uartInit (uint8_t id, uart_cfg_t config)
 
 uint8_t uartIsRxMsg(uint8_t id)
 {
-
+return 0;
 }
 
 uint8_t uartGetRxMsgLength(uint8_t id)
 {
-
+return 0;
 }
 
 uint8_t uartReadMsg(uint8_t id, char* msg, uint8_t cant)
 {
-
+return 0;
 }
 
 uint8_t uartWriteMsg(uint8_t id, const char* msg, uint8_t cant)
 {
-
+return 0;
 }
 
 uint8_t uartIsTxMsgComplete(uint8_t id)
 {
-
+return 0;
 }
 
 
@@ -128,7 +129,7 @@ void UART_setBaudRate(UART_Type * p2uart, uint32_t baudRate)
 	uint16_t sbr;
 	uint32_t clock;
 
-	clock = ((p2uart == UART0) || (p2uart == UART1))? (_CORE_CLOCK_) : (_CORE_CLOCK_ >> 1); //CORE_CLOCK o BUS_CLOCK
+	clock = ((p2uart == UART0) || (p2uart == UART1))? (__CORE_CLOCK__) : (__CORE_CLOCK__ >> 1); //CORE_CLOCK o BUS_CLOCK
 
 	if((baudRate <= MIN_BAUD_RATE) || (baudRate >= MAX_BAUD_RATE))
 	{
@@ -164,9 +165,9 @@ void UART_clockGating(uint8_t id)
 		case U4:
 			sim->SCGC1 |= SIM_SCGC1_UART4_MASK;
 			break;
-		case U5:
-			sim->SCGC1 |= SIM_SCGC1_UART5_MASK;
-			break;
+//		case U5:
+//			sim->SCGC1 |= SIM_SCGC1_UART5_MASK;
+//			break;
 	}
 }
 
