@@ -25,25 +25,25 @@ endif
 # Add inputs and outputs from these tool invocations to the build variables 
 
 # All Target
-all: Baliza.axf
+all: uartSPI.axf
 
 # Tool invocations
-Baliza.axf: $(OBJS) $(USER_OBJS)
+uartSPI.axf: $(OBJS) $(USER_OBJS)
 	@echo 'Building target: $@'
 	@echo 'Invoking: MCU Linker'
-	arm-none-eabi-gcc -nostdlib -Xlinker -Map="Baliza.map" -Xlinker --gc-sections -Xlinker -print-memory-usage -Xlinker --sort-section=alignment -mcpu=cortex-m4 -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -T "Blink_Debug.ld" -o "Baliza.axf" $(OBJS) $(USER_OBJS) $(LIBS)
+	arm-none-eabi-gcc -nostdlib -Xlinker -Map="uartSPI.map" -Xlinker --gc-sections -Xlinker -print-memory-usage -Xlinker --sort-section=alignment -mcpu=cortex-m4 -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -T "Blink_Debug.ld" -o "uartSPI.axf" $(OBJS) $(USER_OBJS) $(LIBS)
 	@echo 'Finished building target: $@'
 	@echo ' '
 	$(MAKE) --no-print-directory post-build
 
 # Other Targets
 clean:
-	-$(RM) $(EXECUTABLES)$(OBJS)$(C_DEPS) Baliza.axf
+	-$(RM) $(EXECUTABLES)$(OBJS)$(C_DEPS) uartSPI.axf
 	-@echo ' '
 
 post-build:
 	-@echo 'Performing post-build steps'
-	-arm-none-eabi-size "Baliza.axf"; # arm-none-eabi-objcopy -v -O binary "Baliza.axf" "Baliza.bin" ; # checksum -p MK64FN1M0xxx12 -d "Baliza.bin";
+	-arm-none-eabi-size "uartSPI.axf"; # arm-none-eabi-objcopy -v -O binary "uartSPI.axf" "uartSPI.bin" ; # checksum -p MK64FN1M0xxx12 -d "uartSPI.bin";
 	-@echo ' '
 
 .PHONY: all clean dependents post-build
