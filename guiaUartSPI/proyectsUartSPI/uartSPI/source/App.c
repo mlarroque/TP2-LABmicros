@@ -7,12 +7,15 @@
 /*******************************************************************************
  * INCLUDE HEADER FILES
  ******************************************************************************/
-
+/*
 #include "uart.h"
 
 char messageReceived[MAX_MSG_LEN+1];
 uint8_t aux;
 
+*/
+#include "boardsInterface.h"
+#include "comController2pc.h"
 
 /*******************************************************************************
  * CONSTANT AND MACRO DEFINITIONS USING #DEFINE
@@ -31,12 +34,42 @@ uint8_t aux;
  ******************************************************************************/
 
 /* Función que se llama 1 vez, al comienzo del programa */
+
+void App_Init (void)
+{
+	initBoardsInterface();
+	initResourcesController2pc();
+}
+/* Función que se llama constantemente en un ciclo infinito */
+
+void App_Run (void)
+{
+	int id, coord, coordName;
+	if(updateLecture(&id, &coord, &coordName))
+	{
+		sendMessage(id, coord, coordName);
+	}
+}
+
+
+
+
+
+
+
+
+
+
+
+
+/* Función que se llama 1 vez, al comienzo del programa */
+/*
 void App_Init (void)
 {
 	uart_cfg_t configUART0;
 	configUART0.baudRate = 9600;
 	configUART0.parity = NO_PARITY;
-	configUART0.mode = NON_BLOCKING_FIFO;
+	configUART0.mode = NON_BLOCKING_SIMPLE;
 	configUART0.txWaterMark = 2;
 	configUART0.rxWaterMark = 5;
 
@@ -46,6 +79,7 @@ void App_Init (void)
 }
 
 /* Función que se llama constantemente en un ciclo infinito */
+/*
 void App_Run (void)
 {
 
@@ -57,7 +91,7 @@ void App_Run (void)
 	//espero interrupciones y realizo ISRs.
 }
 
-
+*/
 /*******************************************************************************
  *******************************************************************************
                         LOCAL FUNCTION DEFINITIONS
