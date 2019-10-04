@@ -41,4 +41,29 @@ _Bool isValidCoord(int coordName, int coord)
 	return ret;
 }
 
+_Bool anyCoordHasChanged(sphericalPos_t * p2oldPos, sphericalPos_t * p2newPos, char * p2coordChanged)
+{
+	_Bool ret = false;
+	if(p2newPos->orientation != p2oldPos->orientation)
+	{
+		ret = true;
+		*p2coordChanged = ORIENTATION_ID;
+	}
+	else if(p2newPos->headAngle != p2oldPos->headAngle)
+	{
+		ret = true;
+		*p2coordChanged = HEAD_ANGLE_ID;
+	}
+	else if(p2newPos->rollAngle != p2oldPos->rollAngle)
+	{
+		ret = true;
+		*p2coordChanged = ROLL_ANGLE_ID;
+	}
 
+	return ret;
+}
+
+void int2charsCoord(int coord, char * p2coordChared, int plusFlag)
+{
+
+}
