@@ -215,7 +215,7 @@ void i2cMasterRead(uint8_t* data, uint8_t data_size)
 		if(data_size == 1)
 		{
 			setNack();
-			sendStop();
+//			sendStop();
 //			setModeTX();
 		}
 		else
@@ -229,7 +229,7 @@ void i2cMasterRead(uint8_t* data, uint8_t data_size)
 	if(data_size == 0)
 	{
 		setNack();
-		setModeTX();
+		setModeRX();
 		sendStop();
 		buffer.finished = true;
 	}
@@ -240,16 +240,18 @@ bool masterTransfer()
 {
 	if(buffer.finished)
 		return false;
-	if(!receivedAck())
-		return false;
+	while(!receivedAck())
+	{
+	}
 	clearInterruptFlag();
 
 	if(buffer.reg_size > 0)
 	{
 		buffer.reg_size--;
 		writeByte(buffer.reg);
-		if(!receivedAck())
-			return false;
+		while(!receivedAck())
+		{
+		}
 		clearInterruptFlag();
 
 		if(buffer.dir == I2C_READ)
@@ -257,8 +259,9 @@ bool masterTransfer()
 //			setModeTX();
 			sendRepeatStart();
 			writeByte(buffer.slave << 1 | 1);
-			if(!receivedAck())
-				return false;
+			while(!receivedAck())
+			{
+			}
 			setModeRX();
 //			if(buffer.rx_size == 1)
 //				setNack();
