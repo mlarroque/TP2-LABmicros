@@ -10,8 +10,6 @@
 //#include "acelerometerHal.h"
 #include "timer.h"
 
-#include "boardIds.h"
-
 #define SOMETHING_UPDATED 1
 #define ANYTHING_UPDATED 0
 

@@ -20,9 +20,12 @@
  ******************************************************************************/
 
 #define UART_CANT_IDS 5
-#define NO_PARITY 0
-#define EVEN_PARITY 1
-#define ODD_PARITY 2
+#define NO_PARITY_UART 0
+#define EVEN_PARITY_UART 1
+#define ODD_PARITY_UART 2
+#define MAX_BAUD_RATE_UART 11200
+#define MIN_BAUD_RATE_UART 9600
+#define IS_VALID_BAUD_RATE(x) ( (x >= MIN_BAUD_RATE_UART) && (x <= MAX_BAUD_RATE_UART) )
 
 #define NBITS_8 0
 #define NBITS_9 1

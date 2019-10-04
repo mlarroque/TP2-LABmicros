@@ -48,7 +48,7 @@ void App_Run (void)
 	char coordPack[N_COORDS_BOARDS + 1];
 	if(updateLecture(&id, coordPack, &coordName))
 	{
-		sendMessage2node(id, coordPack, coordName);
+		sendMessage2node(id, coordPack, coordName, UART0_IMPLEMENTATION);
 		if(id == OUR_BOARD)
 		{
 			sendMessage2othersBoards(OUR_BOARD, coordPack, coordName);
