@@ -92,6 +92,11 @@ int updateLetcure(char * p2id, char * p2coord, char * p2coordName)
 	return somethingUpdated;
 }
 
+void sendMessage2otherBoards(char id, char * p2coord, char coordName)
+{
+	//
+}
+
 void timeOutCallback(void)
 {
 	timeOutNcoord2notice = NUMBER_OF_COORDS; //set flag that reports about the time out to external users

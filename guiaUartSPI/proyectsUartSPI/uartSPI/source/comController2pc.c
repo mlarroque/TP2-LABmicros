@@ -6,10 +6,8 @@
  */
 
 #include "boardIds.h"
-#include "uart.h"
+#include "uart.h"  /////////CAPAZ QUE HAY QUE ABSTRAERLO MAS TODAVIA DE UARTTTTTTT
 #include "timer.h"
-
-#define TIME_OUT 2000UL //time out: 2 seconds
 
 
 
@@ -26,7 +24,7 @@ void initResourcesController2pc(void)
 
 }
 
-void sendMessage2pc(char id, char coord, char coordName)
+void sendMessage2pc(char id, char * p2coord, char coordName)
 {
 	//shapeinfo
 

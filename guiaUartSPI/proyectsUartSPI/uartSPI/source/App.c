@@ -45,13 +45,14 @@ void App_Init (void)
 
 void App_Run (void)
 {
-	char id, coord, coordName;
-	if(updateLecture(&id, &coord, &coordName))
+	char id, coordName;
+	char coordPack[N_COORDS + 1];
+	if(updateLecture(&id, coordPack, &coordName))
 	{
-		sendMessage2pc(id, coord, coordName);
+		sendMessage2pc(id, coordPack, coordName);
 		if(id == OUR_BOARD)
 		{
-			sendMessage2othersBoards(OUR_BOARD, coord, coordName);
+			sendMessage2othersBoards(OUR_BOARD, coordPack, coordName);
 		}
 	}
 }
