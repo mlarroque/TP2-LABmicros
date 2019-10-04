@@ -86,7 +86,7 @@ static bool I2C_WriteAccelReg(uint8_t i2c, uint8_t device_addr, uint8_t reg_addr
 
 	transfer.dir = I2C_WRITE;
     transfer.slave_address = device_addr;
-    transfer.reg	= &reg_addr;
+    transfer.reg	= reg_addr;
     transfer.reg_size = 1;
 	transfer.data = data;
 	transfer.data_size = size;
@@ -103,7 +103,7 @@ static bool I2C_ReadAccelRegs(uint8_t i2c, uint8_t device_addr, uint8_t reg_addr
 
 	transfer.dir = I2C_READ;
     transfer.slave_address   = device_addr;
-    transfer.reg	= &reg_addr;
+    transfer.reg	= reg_addr;
     transfer.reg_size= 1;
     transfer.data = databyte;
     transfer.data_size = dataSize;
@@ -134,7 +134,7 @@ uint8_t _mqx_ints_FXOS8700CQ_start()
     }
     if (databyte != FXOS8700CQ_WHOAMI_VAL)
     {
-        //return (I2C_ERROR);
+        return (I2C_ERROR);
     }
     // write 0000 0000 = 0x00 to accelerometer control register 1 to place FXOS8700CQ into
     // standby

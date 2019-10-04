@@ -39,6 +39,7 @@ SRAWDATA *pMagnData;
 /* Función que se llama 1 vez, al comienzo del programa */
 void App_Init (void)
 {
+	//while(1);
 	accelandMagnetInit();
 	_mqx_ints_FXOS8700CQ_start();
 

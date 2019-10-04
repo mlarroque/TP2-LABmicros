@@ -20,14 +20,14 @@
 #define buffer_SIZE 255 //tamaño del buffer
 
 
-	 //ALT2//ALT1//ALT5
+	 //ALT1//ALT1//ALT5
 enum {I2C_0, I2C_1, I2C_2, I2C_CHANNEL_COUNT};
 
 							//I2C0_SCL			//I2C1_SCL			//I2C2_SCL
-uint8_t i2cSCLpins[] = {PORTNUM2PIN(PB, 2), PORTNUM2PIN(PC, 10), PORTNUM2PIN(PA, 14)};
+uint8_t i2cSCLpins[] = {PORTNUM2PIN(PE, 24), PORTNUM2PIN(PC, 10), PORTNUM2PIN(PA, 14)};
 
 							//I2C0_SDA			//I2C1_SDA			//I2C2_SDA
-uint8_t i2cSDApins[] = {PORTNUM2PIN(PB, 3), PORTNUM2PIN(PC, 11), PORTNUM2PIN(PA, 13)};
+uint8_t i2cSDApins[] = {PORTNUM2PIN(PE, 25), PORTNUM2PIN(PC, 11), PORTNUM2PIN(PA, 13)};
 
 //interrupt vector
 uint8_t i2cIRQs[]= I2C_IRQS;
@@ -66,7 +66,9 @@ static void sendStop(){
     i2c->C1 &= ~I2C_C1_MST_MASK;
 }
 static  void sendRepeatStart(){
-    i2c->C1 |= I2C_C1_RSTA_MASK;
+	i2c->FLT &= ~I2C_FLT_SSIE_MASK;
+	i2c->C1 |= I2C_C1_TX_MASK;
+	i2c->C1 |= I2C_C1_RSTA_MASK;
 }
 static  uint8_t	getInterruptFlag(){
     return i2c->S & I2C_S_IICIF_MASK;
@@ -107,9 +109,10 @@ void setBaudRate(I2C_Type * i2c);
 void configurePins(uint8_t channel);
 void clockGating(int8_t channel);
 //void clearInterruptFlag(I2C_Type * i2c);
-void masterRead(I2C_Type * i2c, uint8_t* data, uint8_t data_size);
-void i2cMasterWrite(I2C_Type * i2c, uint8_t* data, uint8_t data_size);
+void masterRead(uint8_t* data, uint8_t data_size);
+void i2cMasterWrite(uint8_t* data, uint8_t data_size/*, bool repeated_start*/);
 void i2cResetModule(I2C_Type * i2c);
+bool masterTransfer();
 
 
 bool i2cInit(uint8_t channel, i2c_conf_type conf)
@@ -127,6 +130,7 @@ bool i2cInit(uint8_t channel, i2c_conf_type conf)
 		NVIC_EnableIRQ(i2cIRQs[channel]);
 		i2c->C1 = 0;
 		i2c->C1 = I2C_C1_IICIE_MASK | I2C_C1_IICEN_MASK;
+//		i2c->FLT |= I2C_FLT_SSIE_MASK;
 		i2c->S = I2C_S_TCF_MASK | I2C_S_IICIF_MASK;
 		init = true;
 	}
@@ -157,6 +161,8 @@ void i2cTransferInit(i2c_transfer_type t)
     setModeTX();
     sendStart();
     writeByte(t.slave_address << 1 | 0);
+	if(!receivedAck())
+		return false;
 }
 
 void i2cTransferNonBlocking(i2c_transfer_type t)
@@ -166,13 +172,14 @@ void i2cTransferNonBlocking(i2c_transfer_type t)
 
 bool i2cTransferBlocking(i2c_transfer_type t)
 {
+	sendStop();
 	if(isBusBusy())
 		return I2C_ERROR;
 	else
 	{
 		i2cTransferInit(t);
 		while(!buffer.finished)
-			isr_routine();
+			if(masterTransfer());
 	}
 	return I2C_OK;
 }
@@ -182,7 +189,8 @@ void i2cMasterWrite(uint8_t* data, uint8_t data_size/*, bool repeated_start*/)
 	setModeTX();
 	while(data_size > 0)
 	{
-		writeByte(*data);	//mando byte de datos
+		uint8_t d=*data;
+		writeByte(d);	//mando byte de datos
 		data++;
 		data_size--;
 	}
@@ -190,33 +198,39 @@ void i2cMasterWrite(uint8_t* data, uint8_t data_size/*, bool repeated_start*/)
 	if(data_size == 0)					//si ya envié toda la data
 	{
 		setModeRX();
+		setNack();
 		sendStop();
 		buffer.finished = true;
 	}
 }
 
-void i2cMasterRead(I2C_Type * i2c, uint8_t* data, uint8_t data_size)
+void i2cMasterRead(uint8_t* data, uint8_t data_size)
 {
 	uint8_t dummy_read = 0;
-	dummy_read++;
-
-	setModeRX();
+//	unsetNack();
+//	dummy_read=readByte();
 
 	while(data_size > 0)
 	{
 		if(data_size == 1)
+		{
 			setNack();
+			sendStop();
+//			setModeTX();
+		}
 		else
 			unsetNack();
 
-		*buffer.rx_buff++ = readByte();
+		*buffer.rx_buff = readByte();
+		buffer.rx_buff++;
 		data_size--;
 	}
 
 	if(data_size == 0)
 	{
-		setModeRX();
-		i2cMasterStop(i2c);
+		setNack();
+		setModeTX();
+		sendStop();
 		buffer.finished = true;
 	}
 }
@@ -225,19 +239,31 @@ void i2cMasterRead(I2C_Type * i2c, uint8_t* data, uint8_t data_size)
 bool masterTransfer()
 {
 	if(buffer.finished)
-		return;
+		return false;
 	if(!receivedAck())
-		return;
+		return false;
+	clearInterruptFlag();
 
-	if(buffer.slave_reg_size > 0)
+	if(buffer.reg_size > 0)
 	{
-		transfer.slave_reg_size--;
+		buffer.reg_size--;
 		writeByte(buffer.reg);
+		if(!receivedAck())
+			return false;
+		clearInterruptFlag();
 
-		if(transfer.direction == I2C_READ)
+		if(buffer.dir == I2C_READ)
 		{
+//			setModeTX();
 			sendRepeatStart();
-			writeByte(buffer.slave | 0);
+			writeByte(buffer.slave << 1 | 1);
+			if(!receivedAck())
+				return false;
+			setModeRX();
+//			if(buffer.rx_size == 1)
+//				setNack();
+			uint8_t dummy = readByte();
+
 		}
 	}
 	else
@@ -256,6 +282,7 @@ bool masterTransfer()
 		}
 		clearInterruptFlag();
 	}
+	return true;
 }
 
 
@@ -319,6 +346,7 @@ bool isr_routine(void)
 		buffer.rx_buff[buffer.index++] = readByte();
 	}
 	clearInterruptFlag(i2c);
+	return true;
 }
 
 
@@ -336,16 +364,16 @@ static void resetModule(I2C_Type * i2c)
 
 void setBaudRate(I2C_Type * i2c)
 {
-	i2c->F = I2C_F_ICR(0x20) | I2C_F_MULT(0x2);
+	i2c->F = I2C_F_ICR(0x25) | I2C_F_MULT(0x0);
 }
 
 void configurePins(uint8_t channel)
 {
-	uint8_t i2c_mux=2;
+	uint8_t i2c_mux=1;
 	switch(channel)
 	{
 	case I2C_0:
-		i2c_mux = 2;
+		i2c_mux = 5;
 		break;
 	case I2C_1:
 		i2c_mux = 1;
@@ -362,19 +390,27 @@ void configurePins(uint8_t channel)
 	uint8_t port_SCL = PIN2PORT(i2cSCLpins[channel]);
 	uint8_t num_pin_SCL = PIN2NUM(i2cSCLpins[channel]);
 
-
-	setPCRmux(portPointers[port_SDA], num_pin_SDA, i2c_mux);
-	setPCRmux(portPointers[port_SCL], num_pin_SCL, i2c_mux);
+	portPointers[PE]->PCR[24] |= PORT_PCR_MUX(5);
+	portPointers[PE]->PCR[25] |= PORT_PCR_MUX(5);
+//	setPCRmux(portPointers[port_SDA], num_pin_SDA, i2c_mux);
+//	setPCRmux(portPointers[port_SCL], num_pin_SCL, i2c_mux);
 	setPCRirqc(portPointers[port_SDA], num_pin_SDA, IRQ_MODE_DISABLE); //deshabilito interrupciones de puerto
 	setPCRirqc(portPointers[port_SCL], num_pin_SCL, IRQ_MODE_DISABLE);
 
 	//seteo open drain enable como dice la filmina
-	setPCRopenDrainEnable(portPointers[port_SDA], num_pin_SDA);
-	setPCRpullEnable(portPointers[port_SDA], num_pin_SDA);
-	setPCRpullUp(portPointers[port_SDA], num_pin_SDA);
-	setPCRopenDrainEnable(portPointers[port_SCL], num_pin_SCL);
-	setPCRpullEnable(portPointers[port_SCL], num_pin_SCL);
-	setPCRpullUp(portPointers[port_SCL], num_pin_SCL);
+	portPointers[PE]->PCR[24] |= PORT_PCR_ODE_MASK;
+	portPointers[PE]->PCR[25] |= PORT_PCR_ODE_MASK;
+	portPointers[PE]->PCR[24] |= PORT_PCR_PE_MASK;
+	portPointers[PE]->PCR[25] |= PORT_PCR_PE_MASK;
+	portPointers[PE]->PCR[24] |= PORT_PCR_PS_MASK;
+	portPointers[PE]->PCR[25] |= PORT_PCR_PS_MASK;
+
+//	setPCRopenDrainEnable(portPointers[port_SDA], num_pin_SDA);
+//	setPCRpullEnable(portPointers[port_SDA], num_pin_SDA);
+//	setPCRpullUp(portPointers[port_SDA], num_pin_SDA);
+//	setPCRopenDrainEnable(portPointers[port_SCL], num_pin_SCL);
+//	setPCRpullEnable(portPointers[port_SCL], num_pin_SCL);
+//	setPCRpullUp(portPointers[port_SCL], num_pin_SCL);
 
 }
 
@@ -385,7 +421,7 @@ void clockGating(int8_t channel)
 	{
 		case I2C_0:
 			sim->SCGC4 |= SIM_SCGC4_I2C0_MASK;
-			sim->SCGC5 |= SIM_SCGC5_PORTB_MASK;
+			sim->SCGC5 |= SIM_SCGC5_PORTE_MASK;
 			break;
 		case I2C_1:
 			sim->SCGC4 |= SIM_SCGC4_I2C1_MASK;
