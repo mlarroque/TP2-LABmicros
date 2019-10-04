@@ -39,17 +39,17 @@ uint8_t aux;
 void App_Init (void)
 {
 	initBoardsInterface();
-	initResourcesController2pc();
+	initResourcesController2node();
 }
 /* Función que se llama constantemente en un ciclo infinito */
 
 void App_Run (void)
 {
 	char id, coordName;
-	char coordPack[N_COORDS + 1];
+	char coordPack[N_COORDS_BOARDS + 1];
 	if(updateLecture(&id, coordPack, &coordName))
 	{
-		sendMessage2pc(id, coordPack, coordName);
+		sendMessage2node(id, coordPack, coordName);
 		if(id == OUR_BOARD)
 		{
 			sendMessage2othersBoards(OUR_BOARD, coordPack, coordName);

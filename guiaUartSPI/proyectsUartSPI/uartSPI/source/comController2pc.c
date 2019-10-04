@@ -17,14 +17,14 @@ void initUartResources(void);
 
 void timeOutCallback(void);
 
-void initResourcesController2pc(void)
+void initResourcesController2node(void)
 {
 	initUartResources(); //the communication will be serial, using UART.
 	InitializeTimers();
 
 }
 
-void sendMessage2pc(char id, char * p2coord, char coordName)
+void sendMessage2node(char id, char * p2coord, char coordName)
 {
 	//shapeinfo
 
