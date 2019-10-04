@@ -49,7 +49,7 @@ void App_Run (void)
 	if(updateLecture(&id, &coord, &coordName))
 	{
 		sendMessage2pc(id, coord, coordName);
-		if(coordName == OUR_BOARD)
+		if(id == OUR_BOARD)
 		{
 			sendMessage2othersBoards(OUR_BOARD, coord, coordName);
 		}
