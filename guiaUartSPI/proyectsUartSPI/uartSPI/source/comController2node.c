@@ -4,11 +4,9 @@
  *  Created on: 3 oct. 2019
  *      Author: G5
  */
-
-#include "boardIds.h"
+#include "comController2node.h"
 #include "uart.h"  /////////CAPAZ QUE HAY QUE ABSTRAERLO MAS TODAVIA DE UARTTTTTTT
 #include "timer.h"
-
 
 
 unsigned int timeCounter;

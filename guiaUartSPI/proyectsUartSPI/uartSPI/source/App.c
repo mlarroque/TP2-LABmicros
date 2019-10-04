@@ -14,9 +14,8 @@ char messageReceived[MAX_MSG_LEN+1];
 uint8_t aux;
 
 */
+#include <comController2node.h>
 #include "boardsInterface.h"
-#include "comController2pc.h"
-#include "boardIds.h"
 
 /*******************************************************************************
  * CONSTANT AND MACRO DEFINITIONS USING #DEFINE

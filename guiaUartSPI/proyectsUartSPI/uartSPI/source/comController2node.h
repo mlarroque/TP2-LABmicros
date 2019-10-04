@@ -6,8 +6,8 @@
  */
 
 
-#ifndef COMCONTROLLER2PC_H_
-#define COMCONTROLLER2PC_H_
+#ifndef COMCONTROLLER2NODE_H_
+#define COMCONTROLLER2NODE_H_
 
 //implementation options
 #define UART_IMPLEMENTATION 1
@@ -34,4 +34,4 @@ void initResourcesController2node(int implementationOption, int dataMaxLen);
 //		and the process can be repeated a limited number of times (MAX_ERRORS_ALLOWED)
 void sendMessage2node(char header, char * p2data, char dataId);
 
-#endif /* COMCONTROLLER2PC_H_ */
+#endif /* COMCONTROLLER2NODE_H_ */

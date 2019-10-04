@@ -8,6 +8,8 @@
 #ifndef BOARDSINTERFACE_H_
 #define BOARDSINTERFACE_H_
 
+#include "boardIds.h"
+
 #define N_COORDS_BOARDS 3 //It is recommend not to change this definition for proper functionality. It is placed here only to give information to the user
 
 //brief: initialize accelerometer resources of our board, and communication with other boards.
