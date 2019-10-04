@@ -20,16 +20,32 @@
  ******************************************************************************/
 
 #define UART_CANT_IDS 5
+#define NO_PARITY_UART 0
+#define EVEN_PARITY_UART 1
+#define ODD_PARITY_UART 2
+#define MAX_BAUD_RATE_UART 11200
+#define MIN_BAUD_RATE_UART 9600
+#define IS_VALID_BAUD_RATE(x) ( (x >= MIN_BAUD_RATE_UART) && (x <= MAX_BAUD_RATE_UART) )
 
+#define NBITS_8 0
+#define NBITS_9 1
+
+#define MAX_MSG_LEN 8
 
 /*******************************************************************************
  * ENUMERATIONS AND STRUCTURES AND TYPEDEFS
  ******************************************************************************/
-enum {BLOCKING, NON_BLOCKING_SIMPLE, NON_BLOCKING_FIFO}UART_MODE;
+enum {U0, U1, U2, U3, U4};
+enum {BLOCKING, NON_BLOCKING_SIMPLE, NON_BLOCKING_FIFO};
 typedef struct {
     uint32_t baudRate;
-    UART_MODE mode;
+    uint8_t mode;
+    uint8_t parity;
+    uint8_t nBits;
+    int txWaterMark;
+    int rxWaterMark;
 } uart_cfg_t;
+
 
 
 /*******************************************************************************
@@ -85,6 +101,14 @@ uint8_t uartWriteMsg(uint8_t id, const char* msg, uint8_t cant);
  * @return All bytes were transfered
 */
 uint8_t uartIsTxMsgComplete(uint8_t id);
+
+//with resetRXbuffer, the user can ignore all the message that have been arrived to the moment. It has sense only in NON_BLOCKING mode
+void resetRXbuffer(uint8_t id);
+
+//isRXrejected returns how many RX chars have been rejected (since the last successful RX) because of lack of memory buffer, then the user would know
+//how many chars have to be request to retransmit. If any RX has been rejected, the function returns 0. It has sense only in NON_BLOCKING mode.
+
+uint8_t isRXrejected(uint8_t id);
 
 
 /*******************************************************************************

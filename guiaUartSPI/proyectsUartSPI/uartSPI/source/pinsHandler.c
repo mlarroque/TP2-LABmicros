@@ -7,6 +7,13 @@
 
 #include "pinsHandler.h"
 
+// Digital values
+#ifndef LOW
+#define LOW     0
+#define HIGH    1
+#endif // LOW
+
+
 
 _Bool isPinValid(pin_t pin)
 {
