@@ -10,8 +10,8 @@
 
 #define PI (float) 3.141592654
 
-static raw_data_type *pAccelData;
-static raw_data_type *pMagnData;
+static raw_data_type pAccelData;
+static raw_data_type pMagnData;
 static bool newDataReady;
 
 
@@ -22,7 +22,7 @@ void accelandMagnetInit(void)
 
 void getAccelAndMagntData(void)	//capaz recibe una estructura con info mas didactica que x,y,z todo
 {
-	ReadAccelMagnData(pAccelData, pMagnData, newDataReady);
+	ReadAccelMagnData(pAccelData, &pMagnData, &newDataReady);
 	//convierte de cartesianas a algo util para graficar
 }
 
