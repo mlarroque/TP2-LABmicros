@@ -8,8 +8,7 @@
  * INCLUDE HEADER FILES
  ******************************************************************************/
 
-#include "can.h"
-
+#include "coordHAL.h"
 
 /*******************************************************************************
  * CONSTANT AND MACRO DEFINITIONS USING #DEFINE
@@ -27,35 +26,37 @@
  *******************************************************************************
  ******************************************************************************/
 
-#define ID	((uint32_t)0x106)
-#define RX_MB_NUM	7
-#define TX_MB_NUM	1
-#define MB_NUM	(TX_MB_NUM+RX_MB_NUM)
-
-static char msg[8];
-static uint32_t	idsArray[RX_MB_NUM]={0x101,0x102,0x103,0x104,0x105,0x107};
-static uint32_t id;
 static int i = 0;
+static uint32_t id;
+static char nameCoord;
+static char coord[8];
+static char coordNum;
+static char coordArray[4] = {'+','1','6','8'};
 
 /* Función que se llama 1 vez, al comienzo del programa */
 void App_Init (void)
 {
-	can_config_t canConfig;
-	canConfig.baudRate = 125000U;
-	canConfig.maxMbNum = MB_NUM; /* 1 Tx mb and 7 Rx mb*/
-	canConfig.rxMbNum = RX_MB_NUM;
-	canConfig.txMbNum = TX_MB_NUM;
-	canConfig.ids = idsArray;
-	canInit(&canConfig);
+	coordHALinit();
 }
 
 /* Función que se llama constantemente en un ciclo infinito */
 void App_Run (void)
 {
-	if(canIsRxMsg()){
-		//canReadMsg(msg, &id, 8);
+	if(readCoord(&id, &nameCoord, coord, &coordNum)){
+	//if(sendCoordToAll('O', coordArray, 4)){
+		while(1){
+			i++;
+			//breakpoint
+		}
 	}
 }
+
+//if(readCoord(&id, &nameCoord, coord, &coordNum)){
+//	while(1){
+//		i++;
+//		//breakpoint
+//	}
+//}
 
 
 /*******************************************************************************
