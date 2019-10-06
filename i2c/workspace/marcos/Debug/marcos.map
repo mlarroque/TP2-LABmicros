@@ -1355,7 +1355,6 @@ OUTPUT(marcos.axf elf32-littlearm)
  .debug_macro   0x00012e06       0x29 ./SDK/startup/startup_mk64f12.o
  .debug_macro   0x00012e2f       0x80 ./SDK/CMSIS/system_MK64F12.o
 
-.debug_line     0x00000000     0x210d
  .debug_line    0x00000000       0xcd ./source/App.o
  .debug_line    0x000000cd      0x35f ./source/FXOS8700CQ.o
  .debug_line    0x0000042c      0x178 ./source/SysTick.o
@@ -1394,46 +1393,6 @@ OUTPUT(marcos.axf elf32-littlearm)
  .debug_str     0x0007cf5f       0x62 ./SDK/CMSIS/system_MK64F12.o
                               0x77108 (size before relaxing)
 
-.comment        0x00000000       0x7e
- .comment       0x00000000       0x7e ./source/App.o
-                                 0x7f (size before relaxing)
- .comment       0x0000007e       0x7f ./source/FXOS8700CQ.o
- .comment       0x0000007e       0x7f ./source/SysTick.o
- .comment       0x0000007e       0x7f ./source/accelerometer.o
- .comment       0x0000007e       0x7f ./source/i2c.o
- .comment       0x0000007e       0x7f ./source/marc.o
- .comment       0x0000007e       0x7f ./source/uart.o
- .comment       0x0000007e       0x7f ./SDK/startup/hardware.o
- .comment       0x0000007e       0x7f ./SDK/startup/main.o
- .comment       0x0000007e       0x7f ./SDK/startup/semihost_hardfault.o
- .comment       0x0000007e       0x7f ./SDK/startup/startup_mk64f12.o
- .comment       0x0000007e       0x7f ./SDK/CMSIS/system_MK64F12.o
-
-.ARM.attributes
-                0x00000000       0x39
- .ARM.attributes
-                0x00000000       0x39 ./source/App.o
- .ARM.attributes
-                0x00000039       0x39 ./source/FXOS8700CQ.o
- .ARM.attributes
-                0x00000072       0x39 ./source/SysTick.o
- .ARM.attributes
-                0x000000ab       0x39 ./source/accelerometer.o
- .ARM.attributes
-                0x000000e4       0x39 ./source/i2c.o
- .ARM.attributes
-                0x0000011d       0x39 ./source/marc.o
- .ARM.attributes
-                0x00000156       0x39 ./source/uart.o
- .ARM.attributes
-                0x0000018f       0x39 ./SDK/startup/hardware.o
- .ARM.attributes
-                0x000001c8       0x39 ./SDK/startup/main.o
- .ARM.attributes
-                0x00000201       0x39 ./SDK/startup/semihost_hardfault.o
- .ARM.attributes
-                0x0000023a       0x39 ./SDK/startup/startup_mk64f12.o
- .ARM.attributes
                 0x00000273       0x39 ./SDK/CMSIS/system_MK64F12.o
 
 .debug_frame    0x00000000     0x1520
