@@ -1,6 +1,4 @@
 source/accelerometer.o source/accelerometer.d: ../source/accelerometer.c \
- ../source/accelerometer.h ../source/i2c.h
+ ../source/FXOS8700CQ.h
 
-../source/accelerometer.h:
-
-../source/i2c.h:
+../source/FXOS8700CQ.h:

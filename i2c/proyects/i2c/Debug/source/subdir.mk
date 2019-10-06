@@ -5,27 +5,33 @@
 # Add inputs and outputs from these tool invocations to the build variables 
 C_SRCS += \
 ../source/App.c \
+../source/FXOS8700CQ.c \
 ../source/SysTick.c \
 ../source/accelerometer.c \
 ../source/i2c.c \
+../source/marc.c \
 ../source/pinsHandler.c \
 ../source/spi.c \
 ../source/uart.c 
 
 OBJS += \
 ./source/App.o \
+./source/FXOS8700CQ.o \
 ./source/SysTick.o \
 ./source/accelerometer.o \
 ./source/i2c.o \
+./source/marc.o \
 ./source/pinsHandler.o \
 ./source/spi.o \
 ./source/uart.o 
 
 C_DEPS += \
 ./source/App.d \
+./source/FXOS8700CQ.d \
 ./source/SysTick.d \
 ./source/accelerometer.d \
 ./source/i2c.d \
+./source/marc.d \
 ./source/pinsHandler.d \
 ./source/spi.d \
 ./source/uart.d 

@@ -10,8 +10,8 @@
 
 //#include "board.h"
 //#include "gpio.h"
-#include "SysTick.h"
 #include "accelerometer.h"
+#include "SysTick.h"
 
 
 
@@ -33,15 +33,11 @@ void switchCallback(void);
  *******************************************************************************
  ******************************************************************************/
 
-SRAWDATA *pAccelData;
-SRAWDATA *pMagnData;
 
 /* Función que se llama 1 vez, al comienzo del programa */
 void App_Init (void)
 {
-	//while(1);
 	accelandMagnetInit();
-	_mqx_ints_FXOS8700CQ_start();
 
 }
 
@@ -49,8 +45,7 @@ void App_Init (void)
 void App_Run (void)
 {
 
-	ReadAccelMagnData(pAccelData,pMagnData );
-	//espero interrupciones y realizo ISRs.
+	getAccelAndMagntData();
 }
 
 
@@ -60,51 +55,6 @@ void App_Run (void)
  *******************************************************************************
  ******************************************************************************/
 
-
-/*
-
-void sysTickCallback(void)
-{
-	static uint32_t counter = 0;
-	if(isBalizaOn)
-	{
-		if(counter == (SYSTICK_ISR_FREQ_HZ/BALIZA_FREQ_HZ))
-		{
-			gpioToggle(PIN_LED_EXTERNAL);
-			counter = 0;
-		}
-		else
-		{
-			counter++;
-		}
-
-	}
-	else
-	{
-		counter = 0;
-	}
-}
-*/
-/*
-
-void switchCallback(void)
-{
-	//if(!rebote)
-	//{
-		isBalizaOn = !isBalizaOn;
-		gpioToggle(PIN_LED_RED);
-		if (isBalizaOn)
-		{
-			gpioWrite(PIN_LED_EXTERNAL, HIGH); //que la baliza arranque prendida
-		}
-		else
-		{
-			gpioWrite(PIN_LED_EXTERNAL, LOW); //que la baliza se apague inmediatamente
-		}
-	//}
-
-}
-*/
 
 /*******************************************************************************
  ******************************************************************************/
