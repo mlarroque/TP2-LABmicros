@@ -6,16 +6,19 @@
 C_SRCS += \
 ../source/App.c \
 ../source/can.c \
+../source/coordHAL.c \
 ../source/pinsHandler.c 
 
 OBJS += \
 ./source/App.o \
 ./source/can.o \
+./source/coordHAL.o \
 ./source/pinsHandler.o 
 
 C_DEPS += \
 ./source/App.d \
 ./source/can.d \
+./source/coordHAL.d \
 ./source/pinsHandler.d 
 
 

@@ -1,3 +1,3 @@
-source/App.o source/App.d: ../source/App.c ../source/can.h
+source/App.o source/App.d: ../source/App.c ../source/coordHAL.h
 
-../source/can.h:
+../source/coordHAL.h:
