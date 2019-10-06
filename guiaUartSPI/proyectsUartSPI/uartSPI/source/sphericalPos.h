@@ -14,7 +14,11 @@
 #define HEAD_ANGLE_ID 'C'
 #define ROLL_ANGLE_ID 'R'
 
+#define IDS_COORDS {ORIENTATION_ID, HEAD_ANGLE, ROLL_ANGLE}
+
 #define PLUS_FLAG 1
+
+#define SENSIBILITY 5
 
 typedef struct{
 	int orientation;
@@ -38,6 +42,6 @@ _Bool anyCoordHasChanged(sphericalPos_t * p2oldPos, sphericalPos_t * p2newPos, c
 //If it is necessary the char '+' for positive coordinates, the input plusFlag must be equal to PLUS_FLAG.
 //Translation examples: -169 -> '-169', 68 -> '+68' (plusFlag = PLUS_FLAG) or 68 -> '68' if plusFlag is not equal to PLUS_FLAG.
 
-void int2charsCoord(int coord, char * p2coordChared, int plusFlag);
+int int2charsCoord(int coord, char * p2coordChared, int plusFlag);
 
 #endif /* SPHERICALPOS_H_ */

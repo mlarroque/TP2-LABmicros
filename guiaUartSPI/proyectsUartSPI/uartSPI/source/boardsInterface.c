@@ -20,6 +20,8 @@
 
 sphericalPos_t ourBoardPos;
 sphericalPos_t ourOldBoardPos;
+
+sphericalPos_t posDataBase[N_BOARDS];
 //sphericalPos_t auxOtherBoardPos;
 
 int timeOutNcoords2notice;
@@ -98,6 +100,25 @@ void sendMessage2otherBoards(char id, char * p2coord, char coordName)
 void timeOutCallback(void)
 {
 	timeOutNcoord2notice = NUMBER_OF_COORDS; //set flag that reports about the time out to external users
+}
+
+int getBoardCoordChared(char idBoard, char coordName, char * coordChared)
+{
+	int coord = 0, cant = 0;
+	switch(coordName)
+	{
+		case ORIENTATION_ID:
+			coord = posDataBase[idBoard].orientation;
+			break;
+		case HEAD_ANGLE_ID:
+			coord = posDataBase[idBoard].headAngle;
+			break;
+		case ROLL_ANGLE_ID:
+			coord = posDataBase[idBoard].rollAngle;
+			break;
+	}
+	cant = int2charsCoord(coord, coordChared, true);
+	return cant;
 }
 
 

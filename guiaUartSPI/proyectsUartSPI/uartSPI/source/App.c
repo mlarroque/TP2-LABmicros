@@ -14,12 +14,23 @@ char messageReceived[MAX_MSG_LEN+1];
 uint8_t aux;
 
 */
-#include <comController2node.h>
+#include <comController2pc.h>
 #include "boardsInterface.h"
+#include "timer.h"
 
 /*******************************************************************************
  * CONSTANT AND MACRO DEFINITIONS USING #DEFINE
  ******************************************************************************/
+
+#define REFRESH_RATE 32 //mseconds (> 30FPS)
+#define COORDS_TO_REFRESH 3
+#define REFRESH_PER_COORD 4 //mseconds
+#define ROLL_COORD_NUMBER 3
+#define HEAD_COORD_NUMBER 2
+#define ORIENTATION_COORD_NUMBER 1
+#define COORDS_NUMBERS 3
+
+char coordPack[N_COORDS_BOARDS + 1];
 
 
 /*******************************************************************************
@@ -38,25 +49,58 @@ uint8_t aux;
 void App_Init (void)
 {
 	initBoardsInterface();
-	initResourcesController2node();
+	initResourcesController2pc();
+	initializeTimers();
+	SetTimer(REFRESH_PC, REFRESH_RATE, callbackRefreshPc);
 }
 /* Función que se llama constantemente en un ciclo infinito */
 
 void App_Run (void)
 {
-	char id, coordName;
-	char coordPack[N_COORDS_BOARDS + 1];
-	if(updateLecture(&id, coordPack, &coordName))
+
+	char id, cant, coordName;
+	if(updateLecture(&id, coordPack, &coordName, &cant))
 	{
-		sendMessage2node(id, coordPack, coordName, UART0_IMPLEMENTATION);
 		if(id == OUR_BOARD)
 		{
-			sendMessage2othersBoards(OUR_BOARD, coordPack, coordName);
+			sendMessage2othersBoards(coordPack, coordName, cant);
 		}
 	}
 }
 
+void callbackRefreshPc(void)
+{
+	SetTimer(REFRESH_COORD, REFRESH_PER_COORD, callbackRefreshCoord);
+}
 
+void callbackRefreshCoord(void)
+{
+	static int idBoard2refresh = 0;
+	static int coordNumber2refresh = COORD_NUMBERS;
+	char coordName;
+	char idsCoords[N_COORDS] = IDS_COORDS;
+	char * coordChared[MAX_LEN_COORD];
+	int cantCoordChared = 0;
+
+	cantCoordChared = getBoardCoordChared(idBoard2refresh, coordChared, idsCoords[coordNumber2refresh - 1]);
+	coordName = idsCoords[coordNumber2refresh - 1];
+
+	sendMessage2pc(idBoard2refresh + '0', coordChared, coordName, cantCoordChared);
+	coordNumber2refresh--;
+
+	if(coordNumber2refresh == 0)
+	{
+		idBoard2refresh++;
+		coordNumber2refresh = COORD_NUMBERS;
+	}
+
+	if(idBoard2refresh == N_BOARDS)
+	{
+		idBoard2refresh = 0;
+		coordNumber2refresh = COORD_NUMBERS;
+		DisableTimer(REFRESH_COORD);
+	}
+}
 
 
 

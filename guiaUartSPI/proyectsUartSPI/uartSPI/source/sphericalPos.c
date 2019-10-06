@@ -21,6 +21,8 @@
 #define IS_VALID_ROLL_ANGLE_SPHERICAL(x)  ( ( (x >=MIN_ROLL_ANGLE_SPHERICAL) && (x <= MAX_ROLL_ANGLE_SPHERICAL) ))
 #define IS_VALID_ORIENTATION_SPHERICAL(x) ( ( (x >=MIN_ORIENTATION_SPHERICAL) && (x <= MAX_ORIENTATION_SPHERICAL) ) )
 
+_Bool areCoordsEquals(int coordA, int coordB);
+
 _Bool isValidCoord(int coordName, int coord)
 {
 	bool ret = false;
@@ -44,17 +46,17 @@ _Bool isValidCoord(int coordName, int coord)
 _Bool anyCoordHasChanged(sphericalPos_t * p2oldPos, sphericalPos_t * p2newPos, char * p2coordChanged)
 {
 	_Bool ret = false;
-	if(p2newPos->orientation != p2oldPos->orientation)
+	if(!areCoordsEquals(p2newPos->orientation, p2oldPos->orientation))
 	{
 		ret = true;
 		*p2coordChanged = ORIENTATION_ID;
 	}
-	else if(p2newPos->headAngle != p2oldPos->headAngle)
+	else if(!areCoordsEquals(p2newPos->headAngle, p2oldPos->headAngle))
 	{
 		ret = true;
 		*p2coordChanged = HEAD_ANGLE_ID;
 	}
-	else if(p2newPos->rollAngle != p2oldPos->rollAngle)
+	else if(!areCoordsEquals(p2newPos->rollAngle, p2oldPos->rollAngle))
 	{
 		ret = true;
 		*p2coordChanged = ROLL_ANGLE_ID;
@@ -63,7 +65,17 @@ _Bool anyCoordHasChanged(sphericalPos_t * p2oldPos, sphericalPos_t * p2newPos, c
 	return ret;
 }
 
-void int2charsCoord(int coord, char * p2coordChared, int plusFlag)
+int int2charsCoord(int coord, char * p2coordChared, int plusFlag)
 {
 
+}
+
+_Bool areCoordsEquals(int coordA, int coordB)
+{
+	_Bool ret = false;
+	if((coordA >= (coordB + SENSIBILITY)) || (coordA <= (coordB - SENSIBILITY)))
+	{
+		ret = true;
+	}
+	return ret;
 }
