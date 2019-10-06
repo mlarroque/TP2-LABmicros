@@ -23,18 +23,20 @@
 
 _Bool areCoordsEquals(int coordA, int coordB);
 
-_Bool isValidCoord(int coordName, int coord)
+int exp10(int i);
+
+_Bool isValidCoord(char coordName, int coord)
 {
 	bool ret = false;
 	switch(coordName)
 	{
-		case ORIENTATION:
+		case ORIENTATION_ID:
 			ret = IS_VALID_ORIENTATION_SPHERICAL(coord);
 			break;
-		case HEAD_ANGLE:
+		case HEAD_ANGLE_ID:
 			ret = IS_VALID_HEAD_ANGLE_SPHERICAL(coord);
 			break;
-		case ROLL_ANGLE:
+		case ROLL_ANGLE_ID:
 			ret = IS_VALID_ROLL_ANGLE_SPHERICAL(coord);
 			break;
 		default:
@@ -67,7 +69,44 @@ _Bool anyCoordHasChanged(sphericalPos_t * p2oldPos, sphericalPos_t * p2newPos, c
 
 int int2charsCoord(int coord, char * p2coordChared, int plusFlag)
 {
+	int cant = 0, i = 0, aux = 0;
 
+	if(plusFlag && (coord >= 0))
+	{
+		p2CoordChared[0] = '+';
+		cant++;
+	}
+	else if(coord < 0)
+	{
+		p2CoordChared[0] = '-';
+		cant++;
+	}
+	for(i = 0; i < N_COORDS; i++)
+	{
+		aux = coord % 10;
+		p2coordChared[N_COORDS - 1] = aux + '0';
+		aux = coord - aux;
+		coord = aux / 10;
+		cant++;
+	}
+	return cant;
+}
+
+int chars2intCoord(char * p2coordChared, int cant)
+{
+	int i = 0, ret = 0;
+	if((p2coordChared[i] == '+') || (p2coordChared[i] == '-'))
+	{
+		cant--;
+	}
+	for(i = 0; i < cant; i++)
+	{
+		ret += (p2coordChared[cant - 1] - '0') * exp10(i);
+	}
+	if(p2coordChared[i] == '-')
+	{
+		ret = (-1) * ret;
+	}
 }
 
 _Bool areCoordsEquals(int coordA, int coordB)
@@ -76,6 +115,23 @@ _Bool areCoordsEquals(int coordA, int coordB)
 	if((coordA >= (coordB + SENSIBILITY)) || (coordA <= (coordB - SENSIBILITY)))
 	{
 		ret = true;
+	}
+	return ret;
+}
+
+int exp10(int i)
+{
+	int j = 0, ret = 10;
+	if(i <= 0)
+	{
+		ret = 1;
+	}
+	else
+	{
+		for(j = 0; j < i; j++)
+		{
+			ret = 10*ret;
+		}
 	}
 	return ret;
 }

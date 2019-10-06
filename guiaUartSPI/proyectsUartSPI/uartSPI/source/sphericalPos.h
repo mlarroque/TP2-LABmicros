@@ -8,7 +8,7 @@
 #ifndef SPHERICALPOS_H_
 #define SPHERICALPOS_H_
 
-#define NUMBER_OF_COORDS 3
+#define N_COORDS 3
 
 #define ORIENTATION_ID 'O'
 #define HEAD_ANGLE_ID 'C'
@@ -26,7 +26,7 @@ typedef struct{
 	int rollAngle;
 }sphericalPos_t;
 
-_Bool isValidCoord(int coordName, int coord);
+_Bool isValidCoord(char coordName, int coord);
 
 //return true if there is at least one coord that has changed. return false if the structure newPos is equal to the oldPos
 //if return true, the variable coordChanged is charged with the name of the coordinate in which the change was detected.
@@ -43,5 +43,7 @@ _Bool anyCoordHasChanged(sphericalPos_t * p2oldPos, sphericalPos_t * p2newPos, c
 //Translation examples: -169 -> '-169', 68 -> '+68' (plusFlag = PLUS_FLAG) or 68 -> '68' if plusFlag is not equal to PLUS_FLAG.
 
 int int2charsCoord(int coord, char * p2coordChared, int plusFlag);
+
+int chars2intCoord(char * p2coordChared, int cant);
 
 #endif /* SPHERICALPOS_H_ */

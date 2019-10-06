@@ -14,7 +14,7 @@ char messageReceived[MAX_MSG_LEN+1];
 uint8_t aux;
 
 */
-#include <comController2pc.h>
+#include "comController2pc.h"
 #include "boardsInterface.h"
 #include "timer.h"
 
@@ -28,9 +28,6 @@ uint8_t aux;
 #define ROLL_COORD_NUMBER 3
 #define HEAD_COORD_NUMBER 2
 #define ORIENTATION_COORD_NUMBER 1
-#define COORDS_NUMBERS 3
-
-char coordPack[N_COORDS_BOARDS + 1];
 
 
 /*******************************************************************************
@@ -57,15 +54,7 @@ void App_Init (void)
 
 void App_Run (void)
 {
-
-	char id, cant, coordName;
-	if(updateLecture(&id, coordPack, &coordName, &cant))
-	{
-		if(id == OUR_BOARD)
-		{
-			sendMessage2othersBoards(coordPack, coordName, cant);
-		}
-	}
+	updateLecture();
 }
 
 void callbackRefreshPc(void)
