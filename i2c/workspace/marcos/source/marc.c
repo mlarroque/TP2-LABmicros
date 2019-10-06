@@ -262,7 +262,7 @@ void I2C0_IRQHandler()
 			else*/ if(i2c_data.rx_state==DATA)
 			{
 
-				if(i2c_data.currentData==i2c_data.dataLength-1)
+				if(i2c_data.currentData== (i2c_data.dataLength-1) )
 				{
 					//i2c_data.callback();
 					i2c0_stop_signal();

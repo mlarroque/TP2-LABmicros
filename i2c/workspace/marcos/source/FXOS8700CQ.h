@@ -41,7 +41,7 @@ typedef struct
  ******************************************************************************/
 
 void FXOS8700CQInit(void);
-void ReadAccelMagnData(raw_data_type *pAccelData, raw_data_type *pMagnData, bool newDataReady);
+void ReadAccelMagnData(raw_data_type *pAccelData, raw_data_type *pMagnData);
 
 /*******************************************************************************
  ******************************************************************************/

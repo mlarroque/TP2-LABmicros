@@ -10,7 +10,6 @@
 
 static raw_data_type *pAccelData;
 static raw_data_type *pMagnData;
-static bool newDataReady;
 
 
 void accelandMagnetInit(void)
@@ -21,7 +20,8 @@ void accelandMagnetInit(void)
 
 void getAccelAndMagntData(void)	//capaz recibe una estructura con info mas didactica que x,y,z todo
 {
-	ReadAccelMagnData(pAccelData, pMagnData, newDataReady);
+	ReadAccelMagnData(pAccelData, pMagnData);
+	int i =0;
 	//convierte de cartesianas a algo util para graficar
 }
 
