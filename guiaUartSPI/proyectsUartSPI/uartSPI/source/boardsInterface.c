@@ -25,6 +25,7 @@
 
 void refreshCounterFps(void);
 void timeOutCallback(void);
+void initDataBase(void);
 
 sphericalPos_t posDataBase[N_BOARDS];
 
@@ -36,6 +37,7 @@ void initBoardsInterface(void)
 {
 	//initAccelerometer();
 	coordHALinit();
+	initDataBase();
 	changesCounter = 0;
 	SetTimer(INACTIVITY, TIME_OUT_INACTIVITY, timeOutCallback);
 	SetTimer(MAX_FPS_CLEAR, TIME_OUT_MAX_FPS, refreshCounterFps);
@@ -119,5 +121,14 @@ int getBoardCoordChared(char idBoard, char coordName, char * coordChared)
 	cant = int2charsCoord(coord, coordChared, true);
 	return cant;
 }
-
+void initDataBase(void)
+{
+	int i;
+	for(i = 0; i < N_BOARDS; i++)
+	{
+		posDataBase[i].orientation = 0;
+		posDataBase[i].rollAngle = 0;
+		posDataBase[i].headAngle = 0;
+	}
+}
 
