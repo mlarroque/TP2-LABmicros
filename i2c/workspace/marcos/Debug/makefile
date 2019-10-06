@@ -25,25 +25,25 @@ endif
 # Add inputs and outputs from these tool invocations to the build variables 
 
 # All Target
-all: i2c.axf
+all: marcos.axf
 
 # Tool invocations
-i2c.axf: $(OBJS) $(USER_OBJS)
+marcos.axf: $(OBJS) $(USER_OBJS)
 	@echo 'Building target: $@'
 	@echo 'Invoking: MCU Linker'
-	arm-none-eabi-gcc -nostdlib -Xlinker -Map="i2c.map" -Xlinker --gc-sections -Xlinker -print-memory-usage -Xlinker --sort-section=alignment -mcpu=cortex-m4 -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -T "i2c_Debug.ld" -o "i2c.axf" $(OBJS) $(USER_OBJS) $(LIBS)
+	arm-none-eabi-gcc -nostdlib -Xlinker -Map="marcos.map" -Xlinker --gc-sections -Xlinker -print-memory-usage -Xlinker --sort-section=alignment -mcpu=cortex-m4 -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -T "i2c_Debug.ld" -o "marcos.axf" $(OBJS) $(USER_OBJS) $(LIBS)
 	@echo 'Finished building target: $@'
 	@echo ' '
 	$(MAKE) --no-print-directory post-build
 
 # Other Targets
 clean:
-	-$(RM) $(EXECUTABLES)$(OBJS)$(C_DEPS) i2c.axf
+	-$(RM) $(EXECUTABLES)$(OBJS)$(C_DEPS) marcos.axf
 	-@echo ' '
 
 post-build:
 	-@echo 'Performing post-build steps'
-	-arm-none-eabi-size "i2c.axf"; # arm-none-eabi-objcopy -v -O binary "i2c.axf" "i2c.bin" ; # checksum -p MK64FN1M0xxx12 -d "i2c.bin";
+	-arm-none-eabi-size "marcos.axf"; # arm-none-eabi-objcopy -v -O binary "marcos.axf" "marcos.bin" ; # checksum -p MK64FN1M0xxx12 -d "marcos.bin";
 	-@echo ' '
 
 .PHONY: all clean dependents post-build

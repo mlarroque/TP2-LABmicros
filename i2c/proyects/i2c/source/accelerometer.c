@@ -7,7 +7,7 @@
 
 #include "FXOS8700CQ.h"
 
-#define PI (float32_t) 3.141592654
+#define PI (float) 3.141592654
 
 static raw_data_type *pAccelData;
 static raw_data_type *pMagnData;
@@ -27,7 +27,7 @@ void getAccelAndMagntData(void)	//capaz recibe una estructura con info mas didac
 }
 
 
-float32_t atan2(int16_t y, int16_t x)
+float atan2(int16_t y, int16_t x)
 {
 	if( x > 0 )
 	{
@@ -43,11 +43,11 @@ float32_t atan2(int16_t y, int16_t x)
 	}
 	else if( (x==0) && (y>0) )
 	{
-		return (float32_t)(PI/2.0);
+		return (float)(PI/2.0);
 	}
 	else if( (x==0) && (y>0) )
 	{
-		return (float32_t)( (-PI)/2.0 );
+		return (float)( (-PI)/2.0 );
 	}
 	else
 	{
@@ -55,7 +55,7 @@ float32_t atan2(int16_t y, int16_t x)
 	}
 }
 
-float32_t atan(float32_t arg)
+float atan(float arg)
 {
 
 }

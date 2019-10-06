@@ -70,6 +70,7 @@ bool FXOS8700CQConfiguration(void)
 
     // read and check the FXOS8700CQ WHOAMI register
     i2c_read_reg(FXOS8700CQ_SLAVE_ADDR, FXOS8700CQ_WHOAMI, &databyte,(uint8_t) 1, callback);
+
     if (databyte != FXOS8700CQ_WHOAMI_VAL)		//no responde bien el acelerómetro
     {
     	//return false;

@@ -32,6 +32,9 @@ typedef enum {I2C_WRITE, I2C_READ}i2c_direction_type;
 
 typedef enum{SEND_REPEAT_START, SEND_REGISTER, DATA}fsm_states;
 
+
+
+
 typedef struct{
 
 	bool finished;
@@ -55,6 +58,7 @@ static bool init = false;
 static bool bus_busy = false;
 static buffer_type buffer;
 
+callbackPtr callback2Fun;
 
 //PROTOTIPOS
 static  void sendStart(){
@@ -133,7 +137,7 @@ bool i2cInit(uint8_t channel)
 
 
 
-void i2cWriteReg(uint8_t slave, uint8_t reg, uint8_t* data, uint8_t data_size)
+void i2cWriteReg(uint8_t slave, uint8_t reg, uint8_t* data, uint8_t data_size, callbackPtr callback)
 {
 	//if(isbusbys())return;	//todo
 	buffer.finished = false;		//lleno la estructura para la transferencia
@@ -144,16 +148,13 @@ void i2cWriteReg(uint8_t slave, uint8_t reg, uint8_t* data, uint8_t data_size)
 	buffer.reg = reg;
 	buffer.data = data;
 	buffer.data_size = data_size;
-
+	callback2Fun = callback;
 
 	setModeTX();
 	sendStart();
-//	while(buffer.finished)
-//		isr_routine();
-//	return true;
 }
 
-void i2cReadReg(uint8_t slave, uint8_t reg, uint8_t* data, uint8_t data_size)
+void i2cReadReg(uint8_t slave, uint8_t reg, uint8_t* data, uint8_t data_size, callbackPtr callback)
 {
 	//if(isbusbys())return;	//todo
 	buffer.finished = false;
@@ -164,21 +165,9 @@ void i2cReadReg(uint8_t slave, uint8_t reg, uint8_t* data, uint8_t data_size)
 	buffer.reg = reg;
 	buffer.data = data;
 	buffer.data_size = data_size;
-
+	callback2Fun = callback;
 	setModeTX();
 	sendStart();
-
-//	while(buffer.finished)
-//		isr_routine();
-//
-//	return;
-}
-
-//todo borrar esta funcion
-void callback1(void){
-	uint8_t a =0;
-	a++;
-	return;
 }
 
 
@@ -191,7 +180,7 @@ void isr_routine(void)	//este codigo sigue el diagrama 51.6 del reference manual
 		unsetNack();
 		buffer.start_count=0;
 		buffer.finished=true;
-		callback1();		//todo borrar esto
+		callback2Fun();
 	}
 	else
 	{
@@ -267,6 +256,7 @@ void isr_routine(void)	//este codigo sigue el diagrama 51.6 del reference manual
 						uint8_t data = *buffer.data;
 						writeByte(data);
 						buffer.data++;
+						buffer.data_size--;
 					}
 					buffer.fsm_state = DATA;		//proximo estado será DATA
 					break;
@@ -321,27 +311,18 @@ void configurePins(uint8_t channel)
 	uint8_t port_SCL = PIN2PORT(i2cSCLpins[channel]);
 	uint8_t num_pin_SCL = PIN2NUM(i2cSCLpins[channel]);
 
-	portPointers[PE]->PCR[24] |= PORT_PCR_MUX(i2c_mux);
-	portPointers[PE]->PCR[25] |= PORT_PCR_MUX(i2c_mux);
-//	setPCRmux(portPointers[port_SDA], num_pin_SDA, i2c_mux);
-//	setPCRmux(portPointers[port_SCL], num_pin_SCL, i2c_mux);
+	setPCRmux(portPointers[port_SDA], num_pin_SDA, i2c_mux);
+	setPCRmux(portPointers[port_SCL], num_pin_SCL, i2c_mux);
 	setPCRirqc(portPointers[port_SDA], num_pin_SDA, IRQ_MODE_DISABLE); //deshabilito interrupciones de puerto
 	setPCRirqc(portPointers[port_SCL], num_pin_SCL, IRQ_MODE_DISABLE);
 
 	//seteo open drain enable como dice la filmina
-	portPointers[PE]->PCR[24] |= PORT_PCR_ODE_MASK;
-	portPointers[PE]->PCR[25] |= PORT_PCR_ODE_MASK;
-	portPointers[PE]->PCR[24] |= PORT_PCR_PE_MASK;
-	portPointers[PE]->PCR[25] |= PORT_PCR_PE_MASK;
-	portPointers[PE]->PCR[24] |= PORT_PCR_PS_MASK;
-	portPointers[PE]->PCR[25] |= PORT_PCR_PS_MASK;
-
-//	setPCRopenDrainEnable(portPointers[port_SDA], num_pin_SDA);
-//	setPCRpullEnable(portPointers[port_SDA], num_pin_SDA);
-//	setPCRpullUp(portPointers[port_SDA], num_pin_SDA);
-//	setPCRopenDrainEnable(portPointers[port_SCL], num_pin_SCL);
-//	setPCRpullEnable(portPointers[port_SCL], num_pin_SCL);
-//	setPCRpullUp(portPointers[port_SCL], num_pin_SCL);
+	setPCRopenDrainEnable(portPointers[port_SDA], num_pin_SDA);
+	setPCRpullEnable(portPointers[port_SDA], num_pin_SDA);
+	setPCRpullUp(portPointers[port_SDA], num_pin_SDA);
+	setPCRopenDrainEnable(portPointers[port_SCL], num_pin_SCL);
+	setPCRpullEnable(portPointers[port_SCL], num_pin_SCL);
+	setPCRpullUp(portPointers[port_SCL], num_pin_SCL);
 
 }
 
@@ -366,18 +347,18 @@ void clockGating(int8_t channel)
 }
 
 
-//todo descomentar esto
-//void I2C0_IRQHandler(void)
+
+void I2C0_IRQHandler(void)
+{
+	isr_routine();
+}
+
+//void I2C1_IRQHandler(void)
 //{
 //	isr_routine();
 //}
-
-void I2C1_IRQHandler(void)
-{
-	isr_routine();
-}
-
-void I2C2_IRQHandler(void)
-{
-	isr_routine();
-}
+//
+//void I2C2_IRQHandler(void)
+//{
+//	isr_routine();
+//}
