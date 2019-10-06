@@ -135,6 +135,7 @@ bool i2cInit(uint8_t channel)
 
 void i2cWriteReg(uint8_t slave, uint8_t reg, uint8_t* data, uint8_t data_size)
 {
+	//if(isbusbys())return;	//todo
 	buffer.finished = false;		//lleno la estructura para la transferencia
 	buffer.dir = I2C_WRITE;
 	buffer.fsm_state = SEND_REGISTER;
@@ -154,6 +155,7 @@ void i2cWriteReg(uint8_t slave, uint8_t reg, uint8_t* data, uint8_t data_size)
 
 void i2cReadReg(uint8_t slave, uint8_t reg, uint8_t* data, uint8_t data_size)
 {
+	//if(isbusbys())return;	//todo
 	buffer.finished = false;
 	buffer.dir = I2C_READ;
 	buffer.fsm_state = SEND_REGISTER;
