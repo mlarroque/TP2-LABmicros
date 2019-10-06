@@ -35,7 +35,7 @@
 #define FXOS8700CQ_WHOAMI_VAL 	0xC7
 
 // number of bytes to be read from the FXOS8700CQ
-#define FXOS8700CQ_READ_LEN 	20 // uno de status, y 6*2 de data accel/magn
+#define FXOS8700CQ_READ_LEN 	13 // uno de status, y 6*2 de data accel/magn
 
 //GLOBAL VARIABLES
 uint8_t buffer[FXOS8700CQ_READ_LEN]; // read buffer
