@@ -9,11 +9,9 @@
 #include "i2c.h"
 #include "pinsHandler.h"
 #include "MK64F12.h"
-//#include "hardware.h"
 #include <stdint.h>
-#include <stdlib.h>
 
-	 //ALT1//ALT1//ALT5
+	 //ALT5 //ALT1 //ALT5
 enum {I2C_0, I2C_1, I2C_2, I2C_CHANNEL_COUNT};
 
 							//I2C0_SCL			//I2C1_SCL			//I2C2_SCL
@@ -55,18 +53,15 @@ typedef struct{
 
 static I2C_Type* i2c;
 static bool init = false;
-static bool bus_busy = false;
 static buffer_type buffer;
 
 callbackPtr callback2Fun;
 
 //PROTOTIPOS
 static  void sendStart(){
-	bus_busy = true;
      i2c->C1 |= I2C_C1_MST_MASK;
 }
 static void sendStop(){
-	bus_busy=false;
     i2c->C1 &= ~I2C_C1_MST_MASK;
 }
 static  void sendRepeatStart(){
@@ -91,7 +86,7 @@ static  void setModeTX(){    i2c->C1 |= I2C_C1_TX_MASK;}
 
 static  void setModeRX(){    i2c->C1 &= ~I2C_C1_TX_MASK;}
 
-//static  uint8_t	isBusBusy(){    return i2c->S & I2C_S_BUSY_MASK;}
+static  uint8_t isBusBusy(){    return i2c->S & I2C_S_BUSY_MASK;}
 
 static  void setNack(){    i2c->C1 |= I2C_C1_TXAK_MASK;}
 
@@ -139,7 +134,8 @@ bool i2cInit(uint8_t channel)
 
 void i2cWriteReg(uint8_t slave, uint8_t reg, uint8_t* data, uint8_t data_size, callbackPtr callback)
 {
-	//if(isbusbys())return;	//todo
+	if(isBusBusy())
+		return;
 	buffer.finished = false;		//lleno la estructura para la transferencia
 	buffer.dir = I2C_WRITE;
 	buffer.fsm_state = SEND_REGISTER;
@@ -151,12 +147,13 @@ void i2cWriteReg(uint8_t slave, uint8_t reg, uint8_t* data, uint8_t data_size, c
 	callback2Fun = callback;
 
 	setModeTX();
-	sendStart();
+	sendStart();		//mando start e inicia la transferencia
 }
 
 void i2cReadReg(uint8_t slave, uint8_t reg, uint8_t* data, uint8_t data_size, callbackPtr callback)
 {
-	//if(isbusbys())return;	//todo
+	if(isBusBusy())
+		return;
 	buffer.finished = false;
 	buffer.dir = I2C_READ;
 	buffer.fsm_state = SEND_REGISTER;
@@ -167,7 +164,7 @@ void i2cReadReg(uint8_t slave, uint8_t reg, uint8_t* data, uint8_t data_size, ca
 	buffer.data_size = data_size;
 	callback2Fun = callback;
 	setModeTX();
-	sendStart();
+	sendStart();		//mando start e inicia la transferencia
 }
 
 
@@ -194,7 +191,7 @@ void isr_routine(void)	//este codigo sigue el diagrama 51.6 del reference manual
 				writeByte(buffer.slave << 1 | 0);//mando address con 0 en LSB para write
 				return;
 			}
-			else		//start count > 1 entonces fue repeated START
+			else		//start count > 1 entonces fue REPEATED START
 			{
 				writeByte(buffer.slave << 1 | 1);	//mando address con 1 en LSB para read
 				return;
