@@ -64,8 +64,9 @@ void callback(void)
 static void coordConverter(float x, float y, float z)
 {
 	//pasamos de cartesianas a roll/angle
+	roll = (int16_t)(atan2(-x,z)*180/M_PI);
 	pitch = (int16_t)(atan2(y,z)*180/M_PI);
-	roll = (int16_t)(atan2(-x,sqrt(y*y+z*z))*180/M_PI);
+//pitch = (int16_t)(atan2(-y,sqrt(x*x+z*z))*180/M_PI);
 
 }
 
