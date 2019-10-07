@@ -7,8 +7,10 @@
 
 #include "boardsInterface.h"
 #include "coordHAL.h"
-//#include "acelerometerHal.h"
+#include "accelerometer.h"
 #include "timer.h"
+
+#include "hardware.h"
 
 #define SOMETHING_UPDATED 1
 #define ANYTHING_UPDATED 0
@@ -35,7 +37,9 @@ int changesCounter = 0;
 
 void initBoardsInterface(void)
 {
-	//initAccelerometer();
+	hw_EnableInterrupts();
+	accelandMagnetInit();
+	hw_DisableInterrupts();
 	coordHALinit();
 	initDataBase();
 	changesCounter = 0;

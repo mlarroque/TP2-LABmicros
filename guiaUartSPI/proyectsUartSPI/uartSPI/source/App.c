@@ -33,7 +33,9 @@ uint8_t aux;
 /*******************************************************************************
  * FUNCTION PROTOTYPES FOR PRIVATE FUNCTIONS WITH FILE LEVEL SCOPE
  ******************************************************************************/
+void callbackRefreshPc(void);
 
+void callbackRefreshCoord(void);
 
 /*******************************************************************************
  *******************************************************************************
@@ -45,9 +47,9 @@ uint8_t aux;
 
 void App_Init (void)
 {
+	InitializeTimers();
 	initBoardsInterface();
 	initResourcesController2pc();
-	initializeTimers();
 	SetTimer(REFRESH_PC, REFRESH_RATE, callbackRefreshPc);
 }
 /* Función que se llama constantemente en un ciclo infinito */
@@ -91,45 +93,6 @@ void callbackRefreshCoord(void)
 	}
 }
 
-
-
-
-
-
-
-
-
-
-/* Función que se llama 1 vez, al comienzo del programa */
-/*
-void App_Init (void)
-{
-	uart_cfg_t configUART0;
-	configUART0.baudRate = 9600;
-	configUART0.parity = NO_PARITY;
-	configUART0.mode = NON_BLOCKING_SIMPLE;
-	configUART0.txWaterMark = 2;
-	configUART0.rxWaterMark = 5;
-
-	uartInit(U0, configUART0);
-	uartWriteMsg(U0, "uart0", 5);
-
-}
-
-/* Función que se llama constantemente en un ciclo infinito */
-/*
-void App_Run (void)
-{
-
-	if(uartIsRxMsg(U0))
-	{
-		aux = uartReadMsg(U0, messageReceived, 1);
-		uartWriteMsg(U0, messageReceived, aux);
-	}
-	//espero interrupciones y realizo ISRs.
-}
-
-*/
 /*******************************************************************************
  *******************************************************************************
                         LOCAL FUNCTION DEFINITIONS
