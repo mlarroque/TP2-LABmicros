@@ -73,12 +73,12 @@ int int2charsCoord(int coord, char * p2coordChared, int plusFlag)
 
 	if(plusFlag && (coord >= 0))
 	{
-		p2CoordChared[0] = '+';
+		p2coordChared[0] = '+';
 		cant++;
 	}
 	else if(coord < 0)
 	{
-		p2CoordChared[0] = '-';
+		p2coordChared[0] = '-';
 		cant++;
 	}
 	for(i = 0; i < N_COORDS; i++)
@@ -107,6 +107,7 @@ int chars2intCoord(char * p2coordChared, int cant)
 	{
 		ret = (-1) * ret;
 	}
+	return ret;
 }
 
 _Bool areCoordsEquals(int coordA, int coordB)
