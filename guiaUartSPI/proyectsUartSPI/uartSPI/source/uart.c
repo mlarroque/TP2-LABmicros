@@ -433,15 +433,15 @@ void UART_setParity(UART_Type * p2uart, uint8_t parity)
 {
 	switch(parity)
 	{
-		case ODD_PARITY:
+		case ODD_PARITY_UART:
 			p2uart->C1 |= UART_C1_PE_MASK;
 			p2uart->C1 |= UART_C1_PT_MASK;
 			break;
-		case EVEN_PARITY:
+		case EVEN_PARITY_UART:
 			p2uart->C1 |= UART_C1_PE_MASK;
 			p2uart->C1 &= (~UART_C1_PT_MASK);
 			break;
-		case NO_PARITY:
+		case NO_PARITY_UART:
 			p2uart->C1 &= (~UART_C1_PE_MASK);
 			break;
 	}

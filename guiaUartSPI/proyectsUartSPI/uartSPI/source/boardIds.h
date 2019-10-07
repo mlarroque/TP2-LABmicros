@@ -10,6 +10,6 @@
 
 #define NUMBER_OF_BOARDS 7 //6 (externals) + 1 (our board)
 
-enum{OUR_BOARD, BOARD1, BOARD2, BOARD3, BOARD4, BOARD5, BOARD6}boardsIds;
+enum{OUR_BOARD, BOARD1, BOARD2, BOARD3, BOARD4, BOARD5, BOARD6};
 
 #endif /* BOARDIDS_H_ */

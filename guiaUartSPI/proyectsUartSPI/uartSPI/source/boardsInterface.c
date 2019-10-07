@@ -49,7 +49,7 @@ void initBoardsInterface(void)
 	SetTimer(MAX_FPS_CLEAR, TIME_OUT_MAX_FPS, refreshCounterFps);
 }
 
-void updateLetcure(void)
+void updateLecture(void)
 {
 	char coordNameChanged;
 	char coordCharedChanged[MAX_LEN_COORDS];

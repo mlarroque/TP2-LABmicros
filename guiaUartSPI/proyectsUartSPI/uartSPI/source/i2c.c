@@ -73,7 +73,7 @@ static  void sendRepeatStart(){
 	i2c->C1 |= I2C_C1_TX_MASK;
 	i2c->C1 |= I2C_C1_RSTA_MASK;
 }
-static  uint8_t	getInterruptFlag(){    return i2c->S & I2C_S_IICIF_MASK;}
+//static  uint8_t	getInterruptFlag(){    return i2c->S & I2C_S_IICIF_MASK;}
 
 static  uint8_t	getStopFlag(){    return i2c->FLT&I2C_FLT_STOPF_MASK;}
 
@@ -91,7 +91,7 @@ static  void setModeTX(){    i2c->C1 |= I2C_C1_TX_MASK;}
 
 static  void setModeRX(){    i2c->C1 &= ~I2C_C1_TX_MASK;}
 
-static  uint8_t	isBusBusy(){    return i2c->S & I2C_S_BUSY_MASK;}
+//static  uint8_t	isBusBusy(){    return i2c->S & I2C_S_BUSY_MASK;}
 
 static  void setNack(){    i2c->C1 |= I2C_C1_TXAK_MASK;}
 
@@ -290,7 +290,7 @@ void setBaudRate()
 
 void configurePins(uint8_t channel)
 {
-	uint8_t i2c_mux;
+	uint8_t i2c_mux = 5;
 	switch(channel)
 	{
 	case I2C_0:
