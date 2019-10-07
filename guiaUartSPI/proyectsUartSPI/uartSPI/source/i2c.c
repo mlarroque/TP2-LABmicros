@@ -250,8 +250,7 @@ void isr_routine(void)	//este codigo sigue el diagrama 51.6 del reference manual
 					}
 					else
 					{
-						uint8_t data = *buffer.data;
-						writeByte(data);
+						writeByte(*buffer.data);
 						buffer.data++;
 						buffer.data_size--;
 					}
@@ -277,7 +276,6 @@ void isr_routine(void)	//este codigo sigue el diagrama 51.6 del reference manual
 		}
 	}
 }
-
 
 
 void setBaudRate()
@@ -313,7 +311,7 @@ void configurePins(uint8_t channel)
 	setPCRirqc(portPointers[port_SDA], num_pin_SDA, IRQ_MODE_DISABLE); //deshabilito interrupciones de puerto
 	setPCRirqc(portPointers[port_SCL], num_pin_SCL, IRQ_MODE_DISABLE);
 
-	//seteo open drain enable como dice la filmina
+	//seteo open drain enable y pull up como dice la filmina
 	setPCRopenDrainEnable(portPointers[port_SDA], num_pin_SDA);
 	setPCRpullEnable(portPointers[port_SDA], num_pin_SDA);
 	setPCRpullUp(portPointers[port_SDA], num_pin_SDA);
