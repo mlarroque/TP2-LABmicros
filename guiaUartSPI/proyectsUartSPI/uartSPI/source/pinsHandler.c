@@ -52,6 +52,12 @@ void setPCRpullDown(PORT_Type * portPointer, uint8_t numPin)
 }
 
 
+void setPCRopenDrainEnable(PORT_Type * portPointer, uint8_t numPin)
+{
+	(portPointer->PCR)[numPin] = ((portPointer->PCR)[numPin] | PORT_PCR_ODE_MASK);
+}
+
+
 
 void setPCRirqc(PORT_Type * p2port, uint8_t numPin, uint8_t irqMode)
 {

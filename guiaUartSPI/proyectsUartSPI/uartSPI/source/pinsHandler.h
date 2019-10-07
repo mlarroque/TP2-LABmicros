@@ -35,7 +35,15 @@ enum { PA, PB, PC, PD, PE };
 #define NUMBER_OF_PINS_PORT 32
 #endif //NUMBER_OF_PORTS
 
-#define IRQ_MODE_DISABLE 0
+// IRQ modes
+enum {
+    IRQ_MODE_DISABLE = 0,
+    IRQ_MODE_RISING_EDGE = 9,
+    IRQ_MODE_FALLING_EDGE = 10,
+    IRQ_MODE_BOTH_EDGES = 11,
+
+    IRQ_CANT_MODES = 4
+};
 /*******************************************************************************
  * ENUMERATIONS AND STRUCTURES AND TYPEDEFS
  ******************************************************************************/
@@ -57,6 +65,7 @@ void setPCRpullDown(PORT_Type * portPointer, uint8_t numPin);
 
 void setPCRirqc(PORT_Type * p2port, uint8_t numPin, uint8_t irqMode);
 
+void setPCRopenDrainEnable(PORT_Type * portPointer, uint8_t numPin);
 
 
 
