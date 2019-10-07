@@ -14,10 +14,12 @@ static raw_data_type pMagnData;
 
 
 /**
- * @brief Converts from int to
- * @param roll angle of device.
- * @param head/pitch angle of device.
- * @param orientation of device.
+ * @brief Converts from float to int(angles)
+ * @param float x magnitude from accelerometer
+ * @param float y magnitude from accelerometer
+ * @param float z magnitude from accelerometer
+ * @param variable where to store roll angle
+ * @param variable where to store pitch/head angle
  * @return none
 */
 static void coordConverter(float x, float y, float z, int16_t * roll, int16_t * pitch);
