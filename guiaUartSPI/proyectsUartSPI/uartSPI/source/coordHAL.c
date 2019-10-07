@@ -110,7 +110,7 @@ bool sendCoordToAll(char nameCoord, char * coord, uint8_t coordNum){
 	return successStatus;
 }
 
-bool readCoord(uint32_t * id, char * nameCoord, char * coord, char * coordNum){
+bool readCoord(uint32_t * id, char * nameCoord, char * coord, int * coordNum){
 	bool successStatus = false;
 	/* If there is a new message in buffer. */
 	if(canIsRxMsg()){

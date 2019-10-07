@@ -26,6 +26,6 @@ void initBoardsInterface(void);
 void updateLecture(void);
 
 
-int getBoardCoordChared(char idBoard, char coordName, char * coordChared);
+int getBoardCoordChared(int idBoard, char coordName, char * coordChared);
 
 #endif /* BOARDSINTERFACE_H_ */

@@ -9,12 +9,13 @@
 #define SPHERICALPOS_H_
 
 #define N_COORDS 3
+#define MAX_LEN_COORDS (N_COORDS + 1)
 
 #define ORIENTATION_ID 'O'
 #define HEAD_ANGLE_ID 'C'
 #define ROLL_ANGLE_ID 'R'
 
-#define IDS_COORDS {ORIENTATION_ID, HEAD_ANGLE, ROLL_ANGLE}
+#define IDS_COORDS {ORIENTATION_ID, HEAD_ANGLE_ID, ROLL_ANGLE_ID}
 
 #define PLUS_FLAG 1
 
@@ -37,7 +38,7 @@ _Bool anyCoordHasChanged(sphericalPos_t * p2oldPos, sphericalPos_t * p2newPos, c
 //This function received a valid coordinate (if it is not valid the function doesnt't do anything) and translates it to
 //a chain of chars data types (without a terminator '/0'). The maximum number of chars is determined
 //by NUMBER_OF_COORDS + 1 (higher than NUMBER_OF_COORDS because of the sign), so the user of this function must be sure that
-//the p2coordChared is not a NULL pointer and also it allows to write NUMBER_OF_COORDS + 1 memory positions
+//the p2coordChared is not a NULL pointer and also it allows to write N_COORDS + 1 memory positions
 //since p2coordChared (this is really important, if not the function would generate an error in the program).
 //If it is necessary the char '+' for positive coordinates, the input plusFlag must be equal to PLUS_FLAG.
 //Translation examples: -169 -> '-169', 68 -> '+68' (plusFlag = PLUS_FLAG) or 68 -> '68' if plusFlag is not equal to PLUS_FLAG.

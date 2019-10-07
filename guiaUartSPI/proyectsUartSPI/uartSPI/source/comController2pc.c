@@ -17,9 +17,9 @@
 #define ACK_ANSWER 'A'
 #define ERROR_ANSWER 'E'
 
-int cantCharsInpackage;
-char * package2pc[MAX_PACKAGE_PC_LEN];
-char * answerMsg[ANSWER_MSG_LEN];
+int cantCharsInPackage;
+char package2pc[MAX_PACKAGE_PC_LEN];
+char answerMsg[ANSWER_MSG_LEN];
 int errorsCounter = 0;
 
 void rxCallback(void);
@@ -42,7 +42,7 @@ void initResourcesController2pc(void)
 	InitializeTimers(); //timers are necessary to take into account the time that the computer takes to answer
 }
 
-sendMessage2pc(char idBoard, char * p2coord, char coordName, int cant)
+void sendMessage2pc(char idBoard, char * p2coord, char coordName, int cant)
 {
 	int i;
 	//generation of the package
@@ -60,7 +60,8 @@ sendMessage2pc(char idBoard, char * p2coord, char coordName, int cant)
 
 void rxCallback(void)
 {
-	if(!(uartIsRxMsg(U0) && (uartGetRxMsgLength(U0) == ANSWER_MSG_LEN) && (uartReadMsg(U0, answerMsg, ANSWER_MSG_LEN) == ANSWER_MSG_LEN) && areStringsEqual(answerMsg, ACK_ANSWER, ANSWER_LEN_MSG)))
+	char ackDesired = ACK_ANSWER;
+	if(!(uartIsRxMsg(U0) && (uartGetRxMsgLength(U0) == ANSWER_MSG_LEN) && (uartReadMsg(U0, answerMsg, ANSWER_MSG_LEN) == ANSWER_MSG_LEN) && areStringsEqual(answerMsg, &ackDesired, ANSWER_MSG_LEN)))
 	{
 		//if enter in this branch, is consider an error, so it necessary to send message again
 		if(errorsCounter < MAX_ERRORS_ALLOWED)

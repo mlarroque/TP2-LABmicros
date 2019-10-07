@@ -67,13 +67,13 @@ void callbackRefreshPc(void)
 void callbackRefreshCoord(void)
 {
 	static int idBoard2refresh = 0;
-	static int coordNumber2refresh = COORD_NUMBERS;
+	static int coordNumber2refresh = N_COORDS;
 	char coordName;
 	char idsCoords[N_COORDS] = IDS_COORDS;
-	char * coordChared[MAX_LEN_COORD];
+	char coordChared[MAX_LEN_COORD];
 	int cantCoordChared = 0;
 
-	cantCoordChared = getBoardCoordChared(idBoard2refresh, coordChared, idsCoords[coordNumber2refresh - 1]);
+	cantCoordChared = getBoardCoordChared(idBoard2refresh, idsCoords[coordNumber2refresh - 1], coordChared);
 	coordName = idsCoords[coordNumber2refresh - 1];
 
 	sendMessage2pc(idBoard2refresh + '0', coordChared, coordName, cantCoordChared);
@@ -82,13 +82,13 @@ void callbackRefreshCoord(void)
 	if(coordNumber2refresh == 0)
 	{
 		idBoard2refresh++;
-		coordNumber2refresh = COORD_NUMBERS;
+		coordNumber2refresh = COORDS_TO_REFRESH;
 	}
 
 	if(idBoard2refresh == N_BOARDS)
 	{
 		idBoard2refresh = 0;
-		coordNumber2refresh = COORD_NUMBERS;
+		coordNumber2refresh = COORDS_TO_REFRESH;
 		DisableTimer(REFRESH_COORD);
 	}
 }
