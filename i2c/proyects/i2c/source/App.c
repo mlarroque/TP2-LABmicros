@@ -44,8 +44,16 @@ void App_Init (void)
 /* Función que se llama constantemente en un ciclo infinito */
 void App_Run (void)
 {
-
+	int16_t roll= 200;
+	int16_t pitch =200;
+	int16_t orientation= 200;
 	getAccelAndMagntData();
+	while(!IsDataReady());
+	angles_t data = GetMeasuredAngles();
+	roll = data.roll;
+	pitch = data.pitch;
+	orientation = data.orientation;
+	int i =0;
 }
 
 

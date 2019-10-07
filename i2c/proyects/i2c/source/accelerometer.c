@@ -6,13 +6,8 @@
  */
 
 #include "FXOS8700CQ.h"
-#include <math.h>
+#include "accelerometer.h"
 
-#define PI (float) 3.141592654
-
-static raw_data_type *pAccelData;
-static raw_data_type *pMagnData;
-static bool newDataReady;
 
 
 void accelandMagnetInit(void)
@@ -20,47 +15,26 @@ void accelandMagnetInit(void)
 	FXOS8700CQInit();
 }
 
-void getAccelAndMagntData(void)	//capaz recibe una estructura con info mas didactica que x,y,z todo
+
+void getAccelAndMagntData(void)
 {
-	ReadAccelMagnData(pAccelData, pMagnData, newDataReady);
-	//convierte de cartesianas a algo util para graficar
+	ReadAccelMagnData();					//leemos int del acelerometro
+
 }
 
-void coordConverter(int16_t x, int16_t y, int16_t z, int16_t * roll, int16_t * pitch){
-	*roll = atan2(y,z);
-	*pitch = atan2(-x,sqrt(y*y+z*z));
+bool IsDataReady(void)
+{
+	return  GetDataReady();
 }
 
-//float atan2(int16_t y, int16_t x)
-//{
-//	if( x > 0 )
-//	{
-//		//Esto en el primer o cuarto cuadrante
-//
-//	}
-//	else if( (x<0) && (y>=0) )
-//	{
-//		//Estoy en el segundo cuadrante
-//	}
-//	else if( (x<0) && (y<0) )
-//	{
-//		//Estoy en el tercer cuadrante
-//	}
-//	else if( (x==0) && (y>0) )
-//	{
-//		return (float)(PI/2.0);
-//	}
-//	else if( (x==0) && (y>0) )
-//	{
-//		return (float)( (-PI)/2.0 );
-//	}
-//	else
-//	{
-//		//indefinido
-//	}
-//}
+angles_t GetMeasuredAngles(void)
+{
+	angles_t data;
+	data.roll = GetRollAngle();
+	data.pitch=GetPitchAngle();
+	data.orientation=GetOrientation();
+	return data;
+}
 
-//float atan(float arg)
-//{
-//
-//}
+
+
