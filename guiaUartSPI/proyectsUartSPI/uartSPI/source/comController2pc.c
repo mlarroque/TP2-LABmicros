@@ -48,7 +48,7 @@ void sendMessage2pc(char idBoard, char * p2coord, char coordName, int cant)
 	//generation of the package
 	package2pc[0] = idBoard;
 	package2pc[1] = coordName;
-	for(i = 0; i < cant; i++)
+	for(i = 2; i < cant + 2; i++)
 	{
 		package2pc[i] = p2coord[i];
 	}
