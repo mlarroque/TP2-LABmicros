@@ -25,8 +25,9 @@ void getAccelAndMagntData(int16_t* roll, int16_t* head, int16_t* orientation)
 	coordConverter(pAccelData.x, pAccelData.y, pAccelData.z, roll,  head);
 }
 
-void coordConverter(int16_t x, int16_t y, int16_t z, int16_t * roll, int16_t * pitch){
-	*roll = atan2(y,z);
-	*pitch = atan2(-x,sqrt(y*y+z*z));
+void coordConverter(float x, float y, float z, int16_t * roll, int16_t * pitch)
+{
+	*roll = (int16_t)atan2(y,z);
+	*pitch = (int16_t)atan2(-x,sqrt(y*y+z*z));
 }
 

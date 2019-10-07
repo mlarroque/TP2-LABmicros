@@ -26,9 +26,9 @@
  ******************************************************************************/
 typedef struct
 {
-    int16_t x;      //son de 16 bits porque leo parte baja y alta
-    int16_t y;
-    int16_t z;
+    float x;      //son de 16 bits porque leo parte baja y alta
+    float y;
+    float z;
 } raw_data_type;
 
 

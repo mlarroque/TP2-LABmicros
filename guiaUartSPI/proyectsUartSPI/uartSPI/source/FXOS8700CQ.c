@@ -19,10 +19,12 @@
 
 
 #define I2C_ACCELEROMETER 0
-
+#define SENSITIVITY_G	(float)0.000488		//en G
+#define	SENSITIVITY_M	(float)0.1			//en uT
 
 // FXOS8700CQ I2C address
 #define FXOS8700CQ_SLAVE_ADDR 0x1D
+
 
 
 // FXOS8700CQ internal register addresses
@@ -146,14 +148,25 @@ void ReadAccelMagnData(raw_data_type *pAccelData, raw_data_type *pMagnData)
 
     //paso de 16bits a 14bits que son los que importan
     //acelerómetro
-	pAccelData->x = (int16_t)(((buffer[1] << 8) | buffer[2])) >> 2;
-	pAccelData->y = (int16_t)(((buffer[3] << 8) | buffer[4])) >> 2;
-	pAccelData->z = (int16_t)(((buffer[5] << 8) | buffer[6])) >> 2;
+	int16_t AccelX = (int16_t)(((buffer[1] << 8) | buffer[2])) >> 2;
+	int16_t AccelY = (int16_t)(((buffer[3] << 8) | buffer[4])) >> 2;
+	int16_t AccelZ = (int16_t)(((buffer[5] << 8) | buffer[6])) >> 2;
 
 	//idem para el magnetómetro
-	pMagnData->x = (buffer[7] << 8) | buffer[8];
-	pMagnData->y = (buffer[9] << 8) | buffer[10];
-	pMagnData->z = (buffer[11] << 8) | buffer[12];
+	int16_t MagX = (buffer[7] << 8) | buffer[8];
+	int16_t MagY = (buffer[9] << 8) | buffer[10];
+	int16_t MagZ = (buffer[11] << 8) | buffer[12];
+
+
+	pAccelData->x = AccelX*SENSITIVITY_G;
+	pAccelData->y = AccelY*SENSITIVITY_G;
+	pAccelData->z = AccelZ*SENSITIVITY_G;
+
+	pMagnData->x = MagX*SENSITIVITY_M;
+	pMagnData->y = MagY*SENSITIVITY_M;
+	pMagnData->z = MagZ*SENSITIVITY_M;
+
+
 
 
 }
