@@ -56,7 +56,7 @@ static void encodeMsg(char nameCoord, char * coord, uint8_t coordNum);
  * @param coord String with the coordinate.
  * @param coordNum Number of chars in coord string.
 */
-static void decodeMsg(char * nameCoord, char * coord, char * coordNum);
+static void decodeMsg(char * nameCoord, char * coord, int * coordNum);
 
 /******************************************************
  * LOCAL FUNCTION DEFINITIONS
@@ -72,7 +72,7 @@ static void encodeMsg(char nameCoord, char * coord, uint8_t coordNum){
 	cant = coordNum + 1;
 }
 
-static void decodeMsg(char * nameCoord, char * coord, char * coordNum){
+static void decodeMsg(char * nameCoord, char * coord, int * coordNum){
 	/* Get the coord name and length. */
 	*nameCoord = msg[NAME_COORD_INDEX];
 	*coordNum = cant - NAME_COORD_CANT;

@@ -60,7 +60,7 @@ void updateLecture(void)
 
 	getAccelAndMagntData((int16_t *)&newPosOur.rollAngle, (int16_t *)&newPosOur.headAngle, (int16_t *)&newPosOur.orientation);
 
-	if((changesCounter <= MAX_FPS) && anyCoordHasChanged(&(posDataBase[OUR_BOARD]), &newPosOur, &coordNameChanged))
+	if((changesCounter <= MAX_FPS) && anyCoordHasChanged(&(posDataBase[OUR_BOARD]), &newPosOur, &coordNameChanged) && isValidPos(&newPosOur))
 	{
 		posDataBase[OUR_BOARD] = newPosOur;
 		coordNumber = name2numCoord(coordNameChanged);

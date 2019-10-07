@@ -31,7 +31,7 @@ void initResourcesController2pc(void)
 	cantCharsInPackage = 0;
 
 	uart_cfg_t config;
-	config.baudRate = 9600;
+	config.baudRate = 115200;
 	config.nBits = 8;
 	config.parity = NO_PARITY_UART;
 	config.rxWaterMark = 5;
@@ -48,14 +48,14 @@ void sendMessage2pc(char idBoard, char * p2coord, char coordName, int cant)
 	//generation of the package
 	package2pc[0] = idBoard;
 	package2pc[1] = coordName;
-	for(i = 2; i < cant + 2; i++)
+	for(i = 0; i < cant; i++)
 	{
-		package2pc[i] = p2coord[i];
+		package2pc[i + 2] = p2coord[i];
 	}
 	cantCharsInPackage = cant + 2;
 	//start communication
 	uartWriteMsg(U0, package2pc, cant + 2); //cant + 1 (coordName) + 1 (idBoard) = cant + 2
-	SetTimer(TIME_OUT_PC_ANSWER, MAX_TIME_REACTION, rxCallback);
+	//SetTimer(TIME_OUT_PC_ANSWER, MAX_TIME_REACTION, rxCallback);
 }
 
 void rxCallback(void)
@@ -67,12 +67,12 @@ void rxCallback(void)
 		if(errorsCounter < MAX_ERRORS_ALLOWED)
 		{
 			uartWriteMsg(U0, package2pc, cantCharsInPackage); //cant + 1 (coordName) + 1 (idBoard) = cant + 2
-			RestartTimer(TIME_OUT_PC_ANSWER);
+			//RestartTimer(TIME_OUT_PC_ANSWER);
 		}
 	}
 	else
 	{
-		DisableTimer(TIME_OUT_PC_ANSWER);
+		//DisableTimer(TIME_OUT_PC_ANSWER);
 	}
 }
 

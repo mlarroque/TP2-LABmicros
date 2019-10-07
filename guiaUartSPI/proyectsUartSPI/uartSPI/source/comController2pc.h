@@ -9,7 +9,7 @@
 #define COMCONTROLLER2PC_H_
 
 //specification of the protocol that will be implemented using this file
-#define MAX_TIME_REACTION 1 //miliseconds
+#define MAX_TIME_REACTION 100//miliseconds
 #define MAX_ERRORS_ALLOWED 1 //max number of tries to communicate
 
 #define MAX_LEN_COORD 4

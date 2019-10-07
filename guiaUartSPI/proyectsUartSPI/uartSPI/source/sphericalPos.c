@@ -44,7 +44,14 @@ _Bool isValidCoord(char coordName, int coord)
 	}
 	return ret;
 }
-
+_Bool isValidPos(sphericalPos_t * p2pos)
+{
+	_Bool ret = false;
+	ret = isValidCoord(ORIENTATION_ID, p2pos->orientation);
+	ret = isValidCoord(HEAD_ANGLE_ID, p2pos->headAngle);
+	ret = isValidCoord(ROLL_ANGLE_ID, p2pos->rollAngle);
+	return ret;
+}
 _Bool anyCoordHasChanged(sphericalPos_t * p2oldPos, sphericalPos_t * p2newPos, char * p2coordChanged)
 {
 	_Bool ret = false;

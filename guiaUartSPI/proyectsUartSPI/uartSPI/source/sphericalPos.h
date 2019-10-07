@@ -27,6 +27,8 @@ typedef struct{
 	int rollAngle;
 }sphericalPos_t;
 
+_Bool isValidPos(sphericalPos_t * p2pos);
+
 _Bool isValidCoord(char coordName, int coord);
 
 //return true if there is at least one coord that has changed. return false if the structure newPos is equal to the oldPos

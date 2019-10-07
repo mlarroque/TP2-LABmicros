@@ -28,32 +28,32 @@
 #define TX_MESSAGE_MAX_LEN 8
 
 #define RX_BUFFER_LEN 8
-#define TX_BUFFER_LEN 8
+#define TX_BUFFER_LEN 128
 
 #define EMPTY -1
 #define TX_FIFO_SIZE_K64 7
 #define RX_FIFO_SIZE_K64 7
 
 							//RX_0				//RX_1				//RX_2					//RX_3				//RX_4
-uint8_t uartRXpins[] = {PORTNUM2PIN(PB, 16), PORTNUM2PIN(PC, 3), PORTNUM2PIN(PD, 2), PORTNUM2PIN(PC, 16), PORTNUM2PIN(PE, 24)};
+static uint8_t uartRXpins[] = {PORTNUM2PIN(PB, 16), PORTNUM2PIN(PC, 3), PORTNUM2PIN(PD, 2), PORTNUM2PIN(PC, 16), PORTNUM2PIN(PE, 24)};
 
 							//TX_0				//TX_1				//TX_2				//TX_3				//TX_4
-uint8_t uartTXpins[] = {PORTNUM2PIN(PB, 17), PORTNUM2PIN(PC, 4), PORTNUM2PIN(PD, 3), PORTNUM2PIN(PC, 17), PORTNUM2PIN(PE, 25)};
+static uint8_t uartTXpins[] = {PORTNUM2PIN(PB, 17), PORTNUM2PIN(PC, 4), PORTNUM2PIN(PD, 3), PORTNUM2PIN(PC, 17), PORTNUM2PIN(PE, 25)};
 
-uint8_t uartMode[UART_CANT_IDS] = {BLOCKING, BLOCKING, BLOCKING, BLOCKING, BLOCKING};
+static uint8_t uartMode[UART_CANT_IDS] = {BLOCKING, BLOCKING, BLOCKING, BLOCKING, BLOCKING};
 
 //variables de RX
-char RXbuffers[UART_CANT_IDS][RX_BUFFER_LEN];
-int markersRXbuffer[UART_CANT_IDS] = {EMPTY, EMPTY, EMPTY, EMPTY, EMPTY};
-_Bool flagsReading[UART_CANT_IDS] = {false, false, false, false, false};
-uint8_t countersRXfailed[UART_CANT_IDS] = {0, 0, 0, 0, 0};
+static char RXbuffers[UART_CANT_IDS][RX_BUFFER_LEN];
+static int markersRXbuffer[UART_CANT_IDS] = {EMPTY, EMPTY, EMPTY, EMPTY, EMPTY};
+static _Bool flagsReading[UART_CANT_IDS] = {false, false, false, false, false};
+static uint8_t countersRXfailed[UART_CANT_IDS] = {0, 0, 0, 0, 0};
 
 //variables de TX
-char TXbuffers[UART_CANT_IDS][TX_BUFFER_LEN];
-uint8_t outMarkersTXbuffer[UART_CANT_IDS] = {0, 0, 0, 0, 0};
-uint8_t inMarkersTXbuffer[UART_CANT_IDS] = {0, 0, 0, 0, 0};
-uint8_t lensTXbuffer[UART_CANT_IDS] = {0, 0, 0, 0, 0};
-_Bool flagsWriting[UART_CANT_IDS] = {false, false, false, false, false};
+static char TXbuffers[UART_CANT_IDS][TX_BUFFER_LEN];
+static uint8_t outMarkersTXbuffer[UART_CANT_IDS] = {0, 0, 0, 0, 0};
+static uint8_t inMarkersTXbuffer[UART_CANT_IDS] = {0, 0, 0, 0, 0};
+static uint8_t lensTXbuffer[UART_CANT_IDS] = {0, 0, 0, 0, 0};
+static _Bool flagsWriting[UART_CANT_IDS] = {false, false, false, false, false};
 
 //
 uint8_t uartIRQs_TX_RX[] = UART_RX_TX_IRQS;
@@ -251,6 +251,11 @@ uint8_t uartWriteMsg(uint8_t id, const char* msg, uint8_t cant)
 
 			}
 		}
+	}
+	if (cantTX == 0)
+	{
+		cantTX++;
+		cantTX--;
 	}
 	return cantTX;
 }
