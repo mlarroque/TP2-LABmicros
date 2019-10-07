@@ -8,7 +8,6 @@
 #ifndef ACCELEROMETER_H_
 #define ACCELEROMETER_H_
 
-
 #include <stdint.h>
 
 
@@ -20,7 +19,7 @@
 void accelandMagnetInit(void);
 
 /**
- * @brief Returns Accelerometer and Magnetometer info: roll angle, head angle, orientation.
+ * @brief Returns Accelerometer and Magnetometer info in degrees: roll angle, head angle, orientation of device.
  * @param roll angle of device.
  * @param head/pitch angle of device.
  * @param orientation of device.

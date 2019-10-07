@@ -11,7 +11,9 @@
 
 static raw_data_type pAccelData;
 static raw_data_type pMagnData;
+
 static void coordConverter(float x, float y, float z, int16_t * roll, int16_t * pitch);
+
 
 void accelandMagnetInit(void)
 {
@@ -23,6 +25,7 @@ void getAccelAndMagntData(int16_t* roll, int16_t* head, int16_t* orientation)
 {
 	ReadAccelMagnData(&pAccelData, &pMagnData);
 	coordConverter(pAccelData.x, pAccelData.y, pAccelData.z, roll,  head);
+
 	*orientation = (int16_t)(atan2(pMagnData.y, pMagnData.x)*180/M_PI);
 }
 
