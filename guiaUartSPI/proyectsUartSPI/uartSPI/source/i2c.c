@@ -9,7 +9,7 @@
 #include "i2c.h"
 #include "pinsHandler.h"
 #include "MK64F12.h"
-#include "hardware.h"
+//#include "hardware.h"
 #include <stdint.h>
 #include <stdlib.h>
 
@@ -231,7 +231,7 @@ void isr_routine(void)	//este codigo sigue el diagrama 51.6 del reference manual
 					setModeRX();					//paso a recibir
 					if(buffer.data_size == 1)		//quedan dos bytes: el dummy, y la data, entonces mando nack
 						setNack();
-					uint8_t dummy = readByte();
+					uint8_t dummy = readByte();dummy++;
 					buffer.fsm_state = DATA;
 					break;
 				}
@@ -265,7 +265,7 @@ void isr_routine(void)	//este codigo sigue el diagrama 51.6 del reference manual
 				}
 			}
 		}
-		else	//RX
+		else	//modo RX
 		{
 			if(buffer.fsm_state == DATA)		//recibo bytes
 			{
@@ -353,12 +353,12 @@ void I2C0_IRQHandler(void)
 	isr_routine();
 }
 
-//void I2C1_IRQHandler(void)
-//{
-//	isr_routine();
-//}
-//
-//void I2C2_IRQHandler(void)
-//{
-//	isr_routine();
-//}
+void I2C1_IRQHandler(void)
+{
+	isr_routine();
+}
+
+void I2C2_IRQHandler(void)
+{
+	isr_routine();
+}

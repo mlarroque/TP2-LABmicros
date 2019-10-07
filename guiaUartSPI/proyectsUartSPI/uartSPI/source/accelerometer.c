@@ -33,14 +33,15 @@ void accelandMagnetInit(void)
 
 void getAccelAndMagntData(int16_t* roll, int16_t* head, int16_t* orientation)
 {
-	ReadAccelMagnData(&pAccelData, &pMagnData);
-	coordConverter(pAccelData.x, pAccelData.y, pAccelData.z, roll,  head);
+	ReadAccelMagnData(&pAccelData, &pMagnData);					//leemos int del acelerometro
+	coordConverter(pAccelData.x, pAccelData.y, pAccelData.z, roll,  head);		//pasamos del int a los angulos que queremos
 
-	*orientation = (int16_t)(atan2(pMagnData.y, pMagnData.x)*180/M_PI);
+	*orientation = (int16_t)(atan2(pMagnData.y, pMagnData.x)*180/M_PI);			//obtenemos la orientacion de la placa a partir del magnetómetro
 }
 
 void coordConverter(float x, float y, float z, int16_t * roll, int16_t * pitch)
 {
+	//pasamos de cartesianas a roll/angle
 	*roll = (int16_t)(atan2(y,z)*180/M_PI);
 	*pitch = (int16_t)(atan2(-x,sqrt(y*y+z*z))*180/M_PI);
 }

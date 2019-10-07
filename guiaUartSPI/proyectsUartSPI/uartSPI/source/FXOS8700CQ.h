@@ -24,9 +24,13 @@
 /*******************************************************************************
  * ENUMERATIONS AND STRUCTURES AND TYPEDEFS
  ******************************************************************************/
+
+/**
+ * struct where data from the accelerometer/magnetometer will  be stored
+*/
 typedef struct
 {
-    float x;      //son de 16 bits porque leo parte baja y alta
+    float x;
     float y;
     float z;
 } raw_data_type;
@@ -39,8 +43,19 @@ typedef struct
 /*******************************************************************************
  * FUNCTION PROTOTYPES WITH GLOBAL SCOPE
  ******************************************************************************/
-
+/**
+ * @brief Initializes FXOS8700CQ with the I2C0 as default
+ * @param none
+ * @return none
+*/
 void FXOS8700CQInit(void);
+
+/**
+ * @brief Reads accelerometer and magnetometer data from FXOS8700CQ
+ * @param pAccelData where to store accelerometer data
+ * @param pMagnData where to store magnetometer data
+ * @return noneh
+*/
 void ReadAccelMagnData(raw_data_type *pAccelData, raw_data_type *pMagnData);
 
 /*******************************************************************************
