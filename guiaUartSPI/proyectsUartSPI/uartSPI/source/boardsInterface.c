@@ -22,7 +22,7 @@
 #define ROLL_ANGLE_NUM_COORD (N_COORDS - 2)
 #define NO_COORD 0
 
-#define TIME_OUT_INACTIVITY 3000
+#define TIME_OUT_INACTIVITY 1100
 #define TIME_OUT_MAX_FPS 1000
 
 void refreshCounterFps(void);
@@ -40,7 +40,7 @@ int changesCounter = 0;
 void initBoardsInterface(void)
 {
 	hw_EnableInterrupts();
-	accelandMagnetInit();
+	//accelandMagnetInit();
 	hw_DisableInterrupts();
 	coordHALinit();
 	//initDataBase();
@@ -57,13 +57,13 @@ void updateLecture(void)
 
 	uint32_t idChanged;
 	sphericalPos_t newPosOur;
-	angles_t aux;
-	getAccelAndMagntData();
-	while(!IsDataReady());
-	aux = GetMeasuredAngles();
-	newPosOur.orientation = aux.orientation;
-	newPosOur.headAngle = aux.pitch;
-	newPosOur.rollAngle = aux.roll;
+	angles_t aux = {0, 0, 0};
+	//getAccelAndMagntData();
+	//while(!IsDataReady());
+	//aux = GetMeasuredAngles();
+	//newPosOur.orientation = aux.orientation;
+	//newPosOur.headAngle = aux.pitch;
+	//newPosOur.rollAngle = aux.roll;
 
 	if((changesCounter <= MAX_FPS) && isValidPos(&newPosOur) && anyCoordHasChanged(&(posDataBase[OUR_BOARD]), &newPosOur, &coordNameChanged) )
 	{
@@ -99,17 +99,21 @@ void updateLecture(void)
 
 void timeOutCallback(void)
 {
+	static int  turn = 0;
 	char idsCoord[N_COORDS] = IDS_COORDS;
 	char coordChared[MAX_LEN_COORDS];
 	int i = 0, cantCoordChared = 0;
-	for(i = 0; i < N_COORDS; i++)
+	if(!flagsOurBoardChanged[turn])
 	{
-		if(!flagsOurBoardChanged[i])
-		{
-			cantCoordChared = getBoardCoordChared(OUR_BOARD, idsCoord[i], coordChared);
-			while(!sendCoordToAll(idsCoord[i], coordChared, cantCoordChared));
-			flagsOurBoardChanged[i] = false;
-		}
+		cantCoordChared = getBoardCoordChared(OUR_BOARD, idsCoord[turn], coordChared);
+		sendCoordToAll(idsCoord[i], coordChared, cantCoordChared);
+		flagsOurBoardChanged[i] = false;
+
+	}
+	turn++;
+	if(turn == N_COORDS)
+	{
+		turn = 0;
 	}
 }
 
