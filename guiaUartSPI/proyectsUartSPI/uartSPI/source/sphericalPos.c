@@ -8,6 +8,7 @@
 #include "sphericalPos.h"
 #include <stdbool.h>
 #include <stdlib.h>
+#include <math.h>
 
 #define MAX_HEAD_ANGLE_SPHERICAL 179
 #define MIN_HEAD_ANGLE_SPHERICAL -179
@@ -108,16 +109,17 @@ int int2charsCoord(int coord, char * p2coordChared, int plusFlag)
 
 int chars2intCoord(char * p2coordChared, int cant)
 {
-	int i = 0, ret = 0;
+	int i = 0, ret = 0, limit = 1;
 	if((p2coordChared[i] == '+') || (p2coordChared[i] == '-'))
 	{
 		cant--;
+		limit = 0;
 	}
 	for(i = 0; i < cant; i++)
 	{
-		ret += (p2coordChared[cant - 1] - '0') * exp10(i);
+		ret += (p2coordChared[cant - i - limit] - '0') * pow(10, i);
 	}
-	if(p2coordChared[i] == '-')
+	if(p2coordChared[0] == '-')
 	{
 		ret = (-1) * ret;
 	}

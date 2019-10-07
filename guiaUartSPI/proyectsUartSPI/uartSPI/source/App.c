@@ -22,7 +22,7 @@ uint8_t aux;
  * CONSTANT AND MACRO DEFINITIONS USING #DEFINE
  ******************************************************************************/
 
-#define REFRESH_RATE 200 // (> 30FPS)
+#define REFRESH_RATE 220 // (> 30FPS)
 #define COORDS_TO_REFRESH 3
 #define REFRESH_PER_COORD 8 //mseconds
 #define ROLL_COORD_NUMBER 3

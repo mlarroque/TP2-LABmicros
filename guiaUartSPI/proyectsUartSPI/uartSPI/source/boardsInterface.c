@@ -107,7 +107,7 @@ void timeOutCallback(void)
 		if(!flagsOurBoardChanged[i])
 		{
 			cantCoordChared = getBoardCoordChared(OUR_BOARD, idsCoord[i], coordChared);
-			sendCoordToAll(idsCoord[i], coordChared, cantCoordChared);
+			while(!sendCoordToAll(idsCoord[i], coordChared, cantCoordChared));
 			flagsOurBoardChanged[i] = false;
 		}
 	}
