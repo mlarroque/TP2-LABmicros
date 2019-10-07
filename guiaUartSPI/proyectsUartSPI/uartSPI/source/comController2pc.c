@@ -36,7 +36,7 @@ void initResourcesController2pc(void)
 	config.parity = NO_PARITY_UART;
 	config.rxWaterMark = 5;
 	config.txWaterMark = 2;
-	config.mode = BLOCKING;
+	config.mode = NON_BLOCKING_SIMPLE;
 
 	uartInit (U0, config);
 	InitializeTimers(); //timers are necessary to take into account the time that the computer takes to answer
@@ -54,7 +54,8 @@ void sendMessage2pc(char idBoard, char * p2coord, char coordName, int cant)
 	}
 	cantCharsInPackage = cant + 2;
 	//start communication
-	uartWriteMsg(U0, package2pc, cant + 2); //cant + 1 (coordName) + 1 (idBoard) = cant + 2
+	while(!uartWriteMsg(U0, package2pc, cant + 2));
+	 //cant + 1 (coordName) + 1 (idBoard) = cant + 2
 	//SetTimer(TIME_OUT_PC_ANSWER, MAX_TIME_REACTION, rxCallback);
 }
 
