@@ -11,6 +11,7 @@ RM := rm -rf
 -include source/subdir.mk
 -include SDK/startup/subdir.mk
 -include SDK/CMSIS/subdir.mk
+-include SDK/subdir.mk
 -include subdir.mk
 -include objects.mk
 
