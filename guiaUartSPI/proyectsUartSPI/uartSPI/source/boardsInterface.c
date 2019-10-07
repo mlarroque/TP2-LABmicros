@@ -40,7 +40,7 @@ int changesCounter = 0;
 void initBoardsInterface(void)
 {
 	hw_EnableInterrupts();
-	//accelandMagnetInit();
+	accelandMagnetInit();
 	hw_DisableInterrupts();
 	coordHALinit();
 	//initDataBase();
@@ -58,12 +58,12 @@ void updateLecture(void)
 	uint32_t idChanged;
 	sphericalPos_t newPosOur;
 	angles_t aux = {0, 0, 0};
-	//getAccelAndMagntData();
-	//while(!IsDataReady());
-	//aux = GetMeasuredAngles();
-	//newPosOur.orientation = aux.orientation;
-	//newPosOur.headAngle = aux.pitch;
-	//newPosOur.rollAngle = aux.roll;
+	getAccelAndMagntData();
+	while(!IsDataReady());
+	aux = GetMeasuredAngles();
+	newPosOur.orientation = aux.orientation;
+	newPosOur.headAngle = aux.pitch;
+	newPosOur.rollAngle = aux.roll;
 
 	if((changesCounter <= MAX_FPS) && isValidPos(&newPosOur) && anyCoordHasChanged(&(posDataBase[OUR_BOARD]), &newPosOur, &coordNameChanged) )
 	{

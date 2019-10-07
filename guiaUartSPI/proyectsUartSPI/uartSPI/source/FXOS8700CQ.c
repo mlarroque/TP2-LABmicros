@@ -45,6 +45,8 @@ static bool data_ready;
 int16_t roll;
 int16_t pitch;
 int16_t orientation;
+bool finished = false;
+
 
 
 //PROTOTIPOS
