@@ -40,23 +40,18 @@
 #define FXOS8700CQ_READ_LEN 	13 // uno de status, y 6*2 de data accel/magn
 
 //GLOBAL VARIABLES
-uint8_t buffer[FXOS8700CQ_READ_LEN]; // read buffer
-bool newDataReady=false;
-bool finished = false;
-
-struct{
-	raw_data_type *pAccelData;
-	raw_data_type *pMagnData;
-}FXOS_t;
-
-//PROTOTIPOS
-static void FXOS8700CQConfiguration(void);
+uint8_t buffer[FXOS8700CQ_READ_LEN]; // read bufferbool finished = false;
 static bool data_ready;
 int16_t roll;
 int16_t pitch;
 int16_t orientation;
 
-void callback(void)
+
+//PROTOTIPOS
+static void FXOS8700CQConfiguration(void);
+
+
+static void callback(void)
 {
 	finished = true;
 }
