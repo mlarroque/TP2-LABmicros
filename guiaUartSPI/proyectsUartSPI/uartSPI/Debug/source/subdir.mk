@@ -5,23 +5,50 @@
 # Add inputs and outputs from these tool invocations to the build variables 
 C_SRCS += \
 ../source/App.c \
+../source/FXOS8700CQ.c \
 ../source/SysTick.c \
+../source/accelerometer.c \
+../source/boardsInterface.c \
+../source/can.c \
+../source/comController2node.c \
+../source/coordHAL.c \
+../source/i2c.c \
 ../source/pinsHandler.c \
+../source/sphericalPos.c \
 ../source/spi.c \
+../source/timer.c \
 ../source/uart.c 
 
 OBJS += \
 ./source/App.o \
+./source/FXOS8700CQ.o \
 ./source/SysTick.o \
+./source/accelerometer.o \
+./source/boardsInterface.o \
+./source/can.o \
+./source/comController2node.o \
+./source/coordHAL.o \
+./source/i2c.o \
 ./source/pinsHandler.o \
+./source/sphericalPos.o \
 ./source/spi.o \
+./source/timer.o \
 ./source/uart.o 
 
 C_DEPS += \
 ./source/App.d \
+./source/FXOS8700CQ.d \
 ./source/SysTick.d \
+./source/accelerometer.d \
+./source/boardsInterface.d \
+./source/can.d \
+./source/comController2node.d \
+./source/coordHAL.d \
+./source/i2c.d \
 ./source/pinsHandler.d \
+./source/sphericalPos.d \
 ./source/spi.d \
+./source/timer.d \
 ./source/uart.d 
 
 

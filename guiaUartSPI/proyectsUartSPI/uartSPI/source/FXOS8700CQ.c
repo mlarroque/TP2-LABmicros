@@ -52,27 +52,9 @@ static void FXOS8700CQConfiguration(void);
 
 
 
-
-//todo borrar funcion callback
 void callback(void)
 {
 	finished = true;
-}
-
-
-void parseData(raw_data_type *pAccelData, raw_data_type *pMagnData)
-{
-    //paso de 16bits a 14bits que son los que importan
-    //acelerómetro
-	pAccelData->x = (int16_t)(((buffer[1] << 8) | buffer[2])) >> 2;
-	pAccelData->y = (int16_t)(((buffer[3] << 8) | buffer[4])) >> 2;
-	pAccelData->z = (int16_t)(((buffer[5] << 8) | buffer[6])) >> 2;
-
-	//idem para el magnetómetro
-	pMagnData->x = (buffer[7] << 8) | buffer[8];
-	pMagnData->y = (buffer[9] << 8) | buffer[10];
-	pMagnData->z = (buffer[11] << 8) | buffer[12];
-	newDataReady=true;
 }
 
 
@@ -98,7 +80,6 @@ void FXOS8700CQConfiguration(void)
     {
     	return;
     }
-
 
     // write 0000 0000 = 0x00 to accelerometer control register 1 to place FXOS8700CQ into standby
     // [7-1] = 0000 000
@@ -155,15 +136,24 @@ void FXOS8700CQConfiguration(void)
 
 
 
-void ReadAccelMagnData(raw_data_type *pAccelData, raw_data_type *pMagnData, bool newDataReady)
+void ReadAccelMagnData(raw_data_type *pAccelData, raw_data_type *pMagnData)
 {
-	newDataReady = false;
 
     //leo 13 bytes, uno de status y doce de info, el de status no es relevante
 	finished = false;
 	i2cReadReg(FXOS8700CQ_SLAVE_ADDR, FXOS8700CQ_STATUS, buffer, FXOS8700CQ_READ_LEN, &callback);
 	while(!finished);
-	parseData(pAccelData, pMagnData);
+
+    //paso de 16bits a 14bits que son los que importan
+    //acelerómetro
+	pAccelData->x = (int16_t)(((buffer[1] << 8) | buffer[2])) >> 2;
+	pAccelData->y = (int16_t)(((buffer[3] << 8) | buffer[4])) >> 2;
+	pAccelData->z = (int16_t)(((buffer[5] << 8) | buffer[6])) >> 2;
+
+	//idem para el magnetómetro
+	pMagnData->x = (buffer[7] << 8) | buffer[8];
+	pMagnData->y = (buffer[9] << 8) | buffer[10];
+	pMagnData->z = (buffer[11] << 8) | buffer[12];
 
 
 }
