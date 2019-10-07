@@ -9,7 +9,7 @@
 #include "i2c.h"
 #include "pinsHandler.h"
 #include "MK64F12.h"
-#include "hardware.h"
+//#include "hardware.h"
 #include <stdint.h>
 #include <stdlib.h>
 
