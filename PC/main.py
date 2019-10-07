@@ -2,7 +2,7 @@ import GraphHandler as g
 import MessageHandler as m
 
 exit = False;
-baudrate=10000;
+baudrate=15500;
 timeout=None;
 port_name = "COM4";
 Gui = g.GraphHandler();

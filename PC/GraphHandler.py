@@ -63,7 +63,7 @@ class GraphHandler(object):
         for i in range(NUMBER_OF_KINETIS):
             roll_angle, head_angle, orientation = list_of_positions[i];
             (self.axes[i]).view_init(roll_angle, 90+head_angle);
-            (self.axes[i]).set_title("Kinetis"+" "+str(i+1)+ "\n"+ "  R ="+ str(roll_angle) + ", C = " + str(head_angle) );
+            (self.axes[i]).set_title("Kinetis"+" "+str(i+1)+ "\n"+ "  R ="+ str(roll_angle) + ", C = " + str(head_angle)+", O = "+str(orientation) );
         plt.draw();
         plt.pause(DELAY);
 
