@@ -36,7 +36,7 @@ void initResourcesController2pc(void)
 	config.parity = NO_PARITY_UART;
 	config.rxWaterMark = 5;
 	config.txWaterMark = 2;
-	config.mode = NON_BLOCKING_SIMPLE;
+	config.mode = BLOCKING;
 
 	uartInit (U0, config);
 	InitializeTimers(); //timers are necessary to take into account the time that the computer takes to answer
