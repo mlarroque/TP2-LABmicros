@@ -1,19 +1,16 @@
 import GraphHandler as g
 import MessageHandler as m
-import numpy as np
 
 exit = False;
-baudrate=9600;
-timeout=0;
-port_name = "PORT1";
+baudrate=10000;
+timeout=None;
+port_name = "COM4";
 Gui = g.GraphHandler();
-MsgHandler = m.MessageHandler("PORT1",baudrate_=baudrate, timeout_=timeout);
-list_of_positions = np.empty((6,3));
-for i in range(-18,18):
-    list_of_positions[0]= (10*i,0,0);
-    list_of_positions[1]= (10*i,20,0);
-    list_of_positions[2]= (10*i,48,0);
-    list_of_positions[3]= (0,10*i,0);
-    list_of_positions[4]= (0,10*i,0);
-    list_of_positions[5]= (0,10*i,0);
-    Gui.UpdateBoards(list_of_positions);
+MsgHandler = m.MessageHandler(port_name,baudrate_=baudrate, timeout_=timeout);
+MsgHandler.StartCommunication();
+while(1):
+    msg = MsgHandler.ReadFrame();
+    print(msg);
+list_of_positions = MsgHandler.GetPositions();
+Gui.UpdateBoards(list_of_positions);
+
