@@ -25,5 +25,8 @@ class SerialCommunicationHandler(object):
     def ReadMessage(self,bytes_to_read):
         bytes_read = 0;
         if( self.ser.is_open ):
-            bytes_read = self.ser.read(bytes_to_read);
+            try:
+                bytes_read = self.ser.read(bytes_to_read);
+            except:
+                pass
         return bytes_read;

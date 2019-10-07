@@ -1,7 +1,7 @@
 import CircuitBoard as c
 import SerialCommunicationHandler as s
 #Numero de Kinetis utilizadas
-NUMBER_OF_BOARDS = 6
+NUMBER_OF_BOARDS = 7
 ANGLE_MAX = 180
 ANGLE_MIN = -179
 ACK = 'A'
@@ -11,7 +11,9 @@ MAX_MSG_SIZE = 6
 class MessageHandler(object):
     """Handles messages recieved from the Kinetis"""
     def __init__(self, port_name, baudrate_=9600, timeout_=0, parity_='N', bytesize_=8, stopbits_=1):
-        self.BoardList = [c.CircuitBoard(), c.CircuitBoard(), c.CircuitBoard(), c.CircuitBoard()];
+        self.BoardList = [];
+        for i in range(NUMBER_OF_BOARDS):
+            self.BoardList.append( c.CircuitBoard() );
         self.Comm = s.SerialCommunicationHandler(port_name, baudrate_, timeout_, parity_, bytesize_, stopbits_);
 
     def TransmitError(self):
@@ -30,14 +32,33 @@ class MessageHandler(object):
         return self.Comm.WriteMessage(data);
 
     def ManageMessage(self, msg, size):
-        msg_string = msg.decode('ascii');
+        if (size < 3):
+            print("Paquete invalido");
+            return;
+        try:
+                msg_string = msg.decode('ascii');
+        except UnicodeDecodeError:
+            print("Recieved string is not ascii");
+            return;
         size_value = size-ID_BYTES;
+
         #Comienzo el parseo del mensaje recibido
-        board_index = int(msg_string[0]);
+        try:
+          board_index = int(msg_string[0]);
+        except ValueError:
+            print("Invalid Board ID recieved");
+            return;
+
         if( ( board_index < 0 ) or ( board_index>=NUMBER_OF_BOARDS ) ):
             self.TransmitError(); #Si el id de la kinetis es invalido, envia error.
             return;
-        angle_value = int(msg_string[2:(2+size_value)]);
+
+        try:
+          angle_value = int(msg_string[2:(2+size_value)]);
+        except ValueError:
+            print("Invalid angle value recieved");
+            return;
+
         if( (angle_value < ANGLE_MIN) or (angle_value > ANGLE_MAX) ):
             self.TransmitError(); #Si recibe un valor de angulo invalido, envia error.
             return;
@@ -51,13 +72,13 @@ class MessageHandler(object):
         else:
             self.TransmitError(); #Si recibe un id de angulo invalido, envia error.
             return;
-        self.Comm.WriteMessage(bytes(ACK,'ascii'));
+        #self.Comm.WriteMessage(bytes(ACK,'ascii'));
 
     def GetPositions(self):
-        position_list = [];
-        for i in range( len(self.BoardList) ):
-            roll = (self.BoardList[i]).GetRoll();
-            head = (self.BoardList[i]).GetHead();
-            orientation = (self.BoardList[i]).GetOrientation();
-            position_list.append( (roll, head, orientation) );
-        return position_list;
+        list_of_positions = [];
+        for i in range(NUMBER_OF_BOARDS):
+            roll_angle = self.BoardList[i].GetRoll();
+            head_angle = self.BoardList[i].GetHead();
+            orientation = self.BoardList[i].GetOrientation();
+            list_of_positions.append( (roll_angle, head_angle, orientation) );
+        return list_of_positions;
