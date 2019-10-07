@@ -44,7 +44,7 @@ typedef struct
  * FUNCTION PROTOTYPES WITH GLOBAL SCOPE
  ******************************************************************************/
 /**
- * @brief Initializes FXOS8700CQ with the I2C0 as default
+ * @brief Initializes FXOS8700CQ with I2C0 as default
  * @param none
  * @return none
 */
