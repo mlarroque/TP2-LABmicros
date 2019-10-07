@@ -56,10 +56,13 @@ void updateLecture(void)
 	int cant = 0, coordNumber = 0, newCoord = 0;
 
 	uint32_t idChanged;
-	//sphericalPos_t newPos = updateOurBoardPos(); //ourBoardPos has the mayor priority, so in all cases it has to be updated
-	if((changesCounter <= MAX_FPS) && anyCoordHasChanged(&(posDataBase[OUR_BOARD]), &(posDataBase[OUR_BOARD]), &coordNameChanged))
+	sphericalPos_t newPosOur;
+
+	getAccelAndMagntData((int16_t *)&newPosOur.rollAngle, (int16_t *)&newPosOur.headAngle, (int16_t *)&newPosOur.orientation);
+
+	if((changesCounter <= MAX_FPS) && anyCoordHasChanged(&(posDataBase[OUR_BOARD]), &newPosOur, &coordNameChanged))
 	{
-		//posDataBase[OUR_BOARD] = newPos;
+		posDataBase[OUR_BOARD] = newPosOur;
 		coordNumber = name2numCoord(coordNameChanged);
 		flagsOurBoardChanged[coordNumber] = true;
 		cant = getBoardCoordChared(OUR_BOARD, coordNameChanged, coordCharedChanged);

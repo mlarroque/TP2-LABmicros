@@ -69,24 +69,27 @@ _Bool anyCoordHasChanged(sphericalPos_t * p2oldPos, sphericalPos_t * p2newPos, c
 
 int int2charsCoord(int coord, char * p2coordChared, int plusFlag)
 {
-	int cant = 0, i = 0, aux = 0;
+	int cant = 0, i = 0, aux = 0, signCounter = 1;
 
 	if(plusFlag && (coord >= 0))
 	{
 		p2coordChared[0] = '+';
 		cant++;
+		signCounter--;
 	}
 	else if(coord < 0)
 	{
 		p2coordChared[0] = '-';
 		cant++;
+		signCounter--;
 	}
-	for(i = 0; i < N_COORDS; i++)
+	for(i = 0; (i < N_COORDS); i++)
 	{
 		aux = coord % 10;
-		p2coordChared[N_COORDS - 1] = aux + '0';
+		p2coordChared[N_COORDS - i - signCounter] = aux + '0';
 		aux = coord - aux;
 		coord = aux / 10;
+
 		cant++;
 	}
 	return cant;
