@@ -16,7 +16,7 @@
 #include "FXOS8700CQ.h"
 #include "i2c.h"
 #include <stdio.h>
-
+#include <math.h>
 
 #define I2C_ACCELEROMETER 0
 #define SENSITIVITY_G	(float)0.000488		//en G
@@ -51,10 +51,50 @@ struct{
 
 //PROTOTIPOS
 static void FXOS8700CQConfiguration(void);
+static bool data_ready;
+int16_t roll;
+int16_t pitch;
+int16_t orientation;
 
 void callback(void)
 {
 	finished = true;
+}
+
+static void coordConverter(float x, float y, float z)
+{
+	//pasamos de cartesianas a roll/angle
+	pitch = (int16_t)(atan2(y,z)*180/M_PI);
+	roll = (int16_t)(atan2(-x,sqrt(y*y+z*z))*180/M_PI);
+
+}
+
+
+void parseData()
+{
+    //paso de 16bits a 14bits que son los que importan
+    //acelerómetro
+	int16_t AccelX = (int16_t)(((buffer[1] << 8) | buffer[2])) >> 2;
+	int16_t AccelY = (int16_t)(((buffer[3] << 8) | buffer[4])) >> 2;
+	int16_t AccelZ = (int16_t)(((buffer[5] << 8) | buffer[6])) >> 2;
+
+	//idem para el magnetómetro
+	int16_t MagX = (buffer[7] << 8) | buffer[8];
+	int16_t MagY = (buffer[9] << 8) | buffer[10];
+	int16_t MagZ = (buffer[11] << 8) | buffer[12];
+
+	//preparo la data
+	float Ax = AccelX*SENSITIVITY_G;
+	float Ay = AccelY*SENSITIVITY_G;
+	float Az = AccelZ*SENSITIVITY_G;
+
+	float Mx = MagX*SENSITIVITY_M;
+	float My = MagY*SENSITIVITY_M;
+	float Mz = MagZ*SENSITIVITY_M;
+
+	coordConverter(Ax, Ay, Az);
+	orientation = (int16_t)(atan2(My, Mx)*180/M_PI);			//obtenemos la orientacion de la placa a partir del magnetómetro
+	data_ready = true;
 }
 
 void FXOS8700CQInit(void)
@@ -132,31 +172,33 @@ void FXOS8700CQConfiguration(void)
 }
 
 
-void ReadAccelMagnData(raw_data_type *pAccelData, raw_data_type *pMagnData)
+void ReadAccelMagnData(void)
 {
     //leo 13 bytes, uno de status y doce de info, el de status no es relevante
-	finished = false;
-	i2cReadReg(FXOS8700CQ_SLAVE_ADDR, FXOS8700CQ_STATUS, buffer, FXOS8700CQ_READ_LEN, &callback);
-//	while(!finished);
+	data_ready = false;
+	i2cReadReg(FXOS8700CQ_SLAVE_ADDR, FXOS8700CQ_STATUS, buffer, FXOS8700CQ_READ_LEN, &parseData);
 
-    //paso de 16bits a 14bits que son los que importan
-    //acelerómetro
-	int16_t AccelX = (int16_t)(((buffer[1] << 8) | buffer[2])) >> 2;
-	int16_t AccelY = (int16_t)(((buffer[3] << 8) | buffer[4])) >> 2;
-	int16_t AccelZ = (int16_t)(((buffer[5] << 8) | buffer[6])) >> 2;
 
-	//idem para el magnetómetro
-	int16_t MagX = (buffer[7] << 8) | buffer[8];
-	int16_t MagY = (buffer[9] << 8) | buffer[10];
-	int16_t MagZ = (buffer[11] << 8) | buffer[12];
-
-	//preparo la data
-	pAccelData->x = AccelX*SENSITIVITY_G;
-	pAccelData->y = AccelY*SENSITIVITY_G;
-	pAccelData->z = AccelZ*SENSITIVITY_G;
-
-	pMagnData->x = MagX*SENSITIVITY_M;
-	pMagnData->y = MagY*SENSITIVITY_M;
-	pMagnData->z = MagZ*SENSITIVITY_M;
 }
+
+int16_t GetRollAngle(void)
+{
+	return roll;
+}
+
+int16_t GetPitchAngle(void)
+{
+	return pitch;
+}
+
+int16_t GetOrientation(void)
+{
+	return orientation;
+}
+
+bool GetDataReady(void)
+{
+	return data_ready;
+}
+
 

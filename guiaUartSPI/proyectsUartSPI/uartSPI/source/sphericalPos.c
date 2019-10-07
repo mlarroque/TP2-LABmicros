@@ -7,6 +7,7 @@
 
 #include "sphericalPos.h"
 #include <stdbool.h>
+#include <stdlib.h>
 
 #define MAX_HEAD_ANGLE_SPHERICAL 179
 #define MIN_HEAD_ANGLE_SPHERICAL -179
@@ -47,9 +48,10 @@ _Bool isValidCoord(char coordName, int coord)
 _Bool isValidPos(sphericalPos_t * p2pos)
 {
 	_Bool ret = false;
-	ret = isValidCoord(ORIENTATION_ID, p2pos->orientation);
-	ret = isValidCoord(HEAD_ANGLE_ID, p2pos->headAngle);
-	ret = isValidCoord(ROLL_ANGLE_ID, p2pos->rollAngle);
+	if(isValidCoord(ORIENTATION_ID, p2pos->orientation) && isValidCoord(HEAD_ANGLE_ID, p2pos->headAngle) && isValidCoord(ROLL_ANGLE_ID, p2pos->rollAngle))
+	{
+		ret = true;
+	}
 	return ret;
 }
 _Bool anyCoordHasChanged(sphericalPos_t * p2oldPos, sphericalPos_t * p2newPos, char * p2coordChanged)
@@ -70,6 +72,7 @@ _Bool anyCoordHasChanged(sphericalPos_t * p2oldPos, sphericalPos_t * p2newPos, c
 		ret = true;
 		*p2coordChanged = ROLL_ANGLE_ID;
 	}
+	else;
 
 	return ret;
 }
@@ -89,6 +92,7 @@ int int2charsCoord(int coord, char * p2coordChared, int plusFlag)
 		p2coordChared[0] = '-';
 		cant++;
 		signCounter--;
+		coord = coord*(-1);
 	}
 	for(i = 0; (i < N_COORDS); i++)
 	{
@@ -122,10 +126,10 @@ int chars2intCoord(char * p2coordChared, int cant)
 
 _Bool areCoordsEquals(int coordA, int coordB)
 {
-	_Bool ret = false;
-	if((coordA >= (coordB + SENSIBILITY)) || (coordA <= (coordB - SENSIBILITY)))
+	_Bool ret = true;
+	if(abs(coordB-coordA) >= SENSIBILITY)
 	{
-		ret = true;
+		ret = false;
 	}
 	return ret;
 }

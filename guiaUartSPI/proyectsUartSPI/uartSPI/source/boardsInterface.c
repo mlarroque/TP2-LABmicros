@@ -39,10 +39,10 @@ int changesCounter = 0;
 
 void initBoardsInterface(void)
 {
-	//hw_EnableInterrupts();
-	//accelandMagnetInit();
-	//hw_DisableInterrupts();
-	//coordHALinit();
+	hw_EnableInterrupts();
+	accelandMagnetInit();
+	hw_DisableInterrupts();
+	coordHALinit();
 	//initDataBase();
 	changesCounter = 0;
 	SetTimer(INACTIVITY, TIME_OUT_INACTIVITY, timeOutCallback);
@@ -57,18 +57,24 @@ void updateLecture(void)
 
 	uint32_t idChanged;
 	sphericalPos_t newPosOur;
+	angles_t aux;
+	getAccelAndMagntData();
+	while(!IsDataReady());
+	aux = GetMeasuredAngles();
+	newPosOur.orientation = aux.orientation;
+	newPosOur.headAngle = aux.pitch;
+	newPosOur.rollAngle = aux.roll;
 
-	//getAccelAndMagntData((int16_t *)&newPosOur.rollAngle, (int16_t *)&newPosOur.headAngle, (int16_t *)&newPosOur.orientation);
-
-	if((changesCounter <= MAX_FPS) && anyCoordHasChanged(&(posDataBase[OUR_BOARD]), &newPosOur, &coordNameChanged) && isValidPos(&newPosOur))
+	if((changesCounter <= MAX_FPS) && isValidPos(&newPosOur) && anyCoordHasChanged(&(posDataBase[OUR_BOARD]), &newPosOur, &coordNameChanged) )
 	{
-		//posDataBase[OUR_BOARD] = newPosOur;
+		posDataBase[OUR_BOARD] = newPosOur;
 		coordNumber = name2numCoord(coordNameChanged);
 		flagsOurBoardChanged[coordNumber] = true;
 		cant = getBoardCoordChared(OUR_BOARD, coordNameChanged, coordCharedChanged);
-		//sendCoordToAll(coordNameChanged, coordCharedChanged, cant);
+		sendCoordToAll(coordNameChanged, coordCharedChanged, cant);
+		changesCounter++;
 	}
-	if(0)//readCoord(&idChanged, &coordNameChanged, coordCharedChanged, &cant))
+	if(readCoord(&idChanged, &coordNameChanged, coordCharedChanged, &cant))
 	{
 		newCoord = chars2intCoord(coordCharedChanged, cant);
 		if(isValidCoord(coordNameChanged, newCoord))
@@ -101,7 +107,7 @@ void timeOutCallback(void)
 		if(!flagsOurBoardChanged[i])
 		{
 			cantCoordChared = getBoardCoordChared(OUR_BOARD, idsCoord[i], coordChared);
-			//sendCoordToAll(idsCoord[i], coordChared, cantCoordChared);
+			sendCoordToAll(idsCoord[i], coordChared, cantCoordChared);
 			flagsOurBoardChanged[i] = false;
 		}
 	}

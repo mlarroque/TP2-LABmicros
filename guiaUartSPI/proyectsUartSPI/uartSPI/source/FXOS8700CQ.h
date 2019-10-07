@@ -56,7 +56,13 @@ void FXOS8700CQInit(void);
  * @param pMagnData where to store magnetometer data
  * @return noneh
 */
-void ReadAccelMagnData(raw_data_type *pAccelData, raw_data_type *pMagnData);
+void ReadAccelMagnData(void);
+
+//Getters
+int16_t GetRollAngle(void);
+int16_t GetPitchAngle(void);
+int16_t GetOrientation(void);
+bool GetDataReady(void);
 
 /*******************************************************************************
  ******************************************************************************/

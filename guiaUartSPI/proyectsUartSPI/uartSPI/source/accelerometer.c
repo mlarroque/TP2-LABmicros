@@ -6,23 +6,8 @@
  */
 
 #include "FXOS8700CQ.h"
-#include <math.h>
+#include "accelerometer.h"
 
-
-static raw_data_type pAccelData;
-static raw_data_type pMagnData;
-
-
-/**
- * @brief Converts from float to int(angles)
- * @param float x magnitude from accelerometer
- * @param float y magnitude from accelerometer
- * @param float z magnitude from accelerometer
- * @param variable where to store roll angle
- * @param variable where to store pitch/head angle
- * @return none
-*/
-static void coordConverter(float x, float y, float z, int16_t * roll, int16_t * pitch);
 
 
 void accelandMagnetInit(void)
@@ -31,18 +16,25 @@ void accelandMagnetInit(void)
 }
 
 
-void getAccelAndMagntData(int16_t* roll, int16_t* head, int16_t* orientation)
+void getAccelAndMagntData(void)
 {
-	ReadAccelMagnData(&pAccelData, &pMagnData);					//leemos int del acelerometro
-	coordConverter(pAccelData.x, pAccelData.y, pAccelData.z, roll,  head);		//pasamos del int a los angulos que queremos
+	ReadAccelMagnData();					//leemos int del acelerometro
 
-	*orientation = (int16_t)(atan2(pMagnData.y, pMagnData.x)*180/M_PI);			//obtenemos la orientacion de la placa a partir del magnetómetro
 }
 
-void coordConverter(float x, float y, float z, int16_t * roll, int16_t * pitch)
+bool IsDataReady(void)
 {
-	//pasamos de cartesianas a roll/angle
-	*roll = (int16_t)(atan2(y,z)*180/M_PI);
-	*pitch = (int16_t)(atan2(-x,sqrt(y*y+z*z))*180/M_PI);
+	return  GetDataReady();
 }
+
+angles_t GetMeasuredAngles(void)
+{
+	angles_t data;
+	data.roll = GetRollAngle();
+	data.pitch=GetPitchAngle();
+	data.orientation=GetOrientation();
+	return data;
+}
+
+
 
