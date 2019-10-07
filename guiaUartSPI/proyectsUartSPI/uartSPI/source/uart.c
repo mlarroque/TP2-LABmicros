@@ -28,7 +28,7 @@
 #define TX_MESSAGE_MAX_LEN 8
 
 #define RX_BUFFER_LEN 8
-#define TX_BUFFER_LEN 128
+#define TX_BUFFER_LEN 200
 
 #define EMPTY -1
 #define TX_FIFO_SIZE_K64 7
@@ -243,19 +243,21 @@ uint8_t uartWriteMsg(uint8_t id, const char* msg, uint8_t cant)
 			}
 			cantTX = TX_BUFFER_LEN - lensTXbuffer[id]; //cantTX hasta aqui es la cantidad disponible
 			cantTX = ( (cant <= cantTX)? cant : cantTX ); //cantTX es el minimo entre la cantidad disponible y la cantidad requerida
-			copyTXmsg(id, msg, cantTX); //se copian cantTX chars del mensaje
-			if(  (uartWasSleeping || ~(p2uart->C2 & UART_C2_TCIE_MASK) ) && (cantTX > 0)) //si la uart estaba durmiendo desde un principio o estaba activaba pero ahora ya termino
+			if (cantTX == cant)
 			{
-				p2uart->C2 |= UART_C2_TE_MASK;
-				p2uart->C2 |= UART_C2_TIE_MASK; //habilito la interrupcion para el fin de transmisión
+				copyTXmsg(id, msg, cantTX); //se copian cantTX chars del mensaje
+				if(  (uartWasSleeping || ~(p2uart->C2 & UART_C2_TCIE_MASK) ) && (cantTX > 0)) //si la uart estaba durmiendo desde un principio o estaba activaba pero ahora ya termino
+				{
+					p2uart->C2 |= UART_C2_TE_MASK;
+					p2uart->C2 |= UART_C2_TIE_MASK; //habilito la interrupcion para el fin de transmisión
 
+				}
+			}
+			else
+			{
+				cantTX = 0;
 			}
 		}
-	}
-	if (cantTX == 0)
-	{
-		cantTX++;
-		cantTX--;
 	}
 	return cantTX;
 }
