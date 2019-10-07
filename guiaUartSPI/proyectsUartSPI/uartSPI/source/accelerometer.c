@@ -12,6 +12,14 @@
 static raw_data_type pAccelData;
 static raw_data_type pMagnData;
 
+
+/**
+ * @brief Converts from int to
+ * @param roll angle of device.
+ * @param head/pitch angle of device.
+ * @param orientation of device.
+ * @return none
+*/
 static void coordConverter(float x, float y, float z, int16_t * roll, int16_t * pitch);
 
 

@@ -10,7 +10,7 @@ C_SRCS += \
 ../source/accelerometer.c \
 ../source/boardsInterface.c \
 ../source/can.c \
-../source/comController2pc.c \
+../source/comController2node.c \
 ../source/coordHAL.c \
 ../source/i2c.c \
 ../source/pinsHandler.c \
@@ -26,7 +26,7 @@ OBJS += \
 ./source/accelerometer.o \
 ./source/boardsInterface.o \
 ./source/can.o \
-./source/comController2pc.o \
+./source/comController2node.o \
 ./source/coordHAL.o \
 ./source/i2c.o \
 ./source/pinsHandler.o \
@@ -42,7 +42,7 @@ C_DEPS += \
 ./source/accelerometer.d \
 ./source/boardsInterface.d \
 ./source/can.d \
-./source/comController2pc.d \
+./source/comController2node.d \
 ./source/coordHAL.d \
 ./source/i2c.d \
 ./source/pinsHandler.d \
