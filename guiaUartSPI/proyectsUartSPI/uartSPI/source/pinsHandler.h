@@ -35,7 +35,7 @@ enum { PA, PB, PC, PD, PE };
 #define NUMBER_OF_PINS_PORT 32
 #endif //NUMBER_OF_PORTS
 
-
+#define IRQ_MODE_DISABLE 0
 /*******************************************************************************
  * ENUMERATIONS AND STRUCTURES AND TYPEDEFS
  ******************************************************************************/
