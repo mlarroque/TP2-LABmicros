@@ -360,7 +360,7 @@ Discarded input sections
  .debug_macro   0x00000000     0xe07b ./source/spi.o
  .debug_macro   0x00000000       0x22 ./source/spi.o
  .debug_line    0x00000000      0x133 ./source/spi.o
- .debug_str     0x00000000    0x70558 ./source/spi.o
+ .debug_str     0x00000000    0x7057c ./source/spi.o
  .comment       0x00000000       0x7f ./source/spi.o
  .ARM.attributes
                 0x00000000       0x39 ./source/spi.o
@@ -2120,43 +2120,43 @@ OUTPUT(uartSPI.axf elf32-littlearm)
  .debug_line    0x0000241c      0x6d8 ./SDK/startup/startup_mk64f12.o
  .debug_line    0x00002af4      0x1d2 ./SDK/CMSIS/system_MK64F12.o
 
-.debug_str      0x00000000    0x7ea3f
- .debug_str     0x00000000     0x39eb ./source/App.o
-                               0x3b5f (size before relaxing)
- .debug_str     0x000039eb     0x5092 ./source/FXOS8700CQ.o
-                               0x8a4b (size before relaxing)
- .debug_str     0x00008a7d    0x6d238 ./source/SysTick.o
-                              0x70dc2 (size before relaxing)
- .debug_str     0x00075cb5       0x7b ./source/accelerometer.o
-                               0x391f (size before relaxing)
- .debug_str     0x00075d30     0x6e0b ./source/boardsInterface.o
-                              0x774ea (size before relaxing)
- .debug_str     0x0007cb3b      0x671 ./source/can.o
-                              0x77bbb (size before relaxing)
- .debug_str     0x0007d1ac      0x279 ./source/comController2pc.o
-                               0x3b5d (size before relaxing)
- .debug_str     0x0007d425       0xe6 ./source/coordHAL.o
-                               0x39e2 (size before relaxing)
- .debug_str     0x0007d50b      0x2e7 ./source/i2c.o
-                              0x70eed (size before relaxing)
- .debug_str     0x0007d7f2       0x78 ./source/pinsHandler.o
-                              0x7062b (size before relaxing)
- .debug_str     0x0007d86a      0x36f ./source/sphericalPos.o
-                               0x6e9a (size before relaxing)
- .debug_str     0x0007dbd9      0x116 ./source/timer.o
-                               0x39f2 (size before relaxing)
- .debug_str     0x0007dcef      0x481 ./source/uart.o
-                              0x77d11 (size before relaxing)
- .debug_str     0x0007e170      0x146 ./SDK/startup/hardware.o
-                              0x7720b (size before relaxing)
- .debug_str     0x0007e2b6       0x1b ./SDK/startup/main.o
-                              0x77021 (size before relaxing)
- .debug_str     0x0007e2d1       0x36 ./SDK/startup/semihost_hardfault.o
-                               0x2d45 (size before relaxing)
- .debug_str     0x0007e307      0x6e1 ./SDK/startup/startup_mk64f12.o
-                               0x35b4 (size before relaxing)
- .debug_str     0x0007e9e8       0x57 ./SDK/CMSIS/system_MK64F12.o
-                              0x7711a (size before relaxing)
+.debug_str      0x00000000    0x7ea63
+ .debug_str     0x00000000     0x3a0f ./source/App.o
+                               0x3b83 (size before relaxing)
+ .debug_str     0x00003a0f     0x5092 ./source/FXOS8700CQ.o
+                               0x8a6f (size before relaxing)
+ .debug_str     0x00008aa1    0x6d238 ./source/SysTick.o
+                              0x70de6 (size before relaxing)
+ .debug_str     0x00075cd9       0x7b ./source/accelerometer.o
+                               0x3943 (size before relaxing)
+ .debug_str     0x00075d54     0x6e0b ./source/boardsInterface.o
+                              0x7750e (size before relaxing)
+ .debug_str     0x0007cb5f      0x671 ./source/can.o
+                              0x77bdf (size before relaxing)
+ .debug_str     0x0007d1d0      0x279 ./source/comController2pc.o
+                               0x3b81 (size before relaxing)
+ .debug_str     0x0007d449       0xe6 ./source/coordHAL.o
+                               0x3a06 (size before relaxing)
+ .debug_str     0x0007d52f      0x2e7 ./source/i2c.o
+                              0x70f11 (size before relaxing)
+ .debug_str     0x0007d816       0x78 ./source/pinsHandler.o
+                              0x7064f (size before relaxing)
+ .debug_str     0x0007d88e      0x36f ./source/sphericalPos.o
+                               0x6ebe (size before relaxing)
+ .debug_str     0x0007dbfd      0x116 ./source/timer.o
+                               0x3a16 (size before relaxing)
+ .debug_str     0x0007dd13      0x481 ./source/uart.o
+                              0x77d35 (size before relaxing)
+ .debug_str     0x0007e194      0x146 ./SDK/startup/hardware.o
+                              0x7722f (size before relaxing)
+ .debug_str     0x0007e2da       0x1b ./SDK/startup/main.o
+                              0x77045 (size before relaxing)
+ .debug_str     0x0007e2f5       0x36 ./SDK/startup/semihost_hardfault.o
+                               0x2d69 (size before relaxing)
+ .debug_str     0x0007e32b      0x6e1 ./SDK/startup/startup_mk64f12.o
+                               0x35d8 (size before relaxing)
+ .debug_str     0x0007ea0c       0x57 ./SDK/CMSIS/system_MK64F12.o
+                              0x7713e (size before relaxing)
 
 .comment        0x00000000       0x7e
  .comment       0x00000000       0x7e ./source/App.o

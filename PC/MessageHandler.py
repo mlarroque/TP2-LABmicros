@@ -31,7 +31,7 @@ class MessageHandler(object):
         if (self.valid_message):
             return self.Comm.ReadMessage(MAX_MSG_SIZE); #Si recibi un mensaje valido leo los proximos 6 bytes
         else:
-            returnself.Comm.ReadMessage(1); #Si recibo mensaje invalido, leo el proximo byte.
+            return self.Comm.ReadMessage(1); #Si recibo mensaje invalido, leo el proximo byte.
 
     def WriteFrame(self,data):
         return self.Comm.WriteMessage(data);
@@ -64,7 +64,7 @@ class MessageHandler(object):
                 valid = False;
 
             try:
-              angle_value = int(self.last_message[2:(2+size_value)]);
+              angle_value = int( str(self.last_message[2:(2+size_value)]) );
             except ValueError:
                 print("Invalid angle value recieved");
                 valid = False;
