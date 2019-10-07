@@ -70,7 +70,7 @@ void updateLecture(void)
 		posDataBase[OUR_BOARD] = newPosOur;
 		coordNumber = name2numCoord(coordNameChanged);
 		flagsOurBoardChanged[coordNumber] = true;
-		cant = getBoardCoordChared(BOARD5, coordNameChanged, coordCharedChanged);
+		cant = getBoardCoordChared(OUR_BOARD, coordNameChanged, coordCharedChanged);
 		sendCoordToAll(coordNameChanged, coordCharedChanged, cant);
 		changesCounter++;
 	}
@@ -105,7 +105,7 @@ void timeOutCallback(void)
 	int i = 0, cantCoordChared = 0;
 	if(!flagsOurBoardChanged[turn])
 	{
-		cantCoordChared = getBoardCoordChared(BOARD5, idsCoord[turn], coordChared);
+		cantCoordChared = getBoardCoordChared(OUR_BOARD, idsCoord[turn], coordChared);
 		sendCoordToAll(idsCoord[turn], coordChared, cantCoordChared);
 		flagsOurBoardChanged[turn] = false;
 

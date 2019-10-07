@@ -14,7 +14,7 @@
  ****************************************************/
 
 /* Own id for the Tx node. */
-#define ID	((uint32_t)0x106)
+#define ID	((uint32_t)0x101)
 /* Number of Rx Buffers. */
 #define RX_MB_NUM	7
 /* Number of Tx Buffers. */
@@ -33,7 +33,7 @@
  ******************************************************/
 
 /* Ids for the Rx nodes. */
-static uint32_t	idsArray[RX_MB_NUM]={0x100,0x101,0x102,0x103,0x104,0x105,0x107};
+static uint32_t	idsArray[RX_MB_NUM]={0x100,0x102,0x103,0x104,0x105,0x106,0x107};
 /* String to create message. */
 static char msg[MAX_BYTES];
 static uint8_t cant = 0;
