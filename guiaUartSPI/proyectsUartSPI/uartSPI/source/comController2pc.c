@@ -31,7 +31,7 @@ void initResourcesController2pc(void)
 	cantCharsInPackage = 0;
 
 	uart_cfg_t config;
-	config.baudRate = 10000;
+	config.baudRate = 15000;
 	config.nBits = 8;
 	config.parity = NO_PARITY_UART;
 	config.rxWaterMark = 5;
