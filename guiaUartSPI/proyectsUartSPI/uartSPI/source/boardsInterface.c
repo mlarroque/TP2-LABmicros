@@ -31,7 +31,7 @@ void initDataBase(void);
 
 int name2numCoord(char coordNameChanged);
 
-static sphericalPos_t posDataBase[N_BOARDS] = {{0, 0, 0}, {0, 0, 0}, {0, 0, 0}, {0, 0, 0}, {0, 0, 0}, {0, 0, 0}, {0, 0, 0}};
+static sphericalPos_t posDataBase[N_BOARDS] = {{0, 0, 0}, {0, 0, 0}, {0, 0, 0}, {0, 0, 0}, {100, 100, 100}, {0, 0, 0}, {0, 0, 0}};
 
 _Bool flagsOurBoardChanged[N_COORDS] = {false, false, false};
 
@@ -105,9 +105,9 @@ void timeOutCallback(void)
 	int i = 0, cantCoordChared = 0;
 	if(!flagsOurBoardChanged[turn])
 	{
-		cantCoordChared = getBoardCoordChared(OUR_BOARD, idsCoord[turn], coordChared);
-		sendCoordToAll(idsCoord[i], coordChared, cantCoordChared);
-		flagsOurBoardChanged[i] = false;
+		cantCoordChared = getBoardCoordChared(BOARD4, idsCoord[turn], coordChared);
+		sendCoordToAll(idsCoord[turn], coordChared, cantCoordChared);
+		flagsOurBoardChanged[turn] = false;
 
 	}
 	turn++;
