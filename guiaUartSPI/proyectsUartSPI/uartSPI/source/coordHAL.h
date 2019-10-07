@@ -36,6 +36,6 @@ bool sendCoordToAll(char nameCoord, char * coord, uint8_t coordNum);
  * @param coordNum Number of chars in coord string.
  * @return True if message was read successfully. False if no message to read
 */
-bool readCoord(uint32_t * id, char * nameCoord, char * coord, char * coordNum);
+bool readCoord(uint32_t * id, char * nameCoord, char * coord, int * coordNum);
 
 #endif /* COORDHAL_H_ */
