@@ -66,7 +66,6 @@ Discarded input sections
  .text.ReadAccelMagnData
                 0x00000000       0xe8 ./source/FXOS8700CQ.o
  .bss.FXOS_t    0x00000000        0x8 ./source/FXOS8700CQ.o
- .bss.buffer    0x00000000        0xd ./source/FXOS8700CQ.o
  .bss.newDataReady
                 0x00000000        0x1 ./source/FXOS8700CQ.o
  .debug_macro   0x00000000      0xa5a ./source/FXOS8700CQ.o
@@ -110,14 +109,6 @@ Discarded input sections
  .text          0x00000000        0x0 ./source/accelerometer.o
  .data          0x00000000        0x0 ./source/accelerometer.o
  .bss           0x00000000        0x0 ./source/accelerometer.o
- .text.coordConverter
-                0x00000000       0xc4 ./source/accelerometer.o
- .text.getAccelAndMagntData
-                0x00000000       0x7c ./source/accelerometer.o
- .bss.pAccelData
-                0x00000000        0xc ./source/accelerometer.o
- .bss.pMagnData
-                0x00000000        0xc ./source/accelerometer.o
  .debug_macro   0x00000000      0xa5a ./source/accelerometer.o
  .debug_macro   0x00000000      0x34e ./source/accelerometer.o
  .debug_macro   0x00000000       0x22 ./source/accelerometer.o
@@ -508,69 +499,32 @@ Discarded input sections
  .text          0x00000000        0x0 c:/nxp/mcuxpressoide_10.2.0_759/ide/tools/bin/../lib/gcc/arm-none-eabi/7.2.1/../../../../arm-none-eabi/lib/thumb/v7e-m/fpv4-sp/hard\libcr_c.a(atan2.o)
  .data          0x00000000        0x0 c:/nxp/mcuxpressoide_10.2.0_759/ide/tools/bin/../lib/gcc/arm-none-eabi/7.2.1/../../../../arm-none-eabi/lib/thumb/v7e-m/fpv4-sp/hard\libcr_c.a(atan2.o)
  .bss           0x00000000        0x0 c:/nxp/mcuxpressoide_10.2.0_759/ide/tools/bin/../lib/gcc/arm-none-eabi/7.2.1/../../../../arm-none-eabi/lib/thumb/v7e-m/fpv4-sp/hard\libcr_c.a(atan2.o)
- .text.atan2    0x00000000      0x128 c:/nxp/mcuxpressoide_10.2.0_759/ide/tools/bin/../lib/gcc/arm-none-eabi/7.2.1/../../../../arm-none-eabi/lib/thumb/v7e-m/fpv4-sp/hard\libcr_c.a(atan2.o)
- .comment       0x00000000       0x7f c:/nxp/mcuxpressoide_10.2.0_759/ide/tools/bin/../lib/gcc/arm-none-eabi/7.2.1/../../../../arm-none-eabi/lib/thumb/v7e-m/fpv4-sp/hard\libcr_c.a(atan2.o)
- .ARM.attributes
-                0x00000000       0x39 c:/nxp/mcuxpressoide_10.2.0_759/ide/tools/bin/../lib/gcc/arm-none-eabi/7.2.1/../../../../arm-none-eabi/lib/thumb/v7e-m/fpv4-sp/hard\libcr_c.a(atan2.o)
  .text          0x00000000        0x0 c:/nxp/mcuxpressoide_10.2.0_759/ide/tools/bin/../lib/gcc/arm-none-eabi/7.2.1/../../../../arm-none-eabi/lib/thumb/v7e-m/fpv4-sp/hard\libcr_c.a(errno.o)
  .data          0x00000000        0x0 c:/nxp/mcuxpressoide_10.2.0_759/ide/tools/bin/../lib/gcc/arm-none-eabi/7.2.1/../../../../arm-none-eabi/lib/thumb/v7e-m/fpv4-sp/hard\libcr_c.a(errno.o)
  .bss           0x00000000        0x0 c:/nxp/mcuxpressoide_10.2.0_759/ide/tools/bin/../lib/gcc/arm-none-eabi/7.2.1/../../../../arm-none-eabi/lib/thumb/v7e-m/fpv4-sp/hard\libcr_c.a(errno.o)
- .bss.errno     0x00000000        0x4 c:/nxp/mcuxpressoide_10.2.0_759/ide/tools/bin/../lib/gcc/arm-none-eabi/7.2.1/../../../../arm-none-eabi/lib/thumb/v7e-m/fpv4-sp/hard\libcr_c.a(errno.o)
- .comment       0x00000000       0x7f c:/nxp/mcuxpressoide_10.2.0_759/ide/tools/bin/../lib/gcc/arm-none-eabi/7.2.1/../../../../arm-none-eabi/lib/thumb/v7e-m/fpv4-sp/hard\libcr_c.a(errno.o)
- .ARM.attributes
-                0x00000000       0x39 c:/nxp/mcuxpressoide_10.2.0_759/ide/tools/bin/../lib/gcc/arm-none-eabi/7.2.1/../../../../arm-none-eabi/lib/thumb/v7e-m/fpv4-sp/hard\libcr_c.a(errno.o)
  .text          0x00000000        0x0 c:/nxp/mcuxpressoide_10.2.0_759/ide/tools/bin/../lib/gcc/arm-none-eabi/7.2.1/../../../../arm-none-eabi/lib/thumb/v7e-m/fpv4-sp/hard\libcr_c.a(fabs.o)
  .data          0x00000000        0x0 c:/nxp/mcuxpressoide_10.2.0_759/ide/tools/bin/../lib/gcc/arm-none-eabi/7.2.1/../../../../arm-none-eabi/lib/thumb/v7e-m/fpv4-sp/hard\libcr_c.a(fabs.o)
  .bss           0x00000000        0x0 c:/nxp/mcuxpressoide_10.2.0_759/ide/tools/bin/../lib/gcc/arm-none-eabi/7.2.1/../../../../arm-none-eabi/lib/thumb/v7e-m/fpv4-sp/hard\libcr_c.a(fabs.o)
- .text.fabs     0x00000000       0x22 c:/nxp/mcuxpressoide_10.2.0_759/ide/tools/bin/../lib/gcc/arm-none-eabi/7.2.1/../../../../arm-none-eabi/lib/thumb/v7e-m/fpv4-sp/hard\libcr_c.a(fabs.o)
- .comment       0x00000000       0x7f c:/nxp/mcuxpressoide_10.2.0_759/ide/tools/bin/../lib/gcc/arm-none-eabi/7.2.1/../../../../arm-none-eabi/lib/thumb/v7e-m/fpv4-sp/hard\libcr_c.a(fabs.o)
- .ARM.attributes
-                0x00000000       0x39 c:/nxp/mcuxpressoide_10.2.0_759/ide/tools/bin/../lib/gcc/arm-none-eabi/7.2.1/../../../../arm-none-eabi/lib/thumb/v7e-m/fpv4-sp/hard\libcr_c.a(fabs.o)
  .text          0x00000000        0x0 c:/nxp/mcuxpressoide_10.2.0_759/ide/tools/bin/../lib/gcc/arm-none-eabi/7.2.1/../../../../arm-none-eabi/lib/thumb/v7e-m/fpv4-sp/hard\libcr_c.a(sqrt.o)
  .data          0x00000000        0x0 c:/nxp/mcuxpressoide_10.2.0_759/ide/tools/bin/../lib/gcc/arm-none-eabi/7.2.1/../../../../arm-none-eabi/lib/thumb/v7e-m/fpv4-sp/hard\libcr_c.a(sqrt.o)
  .bss           0x00000000        0x0 c:/nxp/mcuxpressoide_10.2.0_759/ide/tools/bin/../lib/gcc/arm-none-eabi/7.2.1/../../../../arm-none-eabi/lib/thumb/v7e-m/fpv4-sp/hard\libcr_c.a(sqrt.o)
- .text.sqrt     0x00000000      0x11c c:/nxp/mcuxpressoide_10.2.0_759/ide/tools/bin/../lib/gcc/arm-none-eabi/7.2.1/../../../../arm-none-eabi/lib/thumb/v7e-m/fpv4-sp/hard\libcr_c.a(sqrt.o)
- .comment       0x00000000       0x7f c:/nxp/mcuxpressoide_10.2.0_759/ide/tools/bin/../lib/gcc/arm-none-eabi/7.2.1/../../../../arm-none-eabi/lib/thumb/v7e-m/fpv4-sp/hard\libcr_c.a(sqrt.o)
- .ARM.attributes
-                0x00000000       0x39 c:/nxp/mcuxpressoide_10.2.0_759/ide/tools/bin/../lib/gcc/arm-none-eabi/7.2.1/../../../../arm-none-eabi/lib/thumb/v7e-m/fpv4-sp/hard\libcr_c.a(sqrt.o)
  .text          0x00000000        0x0 c:/nxp/mcuxpressoide_10.2.0_759/ide/tools/bin/../lib/gcc/arm-none-eabi/7.2.1/../../../../arm-none-eabi/lib/thumb/v7e-m/fpv4-sp/hard\libcr_c.a(_hugeval.o)
  .data          0x00000000        0x0 c:/nxp/mcuxpressoide_10.2.0_759/ide/tools/bin/../lib/gcc/arm-none-eabi/7.2.1/../../../../arm-none-eabi/lib/thumb/v7e-m/fpv4-sp/hard\libcr_c.a(_hugeval.o)
  .bss           0x00000000        0x0 c:/nxp/mcuxpressoide_10.2.0_759/ide/tools/bin/../lib/gcc/arm-none-eabi/7.2.1/../../../../arm-none-eabi/lib/thumb/v7e-m/fpv4-sp/hard\libcr_c.a(_hugeval.o)
- .rodata.__huge_val
-                0x00000000        0x8 c:/nxp/mcuxpressoide_10.2.0_759/ide/tools/bin/../lib/gcc/arm-none-eabi/7.2.1/../../../../arm-none-eabi/lib/thumb/v7e-m/fpv4-sp/hard\libcr_c.a(_hugeval.o)
  .rodata.__huge_vall
                 0x00000000        0x8 c:/nxp/mcuxpressoide_10.2.0_759/ide/tools/bin/../lib/gcc/arm-none-eabi/7.2.1/../../../../arm-none-eabi/lib/thumb/v7e-m/fpv4-sp/hard\libcr_c.a(_hugeval.o)
- .comment       0x00000000       0x7f c:/nxp/mcuxpressoide_10.2.0_759/ide/tools/bin/../lib/gcc/arm-none-eabi/7.2.1/../../../../arm-none-eabi/lib/thumb/v7e-m/fpv4-sp/hard\libcr_c.a(_hugeval.o)
- .ARM.attributes
-                0x00000000       0x39 c:/nxp/mcuxpressoide_10.2.0_759/ide/tools/bin/../lib/gcc/arm-none-eabi/7.2.1/../../../../arm-none-eabi/lib/thumb/v7e-m/fpv4-sp/hard\libcr_c.a(_hugeval.o)
  .text          0x00000000        0x0 c:/nxp/mcuxpressoide_10.2.0_759/ide/tools/bin/../lib/gcc/arm-none-eabi/7.2.1/../../../../arm-none-eabi/lib/thumb/v7e-m/fpv4-sp/hard\libcr_c.a(atan.o)
  .data          0x00000000        0x0 c:/nxp/mcuxpressoide_10.2.0_759/ide/tools/bin/../lib/gcc/arm-none-eabi/7.2.1/../../../../arm-none-eabi/lib/thumb/v7e-m/fpv4-sp/hard\libcr_c.a(atan.o)
  .bss           0x00000000        0x0 c:/nxp/mcuxpressoide_10.2.0_759/ide/tools/bin/../lib/gcc/arm-none-eabi/7.2.1/../../../../arm-none-eabi/lib/thumb/v7e-m/fpv4-sp/hard\libcr_c.a(atan.o)
- .text.atan     0x00000000      0x224 c:/nxp/mcuxpressoide_10.2.0_759/ide/tools/bin/../lib/gcc/arm-none-eabi/7.2.1/../../../../arm-none-eabi/lib/thumb/v7e-m/fpv4-sp/hard\libcr_c.a(atan.o)
- .rodata.a.5195
-                0x00000000       0x20 c:/nxp/mcuxpressoide_10.2.0_759/ide/tools/bin/../lib/gcc/arm-none-eabi/7.2.1/../../../../arm-none-eabi/lib/thumb/v7e-m/fpv4-sp/hard\libcr_c.a(atan.o)
- .comment       0x00000000       0x7f c:/nxp/mcuxpressoide_10.2.0_759/ide/tools/bin/../lib/gcc/arm-none-eabi/7.2.1/../../../../arm-none-eabi/lib/thumb/v7e-m/fpv4-sp/hard\libcr_c.a(atan.o)
- .ARM.attributes
-                0x00000000       0x39 c:/nxp/mcuxpressoide_10.2.0_759/ide/tools/bin/../lib/gcc/arm-none-eabi/7.2.1/../../../../arm-none-eabi/lib/thumb/v7e-m/fpv4-sp/hard\libcr_c.a(atan.o)
  .text          0x00000000        0x0 c:/nxp/mcuxpressoide_10.2.0_759/ide/tools/bin/../lib/gcc/arm-none-eabi/7.2.1/thumb/v7e-m/fpv4-sp/hard\libcr_eabihelpers.a(double.o)
  .data          0x00000000        0x0 c:/nxp/mcuxpressoide_10.2.0_759/ide/tools/bin/../lib/gcc/arm-none-eabi/7.2.1/thumb/v7e-m/fpv4-sp/hard\libcr_eabihelpers.a(double.o)
  .bss           0x00000000        0x0 c:/nxp/mcuxpressoide_10.2.0_759/ide/tools/bin/../lib/gcc/arm-none-eabi/7.2.1/thumb/v7e-m/fpv4-sp/hard\libcr_eabihelpers.a(double.o)
- .text.__aeabi_dmul
-                0x00000000      0x11c c:/nxp/mcuxpressoide_10.2.0_759/ide/tools/bin/../lib/gcc/arm-none-eabi/7.2.1/thumb/v7e-m/fpv4-sp/hard\libcr_eabihelpers.a(double.o)
- .text.__aeabi_ddiv
-                0x00000000      0x138 c:/nxp/mcuxpressoide_10.2.0_759/ide/tools/bin/../lib/gcc/arm-none-eabi/7.2.1/thumb/v7e-m/fpv4-sp/hard\libcr_eabihelpers.a(double.o)
- .text.__aeabi_dsub
-                0x00000000      0x1b4 c:/nxp/mcuxpressoide_10.2.0_759/ide/tools/bin/../lib/gcc/arm-none-eabi/7.2.1/thumb/v7e-m/fpv4-sp/hard\libcr_eabihelpers.a(double.o)
- .text.__aeabi_dadd
-                0x00000000      0x10c c:/nxp/mcuxpressoide_10.2.0_759/ide/tools/bin/../lib/gcc/arm-none-eabi/7.2.1/thumb/v7e-m/fpv4-sp/hard\libcr_eabihelpers.a(double.o)
  .text.__aeabi_drsub
                 0x00000000       0x18 c:/nxp/mcuxpressoide_10.2.0_759/ide/tools/bin/../lib/gcc/arm-none-eabi/7.2.1/thumb/v7e-m/fpv4-sp/hard\libcr_eabihelpers.a(double.o)
  .text.__aeabi_dneg
                 0x00000000        0xe c:/nxp/mcuxpressoide_10.2.0_759/ide/tools/bin/../lib/gcc/arm-none-eabi/7.2.1/thumb/v7e-m/fpv4-sp/hard\libcr_eabihelpers.a(double.o)
  .text.__aeabi_d2f
                 0x00000000       0x54 c:/nxp/mcuxpressoide_10.2.0_759/ide/tools/bin/../lib/gcc/arm-none-eabi/7.2.1/thumb/v7e-m/fpv4-sp/hard\libcr_eabihelpers.a(double.o)
- .text.__aeabi_d2iz
-                0x00000000       0x40 c:/nxp/mcuxpressoide_10.2.0_759/ide/tools/bin/../lib/gcc/arm-none-eabi/7.2.1/thumb/v7e-m/fpv4-sp/hard\libcr_eabihelpers.a(double.o)
  .text.__aeabi_d2uiz
                 0x00000000       0x30 c:/nxp/mcuxpressoide_10.2.0_759/ide/tools/bin/../lib/gcc/arm-none-eabi/7.2.1/thumb/v7e-m/fpv4-sp/hard\libcr_eabihelpers.a(double.o)
  .text.__aeabi_d2lz
@@ -589,14 +543,6 @@ Discarded input sections
                 0x00000000       0x1a c:/nxp/mcuxpressoide_10.2.0_759/ide/tools/bin/../lib/gcc/arm-none-eabi/7.2.1/thumb/v7e-m/fpv4-sp/hard\libcr_eabihelpers.a(double.o)
  .text.__aeabi_ul2d
                 0x00000000        0x8 c:/nxp/mcuxpressoide_10.2.0_759/ide/tools/bin/../lib/gcc/arm-none-eabi/7.2.1/thumb/v7e-m/fpv4-sp/hard\libcr_eabihelpers.a(double.o)
- .text.__aeabi_dcmpeq
-                0x00000000       0x30 c:/nxp/mcuxpressoide_10.2.0_759/ide/tools/bin/../lib/gcc/arm-none-eabi/7.2.1/thumb/v7e-m/fpv4-sp/hard\libcr_eabihelpers.a(double.o)
- .text.__aeabi_dcmplt
-                0x00000000       0x58 c:/nxp/mcuxpressoide_10.2.0_759/ide/tools/bin/../lib/gcc/arm-none-eabi/7.2.1/thumb/v7e-m/fpv4-sp/hard\libcr_eabihelpers.a(double.o)
- .text.__aeabi_dcmpgt
-                0x00000000       0x58 c:/nxp/mcuxpressoide_10.2.0_759/ide/tools/bin/../lib/gcc/arm-none-eabi/7.2.1/thumb/v7e-m/fpv4-sp/hard\libcr_eabihelpers.a(double.o)
- .text.__aeabi_dcmple
-                0x00000000       0x5a c:/nxp/mcuxpressoide_10.2.0_759/ide/tools/bin/../lib/gcc/arm-none-eabi/7.2.1/thumb/v7e-m/fpv4-sp/hard\libcr_eabihelpers.a(double.o)
  .text.__aeabi_dcmpge
                 0x00000000       0x58 c:/nxp/mcuxpressoide_10.2.0_759/ide/tools/bin/../lib/gcc/arm-none-eabi/7.2.1/thumb/v7e-m/fpv4-sp/hard\libcr_eabihelpers.a(double.o)
  .text.__aeabi_dcmpun
@@ -605,9 +551,6 @@ Discarded input sections
                 0x00000000       0x2c c:/nxp/mcuxpressoide_10.2.0_759/ide/tools/bin/../lib/gcc/arm-none-eabi/7.2.1/thumb/v7e-m/fpv4-sp/hard\libcr_eabihelpers.a(double.o)
  .text.__aeabi_cdrcmple
                 0x00000000       0x14 c:/nxp/mcuxpressoide_10.2.0_759/ide/tools/bin/../lib/gcc/arm-none-eabi/7.2.1/thumb/v7e-m/fpv4-sp/hard\libcr_eabihelpers.a(double.o)
- .comment       0x00000000       0x7f c:/nxp/mcuxpressoide_10.2.0_759/ide/tools/bin/../lib/gcc/arm-none-eabi/7.2.1/thumb/v7e-m/fpv4-sp/hard\libcr_eabihelpers.a(double.o)
- .ARM.attributes
-                0x00000000       0x39 c:/nxp/mcuxpressoide_10.2.0_759/ide/tools/bin/../lib/gcc/arm-none-eabi/7.2.1/thumb/v7e-m/fpv4-sp/hard\libcr_eabihelpers.a(double.o)
  .text          0x00000000        0x0 c:/nxp/mcuxpressoide_10.2.0_759/ide/tools/bin/../lib/gcc/arm-none-eabi/7.2.1/thumb/v7e-m/fpv4-sp/hard\libcr_eabihelpers.a(float.o)
  .data          0x00000000        0x0 c:/nxp/mcuxpressoide_10.2.0_759/ide/tools/bin/../lib/gcc/arm-none-eabi/7.2.1/thumb/v7e-m/fpv4-sp/hard\libcr_eabihelpers.a(float.o)
  .bss           0x00000000        0x0 c:/nxp/mcuxpressoide_10.2.0_759/ide/tools/bin/../lib/gcc/arm-none-eabi/7.2.1/thumb/v7e-m/fpv4-sp/hard\libcr_eabihelpers.a(float.o)
@@ -643,8 +586,6 @@ Discarded input sections
                 0x00000000       0x1a c:/nxp/mcuxpressoide_10.2.0_759/ide/tools/bin/../lib/gcc/arm-none-eabi/7.2.1/thumb/v7e-m/fpv4-sp/hard\libcr_eabihelpers.a(float.o)
  .text.__aeabi_ul2f
                 0x00000000        0x8 c:/nxp/mcuxpressoide_10.2.0_759/ide/tools/bin/../lib/gcc/arm-none-eabi/7.2.1/thumb/v7e-m/fpv4-sp/hard\libcr_eabihelpers.a(float.o)
- .text.__aeabi_f2d
-                0x00000000       0x38 c:/nxp/mcuxpressoide_10.2.0_759/ide/tools/bin/../lib/gcc/arm-none-eabi/7.2.1/thumb/v7e-m/fpv4-sp/hard\libcr_eabihelpers.a(float.o)
  .text.__aeabi_fcmpeq
                 0x00000000       0x1e c:/nxp/mcuxpressoide_10.2.0_759/ide/tools/bin/../lib/gcc/arm-none-eabi/7.2.1/thumb/v7e-m/fpv4-sp/hard\libcr_eabihelpers.a(float.o)
  .text.__aeabi_fcmplt
@@ -661,9 +602,6 @@ Discarded input sections
                 0x00000000       0x20 c:/nxp/mcuxpressoide_10.2.0_759/ide/tools/bin/../lib/gcc/arm-none-eabi/7.2.1/thumb/v7e-m/fpv4-sp/hard\libcr_eabihelpers.a(float.o)
  .text.__aeabi_cfrcmple
                 0x00000000        0xa c:/nxp/mcuxpressoide_10.2.0_759/ide/tools/bin/../lib/gcc/arm-none-eabi/7.2.1/thumb/v7e-m/fpv4-sp/hard\libcr_eabihelpers.a(float.o)
- .comment       0x00000000       0x7f c:/nxp/mcuxpressoide_10.2.0_759/ide/tools/bin/../lib/gcc/arm-none-eabi/7.2.1/thumb/v7e-m/fpv4-sp/hard\libcr_eabihelpers.a(float.o)
- .ARM.attributes
-                0x00000000       0x39 c:/nxp/mcuxpressoide_10.2.0_759/ide/tools/bin/../lib/gcc/arm-none-eabi/7.2.1/thumb/v7e-m/fpv4-sp/hard\libcr_eabihelpers.a(float.o)
 
 Memory Configuration
 
@@ -738,7 +676,7 @@ END GROUP
                 0x000001bc                __data_section_table_end = .
                 0x000001bc                __bss_section_table = .
                 0x000001bc        0x4 LONG 0x20000070 ADDR (.bss)
-                0x000001c0        0x4 LONG 0x380 SIZEOF (.bss)
+                0x000001c0        0x4 LONG 0x3a8 SIZEOF (.bss)
                 0x000001c4        0x4 LONG 0x1fff0000 ADDR (.bss_RAM2)
                 0x000001c8        0x4 LONG 0x0 SIZEOF (.bss_RAM2)
                 0x000001cc        0x4 LONG 0x14000000 ADDR (.bss_RAM3)
@@ -855,121 +793,138 @@ END GROUP
                 0x00000410                PROVIDE (__FLASH_CONFIG_END__, .)
                 0x00000001                ASSERT (! ((__FLASH_CONFIG_START__ == __FLASH_CONFIG_END__)), Linker Flash Config Support Enabled, but no .FlashConfig section provided within application)
  *(SORT_BY_ALIGNMENT(.text*))
+ .text.coordConverter
+                0x00000410       0xc4 ./source/accelerometer.o
+ *fill*         0x000004d4        0x4 ff
+ .text.getAccelAndMagntData
+                0x000004d8       0x7c ./source/accelerometer.o
+                0x000004d8                getAccelAndMagntData
+ *fill*         0x00000554        0x4 ff
+ .text.atan2    0x00000558      0x128 c:/nxp/mcuxpressoide_10.2.0_759/ide/tools/bin/../lib/gcc/arm-none-eabi/7.2.1/../../../../arm-none-eabi/lib/thumb/v7e-m/fpv4-sp/hard\libcr_c.a(atan2.o)
+                0x00000558                atan2
+ .text.sqrt     0x00000680      0x11c c:/nxp/mcuxpressoide_10.2.0_759/ide/tools/bin/../lib/gcc/arm-none-eabi/7.2.1/../../../../arm-none-eabi/lib/thumb/v7e-m/fpv4-sp/hard\libcr_c.a(sqrt.o)
+                0x00000680                sqrt
+ *fill*         0x0000079c        0x4 ff
+ .text.atan     0x000007a0      0x224 c:/nxp/mcuxpressoide_10.2.0_759/ide/tools/bin/../lib/gcc/arm-none-eabi/7.2.1/../../../../arm-none-eabi/lib/thumb/v7e-m/fpv4-sp/hard\libcr_c.a(atan.o)
+                0x000007a0                atan
  .text.callbackRefreshPc
-                0x00000410       0x14 ./source/App.o
-                0x00000410                callbackRefreshPc
+                0x000009c4       0x14 ./source/App.o
+                0x000009c4                callbackRefreshPc
  .text.callbackRefreshCoord
-                0x00000424       0x84 ./source/App.o
-                0x00000424                callbackRefreshCoord
+                0x000009d8       0x84 ./source/App.o
+                0x000009d8                callbackRefreshCoord
  .text.App_Init
-                0x000004a8       0x20 ./source/App.o
-                0x000004a8                App_Init
+                0x00000a5c       0x20 ./source/App.o
+                0x00000a5c                App_Init
  .text.callback
-                0x000004c8        0xc ./source/FXOS8700CQ.o
-                0x000004c8                callback
+                0x00000a7c        0xc ./source/FXOS8700CQ.o
+                0x00000a7c                callback
  .text.FXOS8700CQConfiguration
-                0x000004d4       0xf4 ./source/FXOS8700CQ.o
+                0x00000a88       0xf4 ./source/FXOS8700CQ.o
+ .text.ReadAccelMagnData
+                0x00000b7c       0xf0 ./source/FXOS8700CQ.o
+                0x00000b7c                ReadAccelMagnData
  .text.SysTick_Init
-                0x000005c8       0x2c ./source/SysTick.o
-                0x000005c8                SysTick_Init
+                0x00000c6c       0x2c ./source/SysTick.o
+                0x00000c6c                SysTick_Init
  .text.SysTick_Handler
-                0x000005f4       0x10 ./source/SysTick.o
-                0x000005f4                SysTick_Handler
+                0x00000c98       0x10 ./source/SysTick.o
+                0x00000c98                SysTick_Handler
  .text.refreshCounterFps
-                0x00000604        0xc ./source/boardsInterface.o
-                0x00000604                refreshCounterFps
+                0x00000ca8        0xc ./source/boardsInterface.o
+                0x00000ca8                refreshCounterFps
  .text.getBoardCoordChared
-                0x00000610       0x48 ./source/boardsInterface.o
-                0x00000610                getBoardCoordChared
+                0x00000cb4       0x48 ./source/boardsInterface.o
+                0x00000cb4                getBoardCoordChared
  .text.timeOutCallback
-                0x00000658       0x54 ./source/boardsInterface.o
-                0x00000658                timeOutCallback
+                0x00000cfc       0x54 ./source/boardsInterface.o
+                0x00000cfc                timeOutCallback
  .text.initDataBase
-                0x000006ac       0x2c ./source/boardsInterface.o
-                0x000006ac                initDataBase
+                0x00000d50       0x2c ./source/boardsInterface.o
+                0x00000d50                initDataBase
  .text.initBoardsInterface
-                0x000006d8       0x40 ./source/boardsInterface.o
-                0x000006d8                initBoardsInterface
+                0x00000d7c       0x40 ./source/boardsInterface.o
+                0x00000d7c                initBoardsInterface
  .text.updateLecture
-                0x00000718       0xcc ./source/boardsInterface.o
-                0x00000718                updateLecture
+                0x00000dbc       0xe0 ./source/boardsInterface.o
+                0x00000dbc                updateLecture
  .text.FLEXCANenableClock
-                0x000007e4       0x20 ./source/can.o
+                0x00000e9c       0x20 ./source/can.o
  .text.FLEXCANsetBaudRate
-                0x00000804       0x48 ./source/can.o
+                0x00000ebc       0x48 ./source/can.o
  .text.FLEXCANinit
-                0x0000084c       0x8c ./source/can.o
+                0x00000f04       0x8c ./source/can.o
  .text.FLEXCANsetRxMbConfig
-                0x000008d8       0x44 ./source/can.o
+                0x00000f90       0x44 ./source/can.o
  .text.FLEXCANwriteTxMb
-                0x0000091c       0xa8 ./source/can.o
+                0x00000fd4       0xa8 ./source/can.o
  .text.FLEXCANTxHandler
-                0x000009c4       0x24 ./source/can.o
+                0x0000107c       0x24 ./source/can.o
  .text.recursiveStore
-                0x000009e8       0x44 ./source/can.o
+                0x000010a0       0x44 ./source/can.o
  .text.FLEXCANRxHandler
-                0x00000a2c       0x44 ./source/can.o
+                0x000010e4       0x44 ./source/can.o
  .text.CAN0_ORed_Message_buffer_IRQHandler
-                0x00000a70       0x38 ./source/can.o
-                0x00000a70                CAN0_ORed_Message_buffer_IRQHandler
- .text.canInit  0x00000aa8       0x90 ./source/can.o
-                0x00000aa8                canInit
+                0x00001128       0x38 ./source/can.o
+                0x00001128                CAN0_ORed_Message_buffer_IRQHandler
+ .text.canInit  0x00001160       0x90 ./source/can.o
+                0x00001160                canInit
  .text.canWriteMsg
-                0x00000b38       0x60 ./source/can.o
-                0x00000b38                canWriteMsg
+                0x000011f0       0x60 ./source/can.o
+                0x000011f0                canWriteMsg
  .text.canIsTxMsgComplete
-                0x00000b98       0x10 ./source/can.o
-                0x00000b98                canIsTxMsgComplete
+                0x00001250       0x10 ./source/can.o
+                0x00001250                canIsTxMsgComplete
  .text.canIsRxMsg
-                0x00000ba8       0x18 ./source/can.o
-                0x00000ba8                canIsRxMsg
+                0x00001260       0x18 ./source/can.o
+                0x00001260                canIsRxMsg
  .text.canGetRxMsgLength
-                0x00000bc0       0x1c ./source/can.o
-                0x00000bc0                canGetRxMsgLength
+                0x00001278       0x1c ./source/can.o
+                0x00001278                canGetRxMsgLength
  .text.canReadMsg
-                0x00000bdc       0x80 ./source/can.o
-                0x00000bdc                canReadMsg
+                0x00001294       0x80 ./source/can.o
+                0x00001294                canReadMsg
  .text.initResourcesController2pc
-                0x00000c5c       0x48 ./source/comController2pc.o
-                0x00000c5c                initResourcesController2pc
+                0x00001314       0x48 ./source/comController2pc.o
+                0x00001314                initResourcesController2pc
  .text.sendMessage2pc
-                0x00000ca4       0x40 ./source/comController2pc.o
-                0x00000ca4                sendMessage2pc
+                0x0000135c       0x40 ./source/comController2pc.o
+                0x0000135c                sendMessage2pc
  .text.rxCallback
-                0x00000ce4       0x74 ./source/comController2pc.o
-                0x00000ce4                rxCallback
+                0x0000139c       0x74 ./source/comController2pc.o
+                0x0000139c                rxCallback
  .text.encodeMsg
-                0x00000d58       0x38 ./source/coordHAL.o
+                0x00001410       0x38 ./source/coordHAL.o
  .text.decodeMsg
-                0x00000d90       0x38 ./source/coordHAL.o
+                0x00001448       0x38 ./source/coordHAL.o
  .text.coordHALinit
-                0x00000dc8       0x34 ./source/coordHAL.o
-                0x00000dc8                coordHALinit
+                0x00001480       0x34 ./source/coordHAL.o
+                0x00001480                coordHALinit
  .text.sendCoordToAll
-                0x00000dfc       0x38 ./source/coordHAL.o
-                0x00000dfc                sendCoordToAll
+                0x000014b4       0x38 ./source/coordHAL.o
+                0x000014b4                sendCoordToAll
  .text.readCoord
-                0x00000e34       0x40 ./source/coordHAL.o
-                0x00000e34                readCoord
+                0x000014ec       0x40 ./source/coordHAL.o
+                0x000014ec                readCoord
  .text.sendStart
-                0x00000e74       0x14 ./source/i2c.o
+                0x0000152c       0x14 ./source/i2c.o
  .text.sendStop
-                0x00000e88       0x14 ./source/i2c.o
+                0x00001540       0x14 ./source/i2c.o
  .text.sendRepeatStart
-                0x00000e9c       0x1c ./source/i2c.o
+                0x00001554       0x1c ./source/i2c.o
  .text.getStopFlag
-                0x00000eb8       0x10 ./source/i2c.o
+                0x00001570       0x10 ./source/i2c.o
  .text.getStartFlag
-                0x00000ec8       0x10 ./source/i2c.o
+                0x00001580       0x10 ./source/i2c.o
  .text.clearInterruptFlag
-                0x00000ed8       0x14 ./source/i2c.o
+                0x00001590       0x14 ./source/i2c.o
  .text.clearStopFlag
-                0x00000eec       0x14 ./source/i2c.o
+                0x000015a4       0x14 ./source/i2c.o
  .text.clearStartFlag
-                0x00000f00       0x14 ./source/i2c.o
- .text.getMode  0x00000f14       0x10 ./source/i2c.o
+                0x000015b8       0x14 ./source/i2c.o
+ .text.getMode  0x000015cc       0x10 ./source/i2c.o
  .text.setModeTX
-                0x00000f24       0x14 ./source/i2c.o
+                0x000015dc       0x14 ./source/i2c.o
  .text.setModeRX
                 0x00000f38       0x14 ./source/i2c.o
  .text.isBusBusy
@@ -1503,94 +1458,103 @@ END GROUP
                 0x14000000                . = ALIGN ((. != 0x0)?0x8:0x1)
                 [!provide]                PROVIDE (__end_bss_RAM3, .)
 
-.bss            0x20000070      0x380
+.bss            0x20000070      0x3a8
                 0x20000070                _bss = .
  *(SORT_BY_ALIGNMENT(.bss*))
  .bss.idBoard2refresh.5003
                 0x20000070        0x4 ./source/App.o
+ .bss.buffer    0x20000074        0xd ./source/FXOS8700CQ.o
+                0x20000074                buffer
+ *fill*         0x20000081        0x3 
  .bss.sysTickFun
-                0x20000074        0x4 ./source/SysTick.o
-                0x20000074                sysTickFun
+                0x20000084        0x4 ./source/SysTick.o
+                0x20000084                sysTickFun
+ .bss.pAccelData
+                0x20000088        0xc ./source/accelerometer.o
+ .bss.pMagnData
+                0x20000094        0xc ./source/accelerometer.o
  .bss.changesCounter
-                0x20000078        0x4 ./source/boardsInterface.o
-                0x20000078                changesCounter
+                0x200000a0        0x4 ./source/boardsInterface.o
+                0x200000a0                changesCounter
  .bss.flagsOurBoardChanged
-                0x2000007c        0x3 ./source/boardsInterface.o
-                0x2000007c                flagsOurBoardChanged
- *fill*         0x2000007f        0x1 
+                0x200000a4        0x3 ./source/boardsInterface.o
+                0x200000a4                flagsOurBoardChanged
+ *fill*         0x200000a7        0x1 
  .bss.posDataBase
-                0x20000080       0x54 ./source/boardsInterface.o
-                0x20000080                posDataBase
- .bss.rxBuffer  0x200000d4      0x1e4 ./source/can.o
- .bss.rxFrame   0x200002b8       0x10 ./source/can.o
+                0x200000a8       0x54 ./source/boardsInterface.o
+                0x200000a8                posDataBase
+ .bss.rxBuffer  0x200000fc      0x1e4 ./source/can.o
+ .bss.rxFrame   0x200002e0       0x10 ./source/can.o
  .bss.srcClockHz
-                0x200002c8        0x4 ./source/can.o
- .bss.txFrame   0x200002cc       0x10 ./source/can.o
+                0x200002f0        0x4 ./source/can.o
+ .bss.txFrame   0x200002f4       0x10 ./source/can.o
  .bss.answerMsg
-                0x200002dc        0x1 ./source/comController2pc.o
-                0x200002dc                answerMsg
- *fill*         0x200002dd        0x3 
+                0x20000304        0x1 ./source/comController2pc.o
+                0x20000304                answerMsg
+ *fill*         0x20000305        0x3 
  .bss.cantCharsInPackage
-                0x200002e0        0x4 ./source/comController2pc.o
-                0x200002e0                cantCharsInPackage
+                0x20000308        0x4 ./source/comController2pc.o
+                0x20000308                cantCharsInPackage
  .bss.errorsCounter
-                0x200002e4        0x4 ./source/comController2pc.o
-                0x200002e4                errorsCounter
+                0x2000030c        0x4 ./source/comController2pc.o
+                0x2000030c                errorsCounter
  .bss.package2pc
-                0x200002e8        0x6 ./source/comController2pc.o
-                0x200002e8                package2pc
- *fill*         0x200002ee        0x2 
- .bss.msg       0x200002f0        0x8 ./source/coordHAL.o
- .bss.buffer    0x200002f8       0x10 ./source/i2c.o
+                0x20000310        0x6 ./source/comController2pc.o
+                0x20000310                package2pc
+ *fill*         0x20000316        0x2 
+ .bss.msg       0x20000318        0x8 ./source/coordHAL.o
+ .bss.buffer    0x20000320       0x10 ./source/i2c.o
  .bss.callback2Fun
-                0x20000308        0x4 ./source/i2c.o
-                0x20000308                callback2Fun
- .bss.i2c       0x2000030c        0x4 ./source/i2c.o
- .bss.timers    0x20000310       0x50 ./source/timer.o
+                0x20000330        0x4 ./source/i2c.o
+                0x20000330                callback2Fun
+ .bss.i2c       0x20000334        0x4 ./source/i2c.o
+ .bss.timers    0x20000338       0x50 ./source/timer.o
  .bss.RXbuffers
-                0x20000360       0x28 ./source/uart.o
-                0x20000360                RXbuffers
- .bss.TXbuffers
                 0x20000388       0x28 ./source/uart.o
-                0x20000388                TXbuffers
+                0x20000388                RXbuffers
+ .bss.TXbuffers
+                0x200003b0       0x28 ./source/uart.o
+                0x200003b0                TXbuffers
  .bss.countersRXfailed
-                0x200003b0        0x5 ./source/uart.o
-                0x200003b0                countersRXfailed
- *fill*         0x200003b5        0x3 
- .bss.flagsReading
-                0x200003b8        0x5 ./source/uart.o
-                0x200003b8                flagsReading
- *fill*         0x200003bd        0x3 
- .bss.inMarkersTXbuffer
-                0x200003c0        0x5 ./source/uart.o
-                0x200003c0                inMarkersTXbuffer
- *fill*         0x200003c5        0x3 
- .bss.lensTXbuffer
-                0x200003c8        0x5 ./source/uart.o
-                0x200003c8                lensTXbuffer
- *fill*         0x200003cd        0x3 
- .bss.outMarkersTXbuffer
-                0x200003d0        0x5 ./source/uart.o
-                0x200003d0                outMarkersTXbuffer
- *fill*         0x200003d5        0x3 
- .bss.uartMode  0x200003d8        0x5 ./source/uart.o
-                0x200003d8                uartMode
+                0x200003d8        0x5 ./source/uart.o
+                0x200003d8                countersRXfailed
  *fill*         0x200003dd        0x3 
+ .bss.flagsReading
+                0x200003e0        0x5 ./source/uart.o
+                0x200003e0                flagsReading
+ *fill*         0x200003e5        0x3 
+ .bss.inMarkersTXbuffer
+                0x200003e8        0x5 ./source/uart.o
+                0x200003e8                inMarkersTXbuffer
+ *fill*         0x200003ed        0x3 
+ .bss.lensTXbuffer
+                0x200003f0        0x5 ./source/uart.o
+                0x200003f0                lensTXbuffer
+ *fill*         0x200003f5        0x3 
+ .bss.outMarkersTXbuffer
+                0x200003f8        0x5 ./source/uart.o
+                0x200003f8                outMarkersTXbuffer
+ *fill*         0x200003fd        0x3 
+ .bss.uartMode  0x20000400        0x5 ./source/uart.o
+                0x20000400                uartMode
+ *fill*         0x20000405        0x3 
  .bss.__LDM_interruptDisableCount
-                0x200003e0        0x4 ./SDK/startup/hardware.o
- .bss.finished  0x200003e4        0x1 ./source/FXOS8700CQ.o
-                0x200003e4                finished
- .bss.MbNum     0x200003e5        0x1 ./source/can.o
+                0x20000408        0x4 ./SDK/startup/hardware.o
+ .bss.errno     0x2000040c        0x4 c:/nxp/mcuxpressoide_10.2.0_759/ide/tools/bin/../lib/gcc/arm-none-eabi/7.2.1/../../../../arm-none-eabi/lib/thumb/v7e-m/fpv4-sp/hard\libcr_c.a(errno.o)
+                0x2000040c                errno
+ .bss.finished  0x20000410        0x1 ./source/FXOS8700CQ.o
+                0x20000410                finished
+ .bss.MbNum     0x20000411        0x1 ./source/can.o
  .bss.sendingTx
-                0x200003e6        0x1 ./source/can.o
- .bss.cant      0x200003e7        0x1 ./source/coordHAL.o
- .bss.init      0x200003e8        0x1 ./source/i2c.o
+                0x20000412        0x1 ./source/can.o
+ .bss.cant      0x20000413        0x1 ./source/coordHAL.o
+ .bss.init      0x20000414        0x1 ./source/i2c.o
  .bss.initialized
-                0x200003e9        0x1 ./source/timer.o
+                0x20000415        0x1 ./source/timer.o
  *(SORT_BY_ALIGNMENT(COMMON))
-                0x200003f0                . = ALIGN (0x8)
- *fill*         0x200003ea        0x6 
-                0x200003f0                _ebss = .
+                0x20000418                . = ALIGN (0x8)
+ *fill*         0x20000416        0x2 
+                0x20000418                _ebss = .
                 [!provide]                PROVIDE (end, .)
 
 .noinit_RAM2    0x1fff0000        0x0
@@ -1603,25 +1567,25 @@ END GROUP
  *(SORT_BY_ALIGNMENT(.noinit.$FLEX_RAM*))
                 0x14000000                . = ALIGN (0x8)
 
-.noinit         0x200003f0        0x0
-                0x200003f0                _noinit = .
+.noinit         0x20000418        0x0
+                0x20000418                _noinit = .
  *(SORT_BY_ALIGNMENT(.noinit*))
-                0x200003f0                . = ALIGN (0x8)
-                0x200003f0                _end_noinit = .
+                0x20000418                . = ALIGN (0x8)
+                0x20000418                _end_noinit = .
                 0x00001000                _HeapSize = 0x1000
 
-.heap           0x200003f0     0x1000
-                0x200003f0                _pvHeapStart = .
-                0x200013f0                . = (. + _HeapSize)
- *fill*         0x200003f0     0x1000 
-                0x200013f0                . = ALIGN (0x8)
-                0x200013f0                _pvHeapLimit = .
+.heap           0x20000418     0x1000
+                0x20000418                _pvHeapStart = .
+                0x20001418                . = (. + _HeapSize)
+ *fill*         0x20000418     0x1000 
+                0x20001418                . = ALIGN (0x8)
+                0x20001418                _pvHeapLimit = .
                 0x00001000                _StackSize = 0x1000
 
 .heap2stackfill
-                0x200013f0     0x1000
-                0x200023f0                . = (. + _StackSize)
- *fill*         0x200013f0     0x1000 
+                0x20001418     0x1000
+                0x20002418                . = (. + _StackSize)
+ *fill*         0x20001418     0x1000 
 
 .stack          0x2002f000        0x0
                 0x2002f000                _vStackBase = .
@@ -1897,6 +1861,14 @@ OUTPUT(uartSPI.axf elf32-littlearm)
  .comment       0x0000007e       0x7f ./SDK/startup/semihost_hardfault.o
  .comment       0x0000007e       0x7f ./SDK/startup/startup_mk64f12.o
  .comment       0x0000007e       0x7f ./SDK/CMSIS/system_MK64F12.o
+ .comment       0x0000007e       0x7f c:/nxp/mcuxpressoide_10.2.0_759/ide/tools/bin/../lib/gcc/arm-none-eabi/7.2.1/../../../../arm-none-eabi/lib/thumb/v7e-m/fpv4-sp/hard\libcr_c.a(atan2.o)
+ .comment       0x0000007e       0x7f c:/nxp/mcuxpressoide_10.2.0_759/ide/tools/bin/../lib/gcc/arm-none-eabi/7.2.1/../../../../arm-none-eabi/lib/thumb/v7e-m/fpv4-sp/hard\libcr_c.a(errno.o)
+ .comment       0x0000007e       0x7f c:/nxp/mcuxpressoide_10.2.0_759/ide/tools/bin/../lib/gcc/arm-none-eabi/7.2.1/../../../../arm-none-eabi/lib/thumb/v7e-m/fpv4-sp/hard\libcr_c.a(fabs.o)
+ .comment       0x0000007e       0x7f c:/nxp/mcuxpressoide_10.2.0_759/ide/tools/bin/../lib/gcc/arm-none-eabi/7.2.1/../../../../arm-none-eabi/lib/thumb/v7e-m/fpv4-sp/hard\libcr_c.a(sqrt.o)
+ .comment       0x0000007e       0x7f c:/nxp/mcuxpressoide_10.2.0_759/ide/tools/bin/../lib/gcc/arm-none-eabi/7.2.1/../../../../arm-none-eabi/lib/thumb/v7e-m/fpv4-sp/hard\libcr_c.a(_hugeval.o)
+ .comment       0x0000007e       0x7f c:/nxp/mcuxpressoide_10.2.0_759/ide/tools/bin/../lib/gcc/arm-none-eabi/7.2.1/../../../../arm-none-eabi/lib/thumb/v7e-m/fpv4-sp/hard\libcr_c.a(atan.o)
+ .comment       0x0000007e       0x7f c:/nxp/mcuxpressoide_10.2.0_759/ide/tools/bin/../lib/gcc/arm-none-eabi/7.2.1/thumb/v7e-m/fpv4-sp/hard\libcr_eabihelpers.a(double.o)
+ .comment       0x0000007e       0x7f c:/nxp/mcuxpressoide_10.2.0_759/ide/tools/bin/../lib/gcc/arm-none-eabi/7.2.1/thumb/v7e-m/fpv4-sp/hard\libcr_eabihelpers.a(float.o)
 
 .ARM.attributes
                 0x00000000       0x39
@@ -1936,6 +1908,22 @@ OUTPUT(uartSPI.axf elf32-littlearm)
                 0x00000390       0x39 ./SDK/startup/startup_mk64f12.o
  .ARM.attributes
                 0x000003c9       0x39 ./SDK/CMSIS/system_MK64F12.o
+ .ARM.attributes
+                0x00000402       0x39 c:/nxp/mcuxpressoide_10.2.0_759/ide/tools/bin/../lib/gcc/arm-none-eabi/7.2.1/../../../../arm-none-eabi/lib/thumb/v7e-m/fpv4-sp/hard\libcr_c.a(atan2.o)
+ .ARM.attributes
+                0x0000043b       0x39 c:/nxp/mcuxpressoide_10.2.0_759/ide/tools/bin/../lib/gcc/arm-none-eabi/7.2.1/../../../../arm-none-eabi/lib/thumb/v7e-m/fpv4-sp/hard\libcr_c.a(errno.o)
+ .ARM.attributes
+                0x00000474       0x39 c:/nxp/mcuxpressoide_10.2.0_759/ide/tools/bin/../lib/gcc/arm-none-eabi/7.2.1/../../../../arm-none-eabi/lib/thumb/v7e-m/fpv4-sp/hard\libcr_c.a(fabs.o)
+ .ARM.attributes
+                0x000004ad       0x39 c:/nxp/mcuxpressoide_10.2.0_759/ide/tools/bin/../lib/gcc/arm-none-eabi/7.2.1/../../../../arm-none-eabi/lib/thumb/v7e-m/fpv4-sp/hard\libcr_c.a(sqrt.o)
+ .ARM.attributes
+                0x000004e6       0x39 c:/nxp/mcuxpressoide_10.2.0_759/ide/tools/bin/../lib/gcc/arm-none-eabi/7.2.1/../../../../arm-none-eabi/lib/thumb/v7e-m/fpv4-sp/hard\libcr_c.a(_hugeval.o)
+ .ARM.attributes
+                0x0000051f       0x39 c:/nxp/mcuxpressoide_10.2.0_759/ide/tools/bin/../lib/gcc/arm-none-eabi/7.2.1/../../../../arm-none-eabi/lib/thumb/v7e-m/fpv4-sp/hard\libcr_c.a(atan.o)
+ .ARM.attributes
+                0x00000558       0x39 c:/nxp/mcuxpressoide_10.2.0_759/ide/tools/bin/../lib/gcc/arm-none-eabi/7.2.1/thumb/v7e-m/fpv4-sp/hard\libcr_eabihelpers.a(double.o)
+ .ARM.attributes
+                0x00000591       0x39 c:/nxp/mcuxpressoide_10.2.0_759/ide/tools/bin/../lib/gcc/arm-none-eabi/7.2.1/thumb/v7e-m/fpv4-sp/hard\libcr_eabihelpers.a(float.o)
 
 .debug_frame    0x00000000     0x1610
  .debug_frame   0x00000000       0x7c ./source/App.o
